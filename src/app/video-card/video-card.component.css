@@ -1,0 +1,12 @@
+.main-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 70vw;
+    height: 350px;
+    border-radius: 20px;
+    background-color: aliceblue;
+    
+}

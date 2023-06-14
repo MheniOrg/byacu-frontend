@@ -1,0 +1,15 @@
+<div class="background">
+    <app-icon></app-icon>
+    <!-- <p class="servicetitle">The Transcription Service</p> -->
+    <div class="container">
+        <div class="userpic">
+            <img class="userpicimg" *ngIf="user.thumbnails[0] !== undefined" [src]="user.thumbnails[0].url" />
+            <button class="usertxt" *ngIf="user" unselectable="on" (click)="menuClick()" >{{user.channelName}} <span> 🍠 </span></button>
+        </div>
+        <div class="menu" *ngIf="menuOpen">
+            <!-- <p class="usertxt" *ngIf="user">You joined YouTube {{user.timeOnPLatform}} </p> -->
+            <button class="usertxt" unselectable="on" (click)="menuClick()" *ngIf="user">Close Menu</button>
+            <button class="usertxt" unselectable="on" (click)="SignOut()" *ngIf="user">Sign Out</button>
+        </div>
+    </div>
+</div>

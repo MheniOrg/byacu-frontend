@@ -1,0 +1,42 @@
+.icon-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin-left: 25px;
+    /* background-color: aqua; */
+}
+
+.icon-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #611f69;
+}
+
+.icon-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: 'Comfortaa';
+    font-size:16px;
+}
+
+.ic {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}

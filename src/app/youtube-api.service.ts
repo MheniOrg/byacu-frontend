@@ -173,6 +173,66 @@ export class YoutubeApiService {
     return playlist;
   }
 
+  getPlaylistAsync(credentials: string, playlistId: string): Promise<Video[]> {
+    return new Promise((resolve, reject) => { 
+
+      var req = new XMLHttpRequest();
+
+      req.open('GET', 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=' + playlistId + '&access_token=' + credentials, true);
+
+      req.onreadystatechange = (e) => {
+
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            let res = JSON.parse(req.response);
+            let playlist: Video[] = [];
+
+            res.items.forEach((videoObj: LooseObject) => {
+              let video: Video = {id: "", title: "", timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
+
+              video.channelId = videoObj['snippet'].channelId;
+              video.id = videoObj['snippet'].resourceId.videoId;
+              video.title = videoObj['snippet'].title;
+              video.description = videoObj['snippet'].description;
+
+              let timeOnPLatform = moment(videoObj['snippet'].publishedAt);
+
+              video.timeOnPLatform = timeOnPLatform.fromNow();
+
+              video.thumbnails = [];
+
+              ["default", "medium", "high"].forEach((typ) => {
+                let temp = videoObj['snippet'].thumbnails[typ];
+
+                video.thumbnails.push({ type: typ,  url: temp.url, width: temp.width, height: temp.height});
+              });
+
+              playlist.push(video);
+
+            });
+
+            resolve(playlist);
+    
+          } 
+          else {
+            this.refreshAuth();
+          }
+        }
+        
+      }
+
+      req.onerror = (e) => {
+        console.error(req.statusText);
+        reject(req.statusText);
+      };
+
+      req.send(null);
+
+
+      // return playlist;
+    });
+  }
+
   getUser(credentials: string): LooseObject {
 
     let user: User = {id: "###", likes: "###", uploads: "###", channelName: "###", channelDescription: "###", customURL: "###", timeOnPLatform: "###", thumbnails: []};
@@ -224,5 +284,59 @@ export class YoutubeApiService {
     console.log(result);
 
     return result;
+  }
+
+
+  getUserAsync(credentials: string): Promise<User> {
+    return new Promise((resolve, reject) => { 
+
+    let user: User = {id: "###", likes: "###", uploads: "###", channelName: "###", channelDescription: "###", customURL: "###", timeOnPLatform: "###", thumbnails: []};
+    // let videos: Video[] = [];
+    // let result: LooseObject = {};
+
+    var req = new XMLHttpRequest();
+
+    req.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&mine=true' + '&access_token=' + credentials, true);
+
+    req.onreadystatechange = (e) => {
+
+      if (req.readyState === 4) {
+        if (req.status === 200) {
+          let res = JSON.parse(req.response);
+
+          let timeOnPLatform = moment(res.items[0].snippet.publishedAt);
+
+          user.id = res.items[0].id;
+          user.uploads = res.items[0].contentDetails.relatedPlaylists.uploads;
+          user.likes = res.items[0].contentDetails.relatedPlaylists.likes;
+          user.channelName = res.items[0].snippet.title;
+          user.channelDescription = res.items[0].snippet.description;
+          user.customURL = res.items[0].snippet.customUrl;
+          user.timeOnPLatform = timeOnPLatform.fromNow();
+
+          user.thumbnails = [];
+
+          ["default", "medium", "high"].forEach((typ) => {
+            let temp = res.items[0].snippet.thumbnails[typ];
+            user.thumbnails.push({ type: typ,  url: temp.url, width: temp.width, height: temp.height});
+          });
+
+          resolve(user);
+  
+        } else {
+          this.refreshAuth();
+        }
+      }
+      
+    }
+
+    req.onerror = (e) => {
+      console.error(req.statusText);
+      reject(req.statusText);
+    };
+
+    req.send(null);
+
+    });
   }
 }

@@ -1,0 +1,117 @@
+.background {
+    /* background: linear-gradient(180deg, rgba(98, 31, 105, 0.68) 0%, rgba(101, 47, 107, 0.482) 30%, rgba(0,212,255,0) 100%); */
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: aliceblue;
+    position: fixed;
+    top: 0; 
+    left:0;
+    right: 0;
+}
+
+.servicetitle {
+    font-size: 56px;
+    color: #611f69;
+    /* text-decoration: underline; */
+    text-shadow: 2px 2px #6a6796;
+    font-family: 'Inconsolata';
+    text-align: center;
+}
+
+.userpic {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5%;
+    transition: background-color 1s;
+    /* background-color: aquamarine; */
+}
+
+/* .userpic:hover {
+    background-color: rgba(196, 196, 196, 0.308);
+
+    #d9ad61
+
+     #611f69
+} */
+
+.userpicimg {
+    background: #d9ad61;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    /* margin-top: 20px; */
+    padding: 3px;
+}
+
+.usertxt{
+    /* background-color: rgba(196, 196, 196, 0.308); */
+    all: unset;
+    width: 100%;
+    border-radius: 5%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+    
+    cursor: pointer;
+    /* color: #611f69; */
+    font-family: 'Inconsolata';
+    text-align: center;
+    transition: background-color 1s;
+
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.usertxt:hover {
+    background-color: #d9ad61;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-evenly;
+    align-items: center;
+    /* margin-top: 10px; */
+    margin-right: 25px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 150px;
+    height: 100px;
+    position: absolute;
+    background-color: #eccf9d;
+    top: 150px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 400;
+    font-size: 16px;
+}

@@ -1,9 +1,43 @@
 .background {
-    background-color: #f3f2f2 ;
+    background-color: #f3f2f2;
     width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 250px;
+    width: 100vw;
+}
+
+.vid-section-title {
+    font-weight: 400;
+    font-size: 36px;
+    /* border: none; */
+    /* text-decoration:line-through; */
+    
+    cursor:cell;
+    /* color: #611f69; */
+    font-family: 'Inconsolata';
+    width: 60vw;
+    text-align: center;
+    transition: background-color 1s;
+
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
 }

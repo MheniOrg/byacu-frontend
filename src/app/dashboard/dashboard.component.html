@@ -1,0 +1,9 @@
+<div class="background">
+    <app-user-display [user]="user"></app-user-display>
+    <!-- <button (click)="test()">Connect to YouTube</button> -->
+    <div class="video-container">
+        <p class="vid-section-title">Videos</p>
+        <app-video-card *ngFor="let video of shownVideos" [videoInfo]="video" />
+    </div>
+    
+</div>
