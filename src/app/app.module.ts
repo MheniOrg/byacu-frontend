@@ -9,7 +9,6 @@ import { UserDisplayComponent } from './user-display/user-display.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { IconComponent } from './icon/icon.component';
 
-// import { YouTubePlayerModule } from '@angular/youtube-player';
 
 let apiLoaded = false;
 
@@ -20,12 +19,11 @@ let apiLoaded = false;
     LandingPageComponent,
     DashboardComponent,
     UserDisplayComponent,
-    VideoCardComponent,
     IconComponent
   ],
   imports: [
     BrowserModule,
-    // YouTubePlayerModule,
+    VideoCardComponent,
     AppRoutingModule
   ],
   providers: [],

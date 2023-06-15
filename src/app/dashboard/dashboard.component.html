@@ -3,7 +3,10 @@
     <!-- <button (click)="test()">Connect to YouTube</button> -->
     <div class="video-container">
         <p class="vid-section-title">Videos</p>
-        <app-video-card *ngFor="let video of shownVideos" [videoInfo]="video" />
+        <ng-container *ngFor="let video of shownVideos; let i = index">
+            <app-video-card [transcribed]="(i % 2) === 0" [hasResults]="(i % 3) === 0" [videoInfo]="video" />
+        </ng-container>
+        
     </div>
     
 </div>
