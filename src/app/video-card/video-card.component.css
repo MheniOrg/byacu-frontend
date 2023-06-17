@@ -11,7 +11,7 @@
     border-style: solid;
     border-color: #d9ad6133;
     border-width: 1px;
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.1s;
     
 }
 
@@ -22,80 +22,127 @@
 .video-space {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 350px;
-    border-radius: 20px 0px 0px 20px; 
-    background-color:#000000;
-    overflow: hidden;
+    position: relative;
+    /* justify-content: center; */
+    /* align-items: flex-start; */
+    height: 100%;
+    width: 50%;
+    /* border-radius: 20px 0px 0px 20px;  */
+    /* border-right: 1px solid #c5c5c534 ; */
+    /* background-color:#00000000; */
+    /* overflow: hidden; */
+    margin: 0px;
+}
+
+.vid-img {
+    /* margin-left: 20px; */
+    height: 100%;
+    width: auto;
+    border-radius: 20px 0px 0px 20px;
+    /* border-radius: 10px;  */
 }
 
 .video-title {
     width: 100%;
-    height: 50px;
+    min-height: 50px;
+    max-height: 40%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* font-weight: 900; */
-    font-size: 24px;
+    position: absolute;
+    bottom: 0px;
+    font-weight: 300;
+    font-size: 20px;
     /* border: none; */
     /* text-decoration: overline; */
-    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    /* padding: 10px; */
+    margin: 0px;
+    border-radius: 0px 0px 0px 20px;
     /* margin-bottom: 35px; */
     
     cursor:context-menu;
-    color: aliceblue;
-    /* background-color: #611f69; */
+    color: #ffffff;
+    /* background-color: #00000085; */
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6320728975183824) 70%, rgba(0,0,0,0) 100%);
     font-family: 'Comfortaa';
-    text-align: left;
+    text-align: center;
 }
 
 .button-case {
     display: flex;
     flex-direction: row;
-    width: 300px;
-    height: 350px;
+    width: 50%;
+    height: 100%;
     padding: 0;
     margin: 0;
 }
 
-.button1 {
+.transcribe-button {
     all: unset;
-    width: 50%;
+    width: 100%;
     height: 100%;
-    transition: background-color 1s;
-    text-align: center;
-    cursor:pointer;
-    color: #d9ad617d;
-    font-family: 'Comfortaa';
-    font-size: 24px;
-    padding: 0;
-    margin: 0;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-
-    /*
-        Introduced in IE 10.
-        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-    */
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.button1:hover {
-    background-color: #d9ad617d;
-    color: aliceblue;
-}
-
-.button2 {
-    all: unset;
-    width: 50%;
-    height: 100%;
-    transition: background-color 1s;
+    transition: background-color 0.1s;
     border-radius: 0px 20px 20px 0px; 
     text-align: center;
     cursor:pointer;
-    color: #621f697d;
+    color: #d9ad61;
+    font-family: 'Comfortaa';
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.transcribe-button:hover {
+    background-color: #d9ad61;
+    color: aliceblue;
+}
+
+.retranscribe-button {
+    all: unset;
+    width: 50%;
+    height: 100%;
+    transition: background-color 0.1s;
+    text-align: center;
+    cursor:pointer;
+    color: #d9ad61;
+    font-family: 'Comfortaa';
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.retranscribe-button:hover {
+    background-color: #d9ad61;
+    color: aliceblue;
+}
+
+.view-edit-button {
+    all: unset;
+    width: 50%;
+    height: 100%;
+    transition: background-color 0.1s;
+    border-radius: 0px 20px 20px 0px; 
+    text-align: center;
+    cursor:pointer;
+    color: #621f69;
     font-family: 'Comfortaa';
     font-size: 24px;
     -moz-user-select: -moz-none;
@@ -110,16 +157,16 @@
     user-select: none;
 }
 
-.button2:hover {
-    background-color: #621f697d;
+.view-edit-button:hover {
+    background-color: #621f69;
     color: aliceblue;
 }
 
-.button3 {
+.failed-button {
     all: unset;
-    width: 50%;
+    width: 100%;
     height: 100%;
-    transition: background-color 1s;
+    transition: background-color 0.1s;
     border-radius: 0px 20px 20px 0px; 
     text-align: center;
     cursor:pointer;
@@ -129,16 +176,61 @@
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-
-    /*
-        Introduced in IE 10.
-        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-    */
     -ms-user-select: none;
     user-select: none;
 }
 
-.button3:hover {
-    background-color: #696969bc;
+.failed-button:hover {
+    background-color: #696969b2;
     color: aliceblue;
 }
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #621f69;
+    border-bottom: 16px solid #621f69;
+    width: 120px;
+    height: 120px;
+    z-index: 2;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.1s;
+    border-radius: 0px 20px 20px 0px; 
+    text-align: center;
+    cursor:pointer;
+    /* color: #696969bc; */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #621f69;
+    font-family: 'Comfortaa';
+    font-size: 24px;
+}
+
+.loader-button:hover {
+    background-color: #621f69;
+    color: white;
+}
+

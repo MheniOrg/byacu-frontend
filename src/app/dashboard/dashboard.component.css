@@ -12,8 +12,225 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 250px;
+    /* margin-top: 50px; */
     width: 100vw;
+}
+
+.search-n-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+    width: 100vw;
+}
+
+.input-box {
+    all: unset;
+    width: 350px;
+    height: 35px;
+    border-width: 2px;
+    border-color: #0000007a;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+    font-family: 'Comfortaa';
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.filter-buttons {
+    margin-left: 50px;
+    transition: box-shadow 0.5s;
+    border-radius: 20px 20px 20px 20px; 
+}
+
+.filter-buttons:hover {
+    box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
+}
+
+.left-click-inactive {
+    all: unset;
+    height: 30px;
+    width: 90px;
+    background-color: #e8e8e8bc;
+    border-radius: 20px 0px 0px 20px; 
+    text-align: center;
+    cursor:pointer;
+    /* color: rgb(225, 70, 70); */
+    color: #611f69;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
+}
+
+.left-click-inactive:hover {
+    background-color: #611f69;
+    color: white;
+    /* border-color: rgb(225, 207, 70); */
+}
+
+.left-click-active {
+    all: unset;
+    height: 30px;
+    width: 90px;
+    background-color: #611f69;
+    border-radius: 20px 0px 0px 20px; 
+    text-align: center;
+    cursor:pointer;
+    color: white;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
+}
+
+
+.right-click-inactive {
+    all: unset;
+    height: 30px;
+    width: 90px;
+    background-color: #e8e8e8bc;
+    border-radius: 0px 20px 20px 0px; 
+    text-align: center;
+    cursor:pointer;
+    /* color: rgb(70, 225, 104); */
+    color: #611f69;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
+}
+
+.right-click-inactive:hover {
+    background-color: #611f69;
+    color: white;
+    /* border-color: rgb(225, 207, 70); */
+}
+
+.right-click-active {
+    all: unset;
+    height: 30px;
+    width: 90px;
+    background-color: #611f69;
+    border-radius: 0px 20px 20px 0px; 
+    text-align: center;
+    cursor:pointer;
+    color: white;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
+}
+
+.mid-click-inactive {
+    all: unset;
+    height: 30px;
+    width: 110px;
+    background-color: #e8e8e8bc;
+    /* border-radius: 0px 20px 20px 0px;  */
+    text-align: center;
+    cursor:pointer;
+    /* color: rgb(225, 207, 70); */
+    color: #611f69;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
+}
+
+.mid-click-inactive:hover {
+    background-color: #611f69;
+    color: white;
+    /* border-color: rgb(225, 207, 70); */
+}
+
+.mid-click-active {
+    all: unset;
+    height: 30px;
+    width: 110px;
+    background-color: #611f69;
+    /* border-radius: 0px 20px 20px 0px;  */
+    text-align: center;
+    cursor:pointer;
+    color: white;
+    font-family: 'Comfortaa';
+    border-color: #d9ad614b;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 18px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.5s, color 0.5s;;
 }
 
 .vid-section-title {
@@ -24,7 +241,7 @@
     
     cursor:cell;
     /* color: #611f69; */
-    font-family: 'Inconsolata';
+    font-family: 'Comfortaa';
     width: 60vw;
     text-align: center;
     transition: background-color 1s;

@@ -132,7 +132,7 @@ export class YoutubeApiService {
           let res = JSON.parse(req.response);
 
           res.items.forEach((videoObj: LooseObject) => {
-            let video: Video = {id: "", title: "", timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
+            let video: Video = {id: "", title: "", type: 1, timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
 
             video.channelId = videoObj['snippet'].channelId;
             video.id = videoObj['snippet'].resourceId.videoId;
@@ -173,7 +173,60 @@ export class YoutubeApiService {
     return playlist;
   }
 
-  getPlaylistAsync(credentials: string, playlistId: string): Promise<Video[]> {
+  testEndpoint(): void {
+
+    var req = new XMLHttpRequest();
+
+
+    req.open('GET', 'http://byacu.com:8000/oauth_redirect');
+
+    req.setRequestHeader("Access-Control-Allow-Origin", '*');
+
+    // req.withCredentials = true;
+
+    req.onreadystatechange = (e) => {
+
+      if (req.readyState === 4) {
+        // let res = JSON.parse(req.response);
+          
+        console.log(req);
+      }
+      
+    }
+
+    req.onerror = (e) => {
+      console.error(req.statusText);
+    };
+
+    req.send(null);
+
+  }
+
+  testEndpoint2(): void {
+
+    var req = new XMLHttpRequest();
+
+    req.open('POST', 'http://byacu.com:8000/transcribe?url="kt2D7xl06mk"&user_id="jumbalayafanfanwe"');
+
+    req.onreadystatechange = (e) => {
+
+      if (req.readyState === 4) {
+        let res = JSON.parse(req.response);
+          
+        console.log(res);
+      }
+      
+    }
+
+    req.onerror = (e) => {
+      console.error(req.statusText);
+    };
+
+    req.send(null);
+
+  }
+
+  getPlaylistAsync(credentials: string, playlistId: string, typemap: LooseObject): Promise<Video[]> {
     return new Promise((resolve, reject) => { 
 
       var req = new XMLHttpRequest();
@@ -188,7 +241,7 @@ export class YoutubeApiService {
             let playlist: Video[] = [];
 
             res.items.forEach((videoObj: LooseObject) => {
-              let video: Video = {id: "", title: "", timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
+              let video: Video = {id: "", title: "", type: 1, timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
 
               video.channelId = videoObj['snippet'].channelId;
               video.id = videoObj['snippet'].resourceId.videoId;
@@ -207,8 +260,9 @@ export class YoutubeApiService {
                 video.thumbnails.push({ type: typ,  url: temp.url, width: temp.width, height: temp.height});
               });
 
+              
+              video.type = 3; // typemap[video.id];
               playlist.push(video);
-
             });
 
             resolve(playlist);
