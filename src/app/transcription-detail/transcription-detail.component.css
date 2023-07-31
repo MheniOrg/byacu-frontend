@@ -1,0 +1,448 @@
+
+.background {
+    background-color: #ffffff;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color:#d9ad6133
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 85px;
+    height: calc(100% - 85px);
+    /* height: 100%; calc(100% - 85px); */
+    /* background-color: blueviolet; */
+}
+
+.video-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: fit-content;
+    /* background-color: aliceblue; */
+    width: 100%;
+    border-radius: 5px;
+    border:none;
+    /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
+}
+
+.video-controls-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100% - 20px);
+    width: calc(40% - 40px);
+    margin-right: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.text-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100% - 20px);
+    background-color: aliceblue;
+    width: calc(60% - 30px);
+    margin-left: 10px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
+}
+
+#video-player {
+    display: block;
+    width: 100%;
+    /* height: auto; */
+    border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+    padding: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 0px;
+    /* border: none; */
+}
+
+#player {
+    aspect-ratio: 16/9;
+    padding: 0px;
+    margin: 0px;
+    /* border-radius: 5px 5px 5px 5px; */
+    /* border: none; */
+    
+    /* border-style: solid;
+    border-color: black; */
+    /* border-width: 5px; */
+    /* border: black 20px; */
+}
+
+.title-and-description {
+    margin: 5px;
+    width: calc(100% - 20px);
+}
+
+.desc-text {
+    width: 100%;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 6; /* number of lines to show */
+           line-clamp: 6; 
+   -webkit-box-orient: vertical;
+   color: black;
+    font-family: 'Antic';
+}
+
+.title-text {
+    width: 100%;
+    font-size: 22px;
+    /* height: 100px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
+   color: black;
+    font-family: 'Antic';
+}
+
+.ctrl-panel {
+    /* all: unset; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #621f69;
+    /* flex-grow: 1; */
+    width: calc(100% - 4px);
+    padding: 4px;
+    /* height: 150px; */
+    /* background-color: #d9ad6191; */
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    /* border: #000000 solid 1px; */
+    overflow: hidden;
+    /* border-top: #611f69 2px solid; */
+    /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
+}
+
+.ctrl-panel-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    /* margin: 15px; */
+    height: 100%;
+}
+
+.transcriptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    height: calc(95% - 40px);
+    width: calc(100% - 40px);
+    /* background-color: azure; */
+    color: black;
+    overflow-y: scroll;
+}
+
+.wrap-transcription-item {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    /* min-height: 36px; */
+    width: calc(100% - 30px);
+    margin-right: 30px;
+}
+
+.transcription-item {
+    /* all: unset; */
+    /* border: none; */
+    accent-color: blanchedalmond;
+    outline: 0px solid transparent;
+    cursor:text;
+    /* display: inline-block; */
+    width: calc(100% - 20px);
+    /* border-bottom: none; */
+    
+    font-size: 18px;
+    min-height: 18px;
+    /* min-height: 18px; */
+    /* max-height: 20px; */
+    caret-color: #611f69;
+    caret-shape: block;
+    
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: black;
+    font-family: 'Antic';
+    padding: 5px;
+    background-color: rgb(247, 242, 235);  
+    margin-top: 12px;
+
+    border-radius: 5px;
+    
+    /* border-bottom: solid #611f69 2px; */
+    
+    /* text-shadow: 1px 1px rgba(0, 0, 0, 0.286); */
+    /* border-top: solid #611f69 2px;  */
+    /* transition: min-height 0.5s; */
+}
+
+.info-buttton {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 50%; 
+    font-weight: bolder; 
+    font-size: 24px;
+    font-family: 'Antic'; 
+    width:30px;
+    height:30px; 
+    background-color: #621f69; 
+    color: #d9ad61;
+}
+.info-buttton:hover {
+    box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
+    background-color: #d9ad61; 
+    color: #621f69;
+    /* font-size: 40px; */
+}
+
+.transcription-item::selection {
+    background:  #611f69; /* WebKit/Blink Browsers */
+    color: white;
+  }
+.transcription-item::-moz-selection {
+    background: #611f69; /* Gecko Browsers */
+    color: white;
+}
+
+
+.transcription-item:hover {
+    /* font-size: 22px; */
+    /* height: 42px; */
+    overflow: visible;
+    white-space:normal;
+    min-height: fit-content;
+    /* min-height: 50px; */
+    /* max-height: 100%; */
+    border-left: solid #611f69 2px;
+    border-right: solid #611f69 2px;
+    background-color: blanchedalmond;
+    /* box-shadow: 0px 2px 1px 1px #0000006d; */
+    /* transition: min-height 0.3s ease-in-out; */
+} 
+
+.transcription-item:focus {
+    /* font-size: 22px; */
+    /* height: 42px; */
+    overflow: visible;
+    white-space:normal;
+    min-height: fit-content;
+    /* min-height: 100px; */
+    /* max-height: 100%; */
+    background-color: blanchedalmond;
+    border: none;
+    border-left: solid #611f69 2px;
+    border-right: solid #611f69 2px;
+    /* transition: min-height 0.3s ease-in-out; */
+} 
+
+.time-code {
+    font-size: 12px;
+    color: grey;
+    font-family: 'Antic';
+    padding-right: 10px;
+    /* background-color: #611f69; */
+}
+
+#focus-time-code {
+    color: #611f69; 
+    font-weight: 900;
+}
+/* 
+.mat-progress-bar-fill::after {
+    background-color: #611f69;
+} */
+
+
+.progress-bar{
+    margin-top: 30px;
+    width: calc(100% - 40px);
+    background-color:#621f694a !important;
+    color: #621f69 !important;
+
+}
+  
+.bottom-button {
+    all: unset;
+    width: calc((100% / 4));
+    height: calc(100%);
+    transition: background-color 0.1s;
+    /* border-left: #d9ad61 solid 2px;
+    border-top: #d9ad61 solid 2px; */
+    /* border-radius: 0px 20px 20px 0px;  */
+    text-align: center;
+    cursor:pointer;
+    color: aliceblue;
+    background-color: #611f69;
+    font-family: 'Antic';
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.bottom-button:hover {
+    background-color: aliceblue;
+    color: #611f69;
+}
+
+.top-button {
+    all: unset;
+    height: 22px;
+    /* width: 32%; 120px; */
+    flex-grow: 1;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    /* padding-left: 2px;
+    padding-right: 2px; */
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #611f69;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    margin: 5px;
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.top-button:hover {
+    
+    background-color: #3e1443;
+    color: white;
+}
+
+/* .input-box {
+    all: unset;
+    width: calc((48% + (4% / 3)) - 4px);
+    height: 34px;
+    border-width: 2px;
+    border-color: #611f69;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    transition: box-shadow 0.5s;
+    color: #611f69;
+    background-color: white;
+    font-family: 'Antic';
+} */
+
+.input-box-big {
+    all: unset;
+    /* width: calc((64% + (4% / 2)) - 4px); */
+    flex-grow: 7;
+    height: 34px;
+    border-width: 1px;
+    border-color: #611f69;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    transition: box-shadow 0.5s;
+    color: #611f69;
+    background-color: aliceblue;
+    font-family: 'Antic';
+    margin: 5px;
+}
+
+.input-box-small {
+    all: unset;
+    flex-grow: 1;
+    width: calc(32% - 4px);
+    height: 34px;
+    border-width: 2px;
+    border-color: #611f69;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    transition: box-shadow 0.5s;
+    color: #611f69;
+    background-color: white;
+    font-family: 'Antic';
+    margin: 5px;
+}
+
+.disabled-button {
+    all: unset;
+    height: 22px;
+    /* width: 32%; */
+    flex-grow: 1;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #4a444a;
+    color: white;
+    cursor:not-allowed;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
+}

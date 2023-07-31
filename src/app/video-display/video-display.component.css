@@ -1,0 +1,147 @@
+.background {
+    /* background: linear-gradient(180deg, rgba(98, 31, 105, 0.68) 0%, rgba(101, 47, 107, 0.482) 30%, rgba(0,212,255,0) 100%); */
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(240, 248, 255, 0);
+    position: fixed;
+    top: 0; 
+    left:0;
+    right: 0;
+    z-index: 5;
+}
+
+.servicetitle {
+    font-size: 56px;
+    color: #611f69;
+    /* text-decoration: underline; */
+    text-shadow: 2px 2px #6a6796;
+    font-family: 'Antic';
+    text-align: center;
+}
+
+.userpic {
+    /* width: 130px; */
+    /* height: 30px; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-around; */
+    border-radius: 5%;
+    transition: background-color 0.2s;
+    /* background-color: aquamarine; */
+}
+
+/* .userpic:hover {
+    background-color: #611f69; /*rgba(196, 196, 196, 0.308); */
+
+    /* #d9ad61
+
+     #611f69 
+} 
+*/
+
+.userpicimg {
+    background: #d9ad61;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    /* margin-right: 5px; */
+    /* margin-top: 20px; */
+    /* padding: 3px; */
+    margin-left: 15px;
+}
+
+.usertxt{
+    
+    all: unset;
+    /* background-color: rgb(142, 34, 34); */
+    width: 140px;
+    /* height: 50px; */
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: 400;
+    font-size: 18px;
+    /* border: solid #611f69 2px; */
+
+    /* color: #000000;
+    background-color: #ffffff; */
+
+    background-color: #611f69;
+    color: white;
+
+    /* display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center; */
+    
+
+    
+    cursor: pointer;
+    
+    /* color: #611f69; */
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.usertxt:hover {
+    background-color: #3e1443;
+    color: white;
+    
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    /* height: 150px; */
+    /* width: 230px; */
+    justify-content: space-evenly;
+    align-items: center;
+    /* margin-top: 10px; */
+    margin-right: 50px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 140px;
+    height: 0px;
+    position: absolute;
+    top: 60px;
+    /* margin-left: 45px; */
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 16px;
+    overflow: hidden;
+    /* overflow-x: hidden; */
+    background-color: #eccf9d00;
+    transition: height 0s;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.menu:focus {
+    height: 120px;
+    
+}

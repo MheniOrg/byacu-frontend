@@ -1,0 +1,66 @@
+<div class="background">
+    <app-video-display></app-video-display>
+    <div class="main-container">
+        <div class="video-controls-container">
+            <div class="video-section">
+                <div id="video-player">
+                    <div id="player"></div>
+                    <!-- <youtube-player id="player" class="embeded-video" videoId="X9t4DH6-9U4" [height]="300" [width]="550"></youtube-player> -->
+                </div>
+                <!-- <div class="title-and-description">
+                    <p class="title-text">{{video.title}}</p>
+                    <p class="desc-text">{{video.description}}</p>
+                </div> -->
+                <div class="ctrl-panel">
+
+                    <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
+                        <button class="top-button">Upload</button>
+                        <button class="top-button">Reset</button>
+                        <button class="top-button">Save</button>
+                    </div>
+                    
+                    <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
+                        <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="Find"> 
+                        <button *ngIf="this.searchTxt.length > 0" class="top-button">Remove</button>
+                        <button *ngIf="this.searchTxt.length == 0" class="disabled-button">Remove</button>
+                    </div>
+
+                    <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
+                        <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="Replace with">
+                        <button *ngIf="this.replaceTxt.length > 0" class="top-button">Replace</button>
+                        <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
+                    </div>
+                    <!-- <hr width="100%"> -->
+
+                    
+                    <!-- <hr width="100%"> -->
+
+                </div>
+                <button class="info-buttton" (click)="next()">i</button>
+            </div>
+        </div>
+        <div class="text-section">
+            <mat-progress-bar mode="determinate" class="progress-bar" [value]="this.getProgress()"></mat-progress-bar>
+            <div *ngIf="transcriptions" class="transcriptions">
+                
+                <ng-container *ngFor="let item of transcriptions; let i = index">
+                    <button *ngIf="i > currIndex" (click)="this.jumpTo(i)" class="wrap-transcription-item">
+                        <p class="time-code" *ngIf="prevFiveIndex[0] <= i && prevFiveIndex[1] >= i " unselectable >{{item['start_time'].substring(0,8)}}</p>
+                        <div tabindex="0" *ngIf="prevFiveIndex[0] <= i && prevFiveIndex[1] >= i " class="transcription-item">{{item['text']}}</div>
+                    </button>
+                </ng-container>
+                <button  *ngIf="transcriptions[currIndex]" class="wrap-transcription-item">
+                    <p class="time-code" unselectable id="focus-time-code" >{{transcriptions[currIndex]['start_time'].substring(0,8)}}</p>
+                    <div class="transcription-item" tabindex="0" id="focus-item" autofocus>{{transcriptions[currIndex]['text']}}</div>
+                </button>
+                <ng-container *ngFor="let item of transcriptions; let i = index">
+                    <button *ngIf="i > currIndex" (click)="this.jumpTo(i)" class="wrap-transcription-item">
+                        <p class="time-code" *ngIf="i > currIndex" unselectable>{{item['start_time'].substring(0,8)}}</p>
+                        <div tabindex="0" *ngIf="i > currIndex" class="transcription-item">{{item['text']}}</div>
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    
+</div>

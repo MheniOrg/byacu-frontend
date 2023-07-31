@@ -1,30 +1,27 @@
 <div class="main-card">
-    <div class="video-space">
-        <!-- <youtube-player class="embeded-video" videoId="{{videoInfo.id}}" [height]="300" [width]="550"></youtube-player> -->
-       <!-- videoInfo.thumbnails[2].url -->
-        <img [src]="this.y" class="vid-img"/>
-        <!-- <p class="video-title">{{videoInfo.title}}</p> -->
-        <p class="video-title">{{z}}</p>
+    <div class="image-mask">
+        <img [src]="videoInfo.thumbnails[2].url" class="vid-img"/>
     </div>
-    <!-- <p id="St"></p> -->
+    <p class="video-title">{{videoInfo.title}}</p>
+    <!-- <hr width="100%"/> -->
     <div id="button-case-{{this.id}}" class="button-case">
         <ng-container [ngSwitch]="this.videoInfo.type"> 
-        <ng-container  *ngSwitchCase="1">
-            <button class="transcribe-button">Transcribe</button>
-        </ng-container>
-        <ng-container  *ngSwitchCase="2">
-            <button class="retranscribe-button">Re-Transcribe</button>
-            <button class="view-edit-button">View/Edit Results</button>
-        </ng-container>
-        <ng-container  *ngSwitchCase="3">
-            <button class="failed-button">Job failed! <br/>💀<br/> Try Again?</button>
-        </ng-container>
-        <ng-container  *ngSwitchCase="4">
-            <div class="loader-button">
-                <div class="loader"></div>
-                In Progress...
-            </div>
-        </ng-container>
+            <ng-container  *ngSwitchCase="1">
+                <button class="top-button">Transcribe</button>
+            </ng-container>
+            <ng-container  *ngSwitchCase="2">
+                <button class="top-button">Re-Transcribe</button>
+                <button class="top-button" (click)="navigateToVideoDetail()">View/Edit Results</button>
+            </ng-container>
+            <ng-container  *ngSwitchCase="3">
+                <button class="disabled-button">Job failed! 💀</button>
+            </ng-container>
+            <ng-container  *ngSwitchCase="4">
+                <div class="loader-button">
+                    <div class="loader"></div>
+                    In Progress
+                </div>
+            </ng-container>
         </ng-container>
     </div>
 </div>

@@ -1,7 +1,55 @@
 <div class="background">
+    <app-video-display></app-video-display>
+    <div class="main-container">
+        <div class="text-section">
+            <p class="title"><span class="jy">Just Yams</span><span style="color: black;"> / </span><span class="service-title">Captions</span></p>
+            <p class="service-text">Caption videos in Kinyarwanda, Luganda, and Swahili</p>
+            <div class="google-button-wrapper">
+               <button (click)="connect()" class="google-button"></button>
+            </div>
+            <p class="info-text" (click)="showText()">How it Works <span class="icon-arr" *ngIf="textOpen">&#9650;</span><span class="icon-arr" *ngIf="!textOpen">&#9660;</span></p>
+            <div tabindex="0" id="how-it-works-text">
+Each language has a pretrained ML model (built using the Mozilla Common Voice Dataset) which we use to convert sound into captions.  If you decide to use our captioning service, we will use this model to generate  captions for you. At the moment we expect a Word Error Rate of 5%-20% depending on the language. 
+<br/><br/>
+Once the captions are ready you will be able to go to our “Edit Page” where you can manually edit the captions. We will store these edits you make and use them to gradually improve the model as well as to generate a rich dataset for future Machine Learning Engineers.
+<br/><br/>
+We believe that by crowd-sourcing ground truth data about how African languages sound, we can generate a rich dataset and build models with virtually 0 WER.
+            </div>
+            <p class="info-text" (click)="showGif()">Why it Matters <span class="icon-arr" *ngIf="gifOpen">&#9650;</span><span class="icon-arr" *ngIf="!gifOpen">&#9660;</span></p>
+            <div tabindex="0" id="why-it-matters-text" (close)="hideText()">
+The fuel that drives Machine Learning is data. Just Yams: Captions is a data collection engine. And our core feature is the ability to edit captions. By editing our automatically generated captions, you provide us with rich data that we can use to retrain and improve our machine learning models.
+<br/><br/>
+High quality speech to text data can be used to create automated call centers, to create personal voice assistants, to help take notes for students, for in-person translation and so much more.
+<br/><br/>
+Help us make
+                <div class="gif-section">
+                    <div class="gif-title">
+                        <p class="gif-title-part">JustYams</p>
+                        <p class="gif-title-part">No Yams :/</p>
+                    </div>
+                    <div class="gif-row">
+                        <img src="/assets/Kinyarwanda-JY.gif" class="gif"/>
+                        <img src="/assets/Kinyarwanda-Y.gif" class="gif"/>
+                    </div>
+                    <p class="gif-caption">Kinyarwanda</p>
+                    <div class="gif-row">
+                        <img src="/assets/Luganda-JY.gif" class="gif"/>
+                        <img src="/assets/Luganda-Y.gif" class="gif"/>
+                    </div>
+                    <p class="gif-caption">Luganda</p>
+                    <div class="gif-row">
+                        <img src="/assets/Swahili-JY.gif" class="gif"/>
+                        <img src="/assets/Swahili-Y.gif" class="gif"/>
+                    </div>
+                    <p class="gif-caption">Swahili</p>
+                </div>
+                
+                Help us help you make your videos more accesible :D
+            </div>
+        </div>
+    </div>
+    
 
-    <div class="message"></div>
 
-
-<button class="submit" (click)="connect()">Connect to YouTube</button>
+    <!-- <button class="submit" (click)="connect()">Connect to YouTube</button> -->
 </div>

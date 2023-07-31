@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Video } from '../video';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { CommonModule } from '@angular/common';
-
+import { TranscriptionApiService } from '../transcription-api.service';
 
 @Component({
   selector: 'app-video-card',
@@ -17,9 +18,7 @@ import { CommonModule } from '@angular/common';
 export class VideoCardComponent {
   @Input() videoInfo!: Video;
   @Input() id!: number;
-  // @Input() inProgress!: boolean;
-  // @Input() failed!: boolean;
-  // @Input() done!: boolean;
+  transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   @Input() type!: number;
   y: string = "https://i.ytimg.com/vi/hifMYHbVELU/hq720.jpg";
   z: string = "The Sound of the Kinyarwanda language (Numbers, Greetings, Words & Prayer)";
@@ -33,28 +32,19 @@ export class VideoCardComponent {
 
   */
 
-  constructor() {
-    
-  }
+  constructor(private _router: Router) { }
 
 
   ngOnInit() {
-    
-
-    // if (this.done) {
-    //   this.type = 2;
-    // } else if (this.inProgress) {
-    //   this.type = 4;
-    // } else if (this.failed) {
-    //   this.type = 3;
-    // } else {
-    //   this.type = 1;
-    // }
     
   }
 
   ngAfterViewInit() {
     // this.test();
+  }
+
+  navigateToVideoDetail(): void {
+    this._router.navigateByUrl(`/transcription/${this.videoInfo.id}`);
   }
 
   addButtons(type: number): void {

@@ -1,8 +1,28 @@
 <div class="background">
-    <app-user-display [user]="user"></app-user-display>
-    <!-- <button (click)="test()">Connect to YouTube</button> -->
+    <app-user-display [user]="user" (changeLangEvent)="openModal()"></app-user-display>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">Select a Language</span>
+          <button class="lang-select">
+            <span class="lang-select-flag">🇷🇼</span><span class="lang-select-text">Kinyarwanda</span>
+          </button>
+          <button class="lang-select">
+            <span class="lang-select-flag">🇺🇬</span><span class="lang-select-text">Luganda</span>
+          </button>
+          <button class="lang-select">
+            <span class="lang-select-flag">🇰🇪</span><span class="lang-select-text">Swahili (Kenya)</span>
+          </button>
+          <span (click)="closeModal()" class="close">Close &times;</span>
+        </div>
+      
+    </div>
     <div class="search-n-filter" >
+        
         <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
+        <!-- <button class="sync-button">&#8634;</button> -->
+        <div class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#10161;</div>
         <div class="filter-buttons">
             <button id="left-button" class="left-click-inactive" (click)="flipFailed()">Failed</button>
             <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()">In Progress</button>
@@ -10,8 +30,17 @@
         </div>
         
     </div>
+    <!-- <div class="ctrl-panel">
+        <p class="ctrl-title">Controls</p>
+        <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
+        <div class="filter-buttons">
+            <button id="left-button" class="left-click-inactive" (click)="flipFailed()">Failed</button>
+            <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()">In Progress</button>
+            <button id="right-button" class="right-click-inactive" (click)="flipDone()">Done</button>
+        </div>
+        <button class="sync-button">Sync &#8634;</button>
+    </div> -->
     <div class="video-container">
-        <p class="vid-section-title">Videos</p>
         <ng-container *ngFor="let video of this.shownVideos; let i = index">
             <app-video-card key="i" [videoInfo]="video" />
         </ng-container>

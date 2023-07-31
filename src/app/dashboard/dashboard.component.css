@@ -1,5 +1,5 @@
 .background {
-    background-color: #f3f2f2;
+    background-color: rgba(255, 255, 255, 0); /*#f1f1f1;*/
     width: 100vw;
     min-height: 100vh;
     display: flex;
@@ -10,10 +10,12 @@
 
 .video-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* margin-top: 50px; */
-    width: 100vw;
+    flex-direction: row;
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-top: 150px; */
+    width: 60%;
+    flex-wrap: wrap;
 }
 
 .search-n-filter {
@@ -21,48 +23,203 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 200px;
-    width: 100vw;
+    margin-top: 85px;
+    width: calc(60% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 40px;
 }
 
 .input-box {
     all: unset;
-    width: 350px;
+    width: 48%;
+    /* flex-grow: 1; */
     height: 35px;
-    border-width: 2px;
-    border-color: #0000007a;
+    border-width: 1px;
+    border-color: #611f69;
     border-radius: 5px;
     border-style: solid;
     text-align: center;
-    font-family: 'Comfortaa';
+    
     font-weight: 400;
     font-size: 18px;
+    transition: box-shadow 0.5s;
+    color: #611f69;
+    background-color: aliceblue;
+    font-family: 'Antic';
+    /* margin-bottom: 10px; */
+    margin-right: 10px;
 }
 
 .filter-buttons {
-    margin-left: 50px;
+    margin-left: 10px;
     transition: box-shadow 0.5s;
-    border-radius: 20px 20px 20px 20px; 
+    border-radius: 5px; 
+    overflow: hidden;
+    width: auto;
+    border-color: #611f69;
+    border-style: solid;
+    width: 48%;
+    border-width: 1px;
+    height: 35px;
+    /* flex-grow: 1; */
+}
+
+.ctrl-panel {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    background-color: aliceblue;
+    border-radius: 5px;
+    width: 310px;
+    height: 260px;
+    top: 300px;
+    left: 30px
+}
+
+@keyframes spinner {
+    0% { 
+       -webkit-transform: rotate3d(1, 0, 0, 0deg);
+       -ms-transform: rotate3d(1, 0, 0, 0deg);
+       -o-transform: rotate3d(1, 0, 0, 0deg);
+       transform: rotate3d(1, 0, 0, 0deg);
+    }
+    50% { 
+       -webkit-transform: rotate3d(1, 0, 0, 180deg);
+       -ms-transform: rotate3d(1, 0, 0, 180deg);
+       -o-transform: rotate3d(1, 0, 0, 180deg);
+       transform: rotate3d(1, 0, 0, 180deg);
+    }
+    100% { 
+        -webkit-transform: rotate3d(1, 0, 0, 360deg);
+       -ms-transform: rotate3d(1, 0, 0, 360deg);
+       -o-transform: rotate3d(1, 0, 0, 360deg);
+       transform: rotate3d(1, 0, 0, 360deg);
+    }
+}
+
+
+  
+/* Tooltip text */
+.sync-button .tooltiptext {
+visibility: hidden;
+width: 290px;
+background-color: rgb(101, 94, 94);
+color: #fff;
+text-align: center;
+padding: 5px 0;
+font-family: 'Limelight';
+font-size: medium;
+border-radius: 5px;
+
+/* Position the tooltip text - see examples below! */
+rotate: -90deg;
+position: absolute;
+right: -80px;
+/* left: 50px; */
+/* margin-left: -60px; */
+z-index: 1;
+padding-left: 5px;
+padding-right: 5px;
+
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.sync-button:hover .tooltiptext {
+visibility: visible;
+}
+
+.sync-button .tooltiptext::before {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(101, 94, 94) transparent transparent transparent;
+  }
+
+.sync-button {
+    all: unset;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+    /* flex-grow: 1; */
+    border-radius: 50%;
+    padding: 8px;
+    margin-left: calc((4% - 30px) / 2);
+    margin-right: calc((4% - 30px) / 2);
+    /* padding-left: 2px;
+    padding-right: 2px; */
+    font-weight: 900;
+    font-size: 22px;
+    /* background-color: #611f69; */
+
+    color: #611f69;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    border: solid 1px #611f69;
+    /* margin: 5px;
+    margin-top: 30px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    rotate: 90deg;
+    /* animation: spinner 3s infinite linear; */
+}
+
+.sync-button:hover {
+    
+    background-color: #44154a;
+    color: white;
+}
+
+
+
+.ctrl-title {
+    width: 100%;
+    font-family: 'Antic';
+    text-align: center;
+    font-size: 22px;
+}
+
+
+
+/* .input-box:focus {
+    box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
 }
 
 .filter-buttons:hover {
     box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
-}
+} */
 
 .left-click-inactive {
     all: unset;
-    height: 30px;
-    width: 90px;
-    background-color: #e8e8e8bc;
-    border-radius: 20px 0px 0px 20px; 
+    height: 100%;
+    width: 30%;
+    background-color: aliceblue;
+    /* border-radius: 20px 0px 0px 20px;  */
     text-align: center;
     cursor:pointer;
     /* color: rgb(225, 70, 70); */
+    /* color: #611f69; */
     color: #611f69;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
-    border-style: solid;
-    border-width: 1px;
+    font-family: 'Antic';
+    
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -74,28 +231,28 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.1s, color 0.1s;; */
 }
 
 .left-click-inactive:hover {
     background-color: #611f69;
+    /* color: #d9ad61; */
     color: white;
     /* border-color: rgb(225, 207, 70); */
 }
 
 .left-click-active {
     all: unset;
-    height: 30px;
-    width: 90px;
+    height: 100%;
+    width: 30%;
     background-color: #611f69;
-    border-radius: 20px 0px 0px 20px; 
+    /* border-radius: 20px 0px 0px 20px;  */
     text-align: center;
     cursor:pointer;
     color: white;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
-    border-style: solid;
-    border-width: 1px;
+    /* color: #d9ad61; */
+    font-family: 'Antic';
+
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -107,24 +264,25 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.5s, color 0.5s;; */
 }
 
 
 .right-click-inactive {
     all: unset;
-    height: 30px;
-    width: 90px;
-    background-color: #e8e8e8bc;
-    border-radius: 0px 20px 20px 0px; 
+    height: 100%;
+    width: 30%;
+    background-color: aliceblue;
+    /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
     /* color: rgb(70, 225, 104); */
+    /* color: #611f69; */
     color: #611f69;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
+    font-family: 'Antic';
+    /* border-color: #d9ad614b;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; */
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -136,28 +294,30 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.5s, color 0.5s;; */
 }
 
 .right-click-inactive:hover {
     background-color: #611f69;
+    /* color: #d9ad61; */
     color: white;
     /* border-color: rgb(225, 207, 70); */
 }
 
 .right-click-active {
     all: unset;
-    height: 30px;
-    width: 90px;
+    height: 100%;
+    width: 30%;
     background-color: #611f69;
-    border-radius: 0px 20px 20px 0px; 
+    /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
     color: white;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
+    /* color: #d9ad61; */
+    font-family: 'Antic';
+    /* border-color: #d9ad614b;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; */
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -169,23 +329,23 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.5s, color 0.5s;; */
 }
 
 .mid-click-inactive {
     all: unset;
-    height: 30px;
-    width: 110px;
-    background-color: #e8e8e8bc;
+    height: 100%;
+    width: 40%;
+    background-color: aliceblue;
     /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
     /* color: rgb(225, 207, 70); */
     color: #611f69;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
+    font-family: 'Antic';
+    /* border-color: #d9ad614b;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; */
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -197,28 +357,30 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.5s, color 0.5s;; */
 }
 
 .mid-click-inactive:hover {
     background-color: #611f69;
+    /* color: #d9ad61; */
     color: white;
     /* border-color: rgb(225, 207, 70); */
 }
 
 .mid-click-active {
     all: unset;
-    height: 30px;
-    width: 110px;
+    height: 100%;
+    width: 40%;
     background-color: #611f69;
     /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
     color: white;
-    font-family: 'Comfortaa';
-    border-color: #d9ad614b;
+    /* color: #d9ad61; */
+    font-family: 'Antic';
+    /* border-color: #d9ad614b;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; */
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -230,21 +392,24 @@
     */
     -ms-user-select: none;
     user-select: none;
-    transition: background-color 0.5s, color 0.5s;;
+    /* transition: background-color 0.5s, color 0.5s;; */
 }
 
 .vid-section-title {
-    font-weight: 400;
-    font-size: 36px;
+    /* font-weight: 400; */
+    font-size: 32px;
     /* border: none; */
     /* text-decoration:line-through; */
     
     cursor:cell;
     /* color: #611f69; */
-    font-family: 'Comfortaa';
-    width: 60vw;
+    font-family: 'Antic';
+    /* width: 60vw; */
     text-align: center;
     transition: background-color 1s;
+
+    color: #d9ad61;
+    /* color: #611f69; */
 
 
     -moz-user-select: -moz-none;
@@ -258,3 +423,98 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+ /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.lang-select {
+    all: unset;
+
+    width: 80%;
+    height: 80px;
+    border-radius: 5px;
+    background-color:#f9f3e9;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+
+    cursor: pointer;
+
+    font-family: 'Antic';
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: none;
+    
+}
+
+.lang-select:focus {
+    background-color:#611f69;
+}
+
+.lang-select-flag {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    margin-right: 15px;
+    font-size: 46px;
+    /* rotate: y 180deg; */
+
+    width: calc(50% - 15px);
+}
+
+.lang-select-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 15px;
+    font-size: 26px;
+    width: calc(50% - 15px);
+    text-align: left;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:#ffffff;
+    border-radius: 5px;
+    /* margin: 15% auto; 15% from the top and centered */
+    /* padding: 20px;
+    border: 1px solid #888; */
+    width: 30%; /* Could be more or less, depending on screen size */
+    /* height: 500px; */
+    aspect-ratio: 1/1;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Limelight';
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 

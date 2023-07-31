@@ -1,7 +1,8 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, provideZoneChangeDetection, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { User } from '../user';
 import { Router } from '@angular/router';
 import { YoutubeApiService } from '../youtube-api.service';
+import { TranscriptionApiService } from '../transcription-api.service';
 
 @Component({
   selector: 'app-user-display',
@@ -11,7 +12,10 @@ import { YoutubeApiService } from '../youtube-api.service';
 export class UserDisplayComponent {
   @Input() user!: User;
   youtubeService: YoutubeApiService = inject(YoutubeApiService);
+  transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   menuOpen: boolean = false;
+
+  @Output() changeLangEvent = new EventEmitter<string>();
 
   constructor(private _router: Router) { }
 
@@ -21,15 +25,39 @@ export class UserDisplayComponent {
   }
 
   menuClick(): void {
-    this.menuOpen = !this.menuOpen;
+    let menu: any = document.getElementById("menuID");
+    
+    if (!this.menuOpen) {
+      menu.focus();
+      // console.log("iiiiinni");
+      this.menuOpen = true;
+    } else {
+      // this.menuOpen = false;
+    }
+
+    
+    
+  }
+
+  changeLang() : void {
+    this.changeLangEvent.emit();
   }
   
   testEnpoint(): void {
-    this.youtubeService.testEndpoint();
+    // this.youtubeService.testEndpoint();
+    // this.youtubeService.testEndpoint3();
+  }
+
+  menuBlur(event: any): void {
+    if (!event.originalTarget.contains(event.relatedTarget)) {
+      this.menuOpen = false;
+      // console.log("lo", event);
+    } 
+
   }
 
   testEnpoint2(): void {
-    this.youtubeService.testEndpoint2();
+    this.transcriptionService.getResults(escape("https://www.youtube.com/watch?v=r6vz7fuq3Y0"));
   }
 
   navigateToHome() {
@@ -37,6 +65,8 @@ export class UserDisplayComponent {
   }
 
   SignOut(): void {
+    // console.log("kklo", e);
+    // e.stopPropagation();
     localStorage.removeItem('oauth2-test-params');
     this.navigateToHome();
   }

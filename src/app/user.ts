@@ -9,7 +9,4 @@ export interface User {
     uploads: string;
     timeOnPLatform: string;
     thumbnails: Thumbnail[];
-    // defaultThumbnail: Thumbnail;
-    // mediumThumbnail: Thumbnail;
-    // highThumbnail: Thumbnail;
 }

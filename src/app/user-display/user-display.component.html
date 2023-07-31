@@ -1,17 +1,22 @@
 <div class="background">
+    <!-- <span style="margin-left: 40px;font-size: 50px;color:aliceblue;user-select: none;">〰️</span> -->
     <app-icon></app-icon>
     <!-- <p class="servicetitle">The Transcription Service</p> -->
     <div class="container">
         <div class="userpic">
-            <img class="userpicimg" *ngIf="user.thumbnails[2] !== undefined" [src]="user.thumbnails[0].url" />
-            <button class="usertxt" *ngIf="user" unselectable="on" (click)="menuClick()" >{{user.channelName}} <span> 🍠 </span></button>
+            <!-- <span> 🍠 </span>  {{user.channelName}} -->
+            <button class="usertxt" *ngIf="user" unselectable="on" (click)="menuClick()" >
+            
+            MENU
+            <!-- <img class="userpicimg" *ngIf="user.thumbnails[2] !== undefined" [src]="user.thumbnails[0].url" /> -->
+        </button>
         </div>
-        <div class="menu" *ngIf="menuOpen">
+        <div id="menuID" tabindex="0" class="menu" (focusout)="menuBlur($event)">
             <!-- <p class="usertxt" *ngIf="user">You joined YouTube {{user.timeOnPLatform}} </p> -->
-            <button class="usertxt" unselectable="on" (click)="SignOut()" *ngIf="user">Sign Out</button>
-            <button class="usertxt" unselectable="on" (click)="testEnpoint()" *ngIf="user">Test Endpoint</button>
-            <button class="usertxt" unselectable="on" (click)="testEnpoint2()" *ngIf="user">Test Endpoint 2</button>
-            <button class="usertxt" unselectable="on" (click)="menuClick()" *ngIf="user">✖️</button>
+            <button class="usertxt" unselectable="on" (focusin)="changeLang()" (click)="changeLang()">Select Language</button>
+            <button class="usertxt" unselectable="on" (focusin)="SignOut()" (click)="SignOut()">Sign Out</button>
+            <!-- <button class="usertxt" unselectable="on" (focusin)="testEnpoint2()" (click)="testEnpoint2()">Test Endpoint 2</button>
+            <button class="usertxt" unselectable="on" (focusin)="menuClick()" (click)="menuClick()">✖️</button> -->
         </div>
     </div>
 </div>

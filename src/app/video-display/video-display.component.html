@@ -1,0 +1,18 @@
+<div class="background">
+    <!-- <span style="margin-left: 40px;font-size: 50px;color:aliceblue;user-select: none;">〰️</span> -->
+    <app-icon></app-icon>
+    <!-- <p class="servicetitle">The Transcription Service</p> -->
+    <div class="container">
+            <!-- <span> 🍠 </span> -->
+            <button class="usertxt" unselectable="on" (click)="menuClick()" >
+                MENU
+            </button>
+        <div id="menuID" tabindex="0" class="menu" (focusout)="menuBlur($event)">
+            <!-- <p class="usertxt" *ngIf="user">You joined YouTube {{user.timeOnPLatform}} </p> -->
+
+            <button class="usertxt" unselectable="on" (focusin)="navigateToDashboard()" (click)="navigateToDashboard()">Dashboard</button>
+            <button class="usertxt" unselectable="on" (focusin)="SignOut()" (click)="SignOut()">Sign Out</button>
+            <!-- <button class="usertxt" unselectable="on" (focusin)="testEnpoint2()" >Test Endpoint 2</button> -->
+        </div>
+    </div>
+</div>

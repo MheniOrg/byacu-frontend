@@ -7,6 +7,7 @@ import { StrictObject } from '../strict-object';
 import { LooseObject } from '../loose-object';
 import { Thumbnail } from '../thumbnail';
 import { UserDisplayComponent } from '../user-display/user-display.component';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-dashboard',
@@ -199,13 +200,15 @@ export class DashboardComponent {
 
         this.uploads = this.repeat(r, 6);
  
-        for (let i:number = 0; i < 12; i++ ) {
+        for (let i:number = 0; i < 20; i++ ) {
           this.uploads[i].type = this.getRandomInt();
         }
 
         // console.log(this.uploads);
 
         this.shownVideos = this.uploads;
+
+        console.log(this.uploads);
 
         this.failedVideos = this.uploads.filter((item: Video) => { return item.type === 3 });
         this.inProgressVideos = this.uploads.filter((item: Video) => { return item.type === 4 });
@@ -220,6 +223,14 @@ export class DashboardComponent {
     // console.log(this.videoType);
     
 
+  }
+
+  openModal(): void {
+    $("#myModal").css("display", "flex");
+  }
+
+  closeModal(): void {
+    $("#myModal").css("display", "none");
   }
 
   filterVids(): void {

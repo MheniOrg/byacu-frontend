@@ -1,22 +1,97 @@
 .main-card {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    /* justify-content: space-between; */
     align-items: center;
-    margin-bottom: 20px;
-    width: 60vw;
-    height: 350px;
-    border-radius: 20px;
-    background-color: aliceblue;
-    border-style: solid;
+    margin: 10px;
+    width: calc(20vw - 20px);
+    height: fit-content;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color:#f9f3e9;
+    /* background-color: aliceblue; */
+    border: none;
+    /* border-style: solid;
     border-color: #d9ad6133;
-    border-width: 1px;
-    transition: box-shadow 0.1s;
+    border-width: 1px; */
+    /* transition: box-shadow 0.1s; */
+    /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
     
 }
 
 .main-card:hover {
-    box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
+    /* margin-bottom: 20px; */
+    /* border: #611f69 2px solid; */
+    box-shadow: 0 1px 2px 0 #621f694f, 0 2px 3px 0 #621f697d;
+    /* box-shadow: none; */
+    /* border-radius: 2px; */
+}
+
+.top-button {
+    all: unset;
+    height: 22px;
+    /* width: 32%; 120px; */
+    width: 160px;
+    /* flex-grow: 1; */
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    /* padding-left: 2px;
+    padding-right: 2px; */
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #611f69;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* margin: 5px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
+}
+
+.top-button:hover {
+    background-color: #3e1443;
+    color: white;
+}
+
+.disabled-button {
+    all: unset;
+    height: 22px;
+    /* width: 32%; */
+    /* flex-grow: 1; */
+    width: 160px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #4a444a;
+    color: white;
+    cursor:not-allowed;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
 }
 
 .video-space {
@@ -34,50 +109,69 @@
     margin: 0px;
 }
 
+.image-mask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    aspect-ratio: 16/9;
+    overflow-y: hidden;
+}
+
 .vid-img {
     /* margin-left: 20px; */
-    height: 100%;
-    width: auto;
-    border-radius: 20px 0px 0px 20px;
+    /* height: fit-content; */
+    width: 100%;
+    /* aspect-ratio: 48/36; */
+    border-radius: 2px 0px 0px 2px;
+    padding: 0px;
+    /* margin: 0px; */
+    background-color: #611f69;
     /* border-radius: 10px;  */
+    /* margin: 0px -75px -100px 0px; */
 }
 
 .video-title {
-    width: 100%;
-    min-height: 50px;
-    max-height: 40%;
+    width: calc(100% - 20px);
+    /* min-height: 50px; */
+    /* max-height: 40px; */
+    /* overflow: hidden; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    white-space: nowrap;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    bottom: 0px;
+    text-overflow: ellipsis;
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18px;
+    /* text-align: center; */
     /* border: none; */
     /* text-decoration: overline; */
     padding-top: 5px;
     padding-bottom: 5px;
     /* padding: 10px; */
-    margin: 0px;
-    border-radius: 0px 0px 0px 20px;
+    margin: 2px;
+    /* border-radius: 0px 0px 0px 20px; */
     /* margin-bottom: 35px; */
     
-    cursor:context-menu;
-    color: #ffffff;
+    cursor:text;
+    color: #3e1443;
     /* background-color: #00000085; */
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6320728975183824) 70%, rgba(0,0,0,0) 100%);
-    font-family: 'Comfortaa';
-    text-align: center;
+    /* background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6320728975183824) 70%, rgba(0,0,0,0) 100%); */
+    font-family: 'Antic';
+    text-align: left;
 }
 
 .button-case {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
-    width: 50%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+    width: 95%;
+    height: 50px;
+    padding: 0px;
+    margin: 5px;
 }
 
 .transcribe-button {
@@ -89,7 +183,7 @@
     text-align: center;
     cursor:pointer;
     color: #d9ad61;
-    font-family: 'Comfortaa';
+    font-family: 'Inconsolata';
     font-size: 24px;
     padding: 0;
     margin: 0;
@@ -113,7 +207,7 @@
     text-align: center;
     cursor:pointer;
     color: #d9ad61;
-    font-family: 'Comfortaa';
+    font-family: 'Inconsolata';
     font-size: 24px;
     padding: 0;
     margin: 0;
@@ -143,7 +237,7 @@
     text-align: center;
     cursor:pointer;
     color: #621f69;
-    font-family: 'Comfortaa';
+    font-family: 'Inconsolata';
     font-size: 24px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -171,13 +265,14 @@
     text-align: center;
     cursor:pointer;
     color: #696969bc;
-    font-family: 'Comfortaa';
+    font-family: 'Inconsolata';
     font-size: 24px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background-color: aliceblue;
 }
 
 .failed-button:hover {
@@ -186,12 +281,12 @@
 }
 
 .loader {
-    border: 16px solid #f3f3f3;
+    border: 2px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 16px solid #621f69;
-    border-bottom: 16px solid #621f69;
-    width: 120px;
-    height: 120px;
+    border-top: 2px solid #621f69;
+    border-bottom: 2px solid #621f69;
+    width: 12px;
+    height: 12px;
     z-index: 2;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
@@ -207,30 +302,64 @@
     100% { transform: rotate(360deg); }
 }
 
-.loader-button {
+/* .loader-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: 22px;
     transition: background-color 0.1s;
     border-radius: 0px 20px 20px 0px; 
     text-align: center;
     cursor:pointer;
-    /* color: #696969bc; */
+    color: #696969bc;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
     color: #621f69;
-    font-family: 'Comfortaa';
+    font-family: 'Antic';
     font-size: 24px;
+} */
+
+.loader-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row-reverse;
+    height: 22px;
+    /* width: 32%; */
+    /* flex-grow: 1; */
+    width: 160px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #4a444a00;
+    color: #611f69;
+    cursor:not-allowed;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
+    border: solid #621f69 2px;
 }
 
-.loader-button:hover {
+/* .loader-button:hover {
     background-color: #621f69;
     color: white;
-}
+} */
 

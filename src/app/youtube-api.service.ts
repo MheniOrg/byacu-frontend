@@ -11,8 +11,10 @@ import moment from 'moment';
   providedIn: 'root'
 })
 export class YoutubeApiService {
+
   YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
   YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
+  videoMap: LooseObject = {};
   constructor() { }
 
 
@@ -106,6 +108,7 @@ export class YoutubeApiService {
     if (prms) {
       params = JSON.parse(prms);
     } else {
+      // this.initiateOath2Flow("dashboard");
       this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
     }
 
@@ -114,6 +117,8 @@ export class YoutubeApiService {
 
   refreshAuth() {
     localStorage.removeItem('oauth2-test-params');
+
+    // this.initiateOath2Flow("dashboard");
     this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
   }
 
@@ -226,6 +231,33 @@ export class YoutubeApiService {
 
   }
 
+  initiateOath2Flow(page: string): void {
+
+    var req = new XMLHttpRequest();
+
+    // req.open('get', `http://localhost:8000/auth/${page}`);
+    req.open('get', `http://byacu.com:8000/auth/${page}`);
+
+    req.onreadystatechange = (e) => {
+
+      if (req.readyState === 4) {
+        let res = JSON.parse(req.response);
+          
+        console.log(res);
+
+        window.location.replace(res);
+      }
+      
+    }
+
+    req.onerror = (e) => {
+      console.error(req.statusText);
+    };
+
+    req.send(null);
+
+  }
+
   getPlaylistAsync(credentials: string, playlistId: string, typemap: LooseObject): Promise<Video[]> {
     return new Promise((resolve, reject) => { 
 
@@ -262,6 +294,9 @@ export class YoutubeApiService {
 
               
               video.type = 3; // typemap[video.id];
+
+              this.videoMap[video.id] = video;
+              
               playlist.push(video);
             });
 

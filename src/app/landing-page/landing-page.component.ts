@@ -24,6 +24,8 @@ export class LandingPageComponent {
   skip_delay: number = 90;
   speed: number = 35;
   part: string = '';
+  textOpen = false;
+  gifOpen = false;
   
   YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
   YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
@@ -44,10 +46,78 @@ export class LandingPageComponent {
 
   }
 
+  showText(): void {
 
+    var element = $("#how-it-works-text");
+
+
+    if (!this.textOpen) {
+      // element.css({ "height": "fit-content", "overflow-y": "visible" });
+
+      element.css("height", "250px");
+      element.css("overflow-y", "scroll");
+
+
+      // setTimeout(() => {
+      //   element.focus();
+      // }, 1000);
+      this.textOpen = true;
+
+      console.log("open");
+    } else {
+      
+      this.textOpen = false;
+
+      element.css("height", "0px");
+      element.css("overflow-y", "hidden");
+      console.log("closed");
+    }
+    
+  }
+
+  showGif(): void {
+
+    var element = $("#why-it-matters-text");
+
+
+    if (!this.gifOpen) {
+      // element.css({ "height": "fit-content", "overflow-y": "visible" });
+
+      element.css("height", "1000px");
+      element.css("overflow-y", "scroll");
+
+
+      // setTimeout(() => {
+      //   element.focus();
+      // }, 1000);
+      this.gifOpen = true;
+
+      console.log("open");
+    } else {
+      
+      this.gifOpen = false;
+
+      element.css("height", "0px");
+      element.css("overflow-y", "hidden");
+      console.log("closed");
+    }
+    
+  }
+
+  hideText(): void {
+    var element = $("#how-it-works-text");
+    // console.log("uhy");
+    // element.css({ "height": "0px", "overflow-y": "hidden" });
+    this.textOpen = false;
+
+    element.css("height", "0px");
+    element.css("overflow-y", "hidden");
+    console.log("closed");
+  }
 
   connect(): void {
     this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
+    // this.youtubeService.initiateOath2Flow("dashboard");
   }
 
   wordflick(): void {
