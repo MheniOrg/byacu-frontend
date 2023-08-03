@@ -1,12 +1,15 @@
 .background {
-    background-color: #ffffff;
+    background-color: white;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    color:#d9ad6133
+    background: url(https://garden.spoonflower.com/c/9757164/p/f/m/RmYQjqT7f2DUkVRItvNlsstd8a57mVfW85jfv-LQ3v2ta_7TAkE/Geometric%20African%20Pattern.jpg);
+    /* background: url(https://static.vecteezy.com/system/resources/previews/008/043/428/non_2x/african-mexican-seamless-pattern-south-african-ornaments-african-tribal-background-south-africa-design-uganda-pattern-design-for-background-texture-fabric-vector.jpg); */
+    background-size: 300px;
 }
 
 .main-container {
@@ -14,10 +17,13 @@
     flex-direction: row;
     width: 100%;
     margin-top: 65px;
-    height: fit-content;
+    /* height: fit-content; */
     /* height: calc(100% - 65px); */
     /* height: 100%; calc(100% - 85px); */
     /* background-color: blueviolet; */
+    height: calc(100vh);
+    padding: 0px;
+    margin: 0px;
 }
 
 
@@ -98,16 +104,18 @@
 .text-section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     /* min-height: calc(100% - 50px); */
-    height: fit-content;
-    background-color: aliceblue;
+    /* height: 100; */
+    background-color: #f6f4f1;
+    
     width: calc(100% - 100px);
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
-    border-radius: 5px;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-bottom: 150px;
+    margin-top: 220px;
+    border-radius: 50px;
     transition: height 0.1s;
     /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
 }
@@ -121,7 +129,7 @@
     font-family: 'Antic';
     height: 0px;
     overflow-y: scroll;
-    transition: height 0.4s;
+    /* transition: height 0.4s; */
     outline: none;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
@@ -145,12 +153,12 @@
     color: black;
     width: 40%;
     margin-top: 15px;
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
     font-family: 'Antic';
     height: 0px;
     overflow-y: scroll;
-    transition: height 1.6s;
+    /* transition: height 1.6s; */
     outline: none;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
@@ -170,8 +178,10 @@
     color: #611f69;
     font-family: 'Limelight';
     font-size: 56px;
+    stroke: black;
     /* font-weight: 900; */
-    margin-top: 200px;
+    /* margin-top: 100px; */
+    margin-bottom: 30px;
 }
 
 .info-text {
@@ -194,6 +204,8 @@
 .service-title {
     font-family: 'Limelight';
     /* font-family: 'Antic'; */
+    /* font-family: 'M'; */
+    
     font-size: 58px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -205,10 +217,10 @@
 .service-text {
     color: black;
     font-family: 'Antic';
-    font-size: 24px;
+    font-size: 30px;
     text-align: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     width: 624px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -225,6 +237,8 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /* stroke: black;
+    stroke-width: 2px; */
 }
 
 .google-button-wrapper {
@@ -237,13 +251,14 @@
     font-family: 'Antic';
     font-size: 18px;
     align-items: center;
+    margin-top: 30px;
     margin-bottom: 50px;
 }
 
 .google-button {
     all: unset;
-    width: calc(191px / 1);
-    height: calc(46px / 1);
+    width: calc(191px * 2);
+    height: calc(46px * 2);
     transition: box-shadow 0.1s;
     box-shadow: none;
     background-size: 100% 100%;

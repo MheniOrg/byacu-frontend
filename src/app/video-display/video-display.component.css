@@ -6,7 +6,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(240, 248, 255, 0);
+    background-color: rgb(255, 255, 255);
     position: fixed;
     top: 0; 
     left:0;

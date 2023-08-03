@@ -14,15 +14,15 @@
           <button class="lang-select">
             <span class="lang-select-flag">🇰🇪</span><span class="lang-select-text">Swahili (Kenya)</span>
           </button>
-          <span (click)="closeModal()" class="close">Close &times;</span>
+          <span (click)="closeModal()" class="close">&times;</span>
         </div>
       
     </div>
     <div class="search-n-filter" >
         
         <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
-        <!-- <button class="sync-button">&#8634;</button> -->
-        <div class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#10161;</div>
+        <!-- <button class="sync-button">&#8634; &#10161;</button> -->
+        <div class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#8634;</div>
         <div class="filter-buttons">
             <button id="left-button" class="left-click-inactive" (click)="flipFailed()">Failed</button>
             <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()">In Progress</button>

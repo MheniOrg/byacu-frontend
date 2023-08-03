@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
+// import { environment } from '../../environments/environment';
 import { YoutubeApiService } from '../youtube-api.service';
 import { User } from '../user';
 import { Video } from '../video';
@@ -33,8 +33,8 @@ export class DashboardComponent {
   failedVideos!: Video[];
   inProgressVideos!: Video[];
   doneVideos!: Video[];
-  YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
-  YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
+  // YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
+  // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
   searchString: string = "";
   failedFilter: boolean = false;
   inProgressFilter: boolean = false;

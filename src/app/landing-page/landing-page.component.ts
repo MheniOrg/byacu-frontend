@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import * as $ from 'jquery';
-import { environment } from '../../environments/environment';
+// import { environment } from '../../environments/environment';
 import { YoutubeApiService } from '../youtube-api.service';
 
 
@@ -27,8 +27,8 @@ export class LandingPageComponent {
   textOpen = false;
   gifOpen = false;
   
-  YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
-  YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
+  // YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
+  // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
   
   constructor() { 
     /* console.log(environment); */ 
@@ -116,8 +116,8 @@ export class LandingPageComponent {
   }
 
   connect(): void {
-    this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
-    // this.youtubeService.initiateOath2Flow("dashboard");
+    // this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
+    this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
   }
 
   wordflick(): void {

@@ -4,7 +4,7 @@ import { Video } from './video';
 import { StrictObject } from './strict-object';
 import { LooseObject } from './loose-object';
 import { Thumbnail } from './thumbnail';
-import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment';
 import moment from 'moment';
 
 @Injectable({
@@ -12,8 +12,8 @@ import moment from 'moment';
 })
 export class YoutubeApiService {
 
-  YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
-  YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
+  // YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
+  // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
   videoMap: LooseObject = {};
   constructor() { }
 
@@ -109,7 +109,7 @@ export class YoutubeApiService {
       params = JSON.parse(prms);
     } else {
       // this.initiateOath2Flow("dashboard");
-      this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
+      // this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
     }
 
     return params["access_token"];
@@ -119,7 +119,7 @@ export class YoutubeApiService {
     localStorage.removeItem('oauth2-test-params');
 
     // this.initiateOath2Flow("dashboard");
-    this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
+    // this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
   }
 
   getPlaylist(credentials: string, playlistId: string): Video[] {
@@ -236,7 +236,7 @@ export class YoutubeApiService {
     var req = new XMLHttpRequest();
 
     // req.open('get', `http://localhost:8000/auth/${page}`);
-    req.open('get', `http://byacu.com:8000/auth/${page}`);
+    req.open('get', `https://byacu.com/auth?page=${page}`);
 
     req.onreadystatechange = (e) => {
 

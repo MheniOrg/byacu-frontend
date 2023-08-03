@@ -8,7 +8,7 @@
     height: fit-content;
     border-radius: 5px;
     overflow: hidden;
-    background-color:#f9f3e9;
+    background-color:#f9f3e900;
     /* background-color: aliceblue; */
     border: none;
     /* border-style: solid;
@@ -22,7 +22,7 @@
 .main-card:hover {
     /* margin-bottom: 20px; */
     /* border: #611f69 2px solid; */
-    box-shadow: 0 1px 2px 0 #621f694f, 0 2px 3px 0 #621f697d;
+    /* box-shadow: 0 1px 2px 0 #621f694f, 0 2px 3px 0 #621f697d; */
     /* box-shadow: none; */
     /* border-radius: 2px; */
 }
@@ -114,9 +114,12 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    /* border-radius: 2px; */
     height: fit-content;
     aspect-ratio: 16/9;
+    /* aspect-ratio: 1/1; */
     overflow-y: hidden;
+    border-radius: 5px;
 }
 
 .vid-img {
@@ -124,7 +127,7 @@
     /* height: fit-content; */
     width: 100%;
     /* aspect-ratio: 48/36; */
-    border-radius: 2px 0px 0px 2px;
+    border-radius: 5px;
     padding: 0px;
     /* margin: 0px; */
     background-color: #611f69;
