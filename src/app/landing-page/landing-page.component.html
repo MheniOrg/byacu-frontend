@@ -1,12 +1,17 @@
 <div class="background">
-    <app-video-display></app-video-display>
+    <!-- <app-video-display></app-video-display> -->
     <div class="main-container">
+        
         <div class="text-section">
+            <div class="top"><app-icon></app-icon></div>
+            <!-- <app-icon></app-icon> -->
             <p class="title"><span class="jy">Captions</span></p>
             <p class="service-text">Caption videos in Kinyarwanda, Luganda, and Swahili</p>
             <div class="google-button-wrapper">
                <button (click)="connect()" class="google-button"></button>
             </div>
+            <a class="info-text" href="/legal/PrivacyPolicy">Privacy Policy</a>
+            <a class="info-text" href="/legal/TermsOfService">Terms of Service</a>
             <!-- <p class="info-text" (click)="showText()">How it Works <span class="icon-arr" *ngIf="textOpen">&#9650;</span><span class="icon-arr" *ngIf="!textOpen">&#9660;</span></p>
             <div tabindex="0" id="how-it-works-text">
 Each language has a pretrained ML model (built using the Mozilla Common Voice Dataset) which we use to convert sound into captions.  If you decide to use our captioning service, we will use this model to generate  captions for you. At the moment we expect a Word Error Rate of 5%-20% depending on the language. 

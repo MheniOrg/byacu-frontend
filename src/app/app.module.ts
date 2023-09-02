@@ -13,6 +13,9 @@ import { VideoDisplayComponent } from './video-display/video-display.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SafePipe } from './safe.pipe';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TermsOfServicePageComponent } from './terms-of-service-page/terms-of-service-page.component';
+import { PrivacyPolicyPageComponent } from './privacy-policy-page/privacy-policy-page.component';
+import { LegalPageComponent } from './legal-page/legal-page.component';
 
 let apiLoaded = false;
 
@@ -26,7 +29,10 @@ let apiLoaded = false;
     IconComponent,
     TranscriptionDetailComponent,
     VideoDisplayComponent,
-    SafePipe
+    SafePipe,
+    TermsOfServicePageComponent,
+    PrivacyPolicyPageComponent,
+    LegalPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, inject, provideZoneChangeDetection, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { YoutubeApiService } from '../youtube-api.service';
+import { AuthApiService } from '../auth-api.service';
 import { TranscriptionApiService } from '../transcription-api.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { TranscriptionApiService } from '../transcription-api.service';
 export class VideoDisplayComponent {
 
 
-  youtubeService: YoutubeApiService = inject(YoutubeApiService);
+  youtubeService: AuthApiService = inject(AuthApiService);
   transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   menuOpen: boolean = false;
 
@@ -52,7 +52,7 @@ export class VideoDisplayComponent {
   }
 
   testEnpoint2(): void {
-    this.transcriptionService.getResults(escape("https://www.youtube.com/watch?v=r6vz7fuq3Y0"));
+    // this.transcriptionService.getResults(escape("https://www.youtube.com/watch?v=r6vz7fuq3Y0"));
   }
 
   navigateToHome() {

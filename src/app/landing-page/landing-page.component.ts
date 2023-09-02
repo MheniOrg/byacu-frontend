@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import * as $ from 'jquery';
 // import { environment } from '../../environments/environment';
-import { YoutubeApiService } from '../youtube-api.service';
+import { AuthApiService } from '../auth-api.service';
 
 
 
@@ -13,7 +13,7 @@ import { YoutubeApiService } from '../youtube-api.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
-  youtubeService: YoutubeApiService = inject(YoutubeApiService);
+  youtubeService: AuthApiService = inject(AuthApiService);
 
   words: string[] = ['Start Transcription ?', 'Tangira Kwandukura ?']; //, 'Anza Unukuzi ?', 'Tandika Okuwandiika ?'];
   i: number = 0;
@@ -117,7 +117,7 @@ export class LandingPageComponent {
 
   connect(): void {
     // this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
-    this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
+    this.youtubeService.initiateOath2Flow("http://justyams.com/dashboard");
   }
 
   wordflick(): void {

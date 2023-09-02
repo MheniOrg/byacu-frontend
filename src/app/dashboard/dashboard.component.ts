@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 // import { environment } from '../../environments/environment';
-import { YoutubeApiService } from '../youtube-api.service';
+import { AuthApiService } from '../auth-api.service';
+import { TranscriptionApiService } from '../transcription-api.service';
 import { User } from '../user';
 import { Video } from '../video';
 import { StrictObject } from '../strict-object';
@@ -15,9 +16,10 @@ import * as $ from 'jquery';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  youtubeService: YoutubeApiService = inject(YoutubeApiService);
+  authService: AuthApiService = inject(AuthApiService);
+  transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   fragmentString = location.hash.substring(1);
-  token!: string;
+  session!: string;
   user: User = {
     channelName: '',
     channelDescription: '',
@@ -163,56 +165,34 @@ export class DashboardComponent {
     this.filterVids();
   }
 
-  repeat(array: Video[], n:number){
-    var out: Video[] = [];
-    for(var i = 0; i < n; i++) {
-      for(var j = 0; j < array.length; j++) {
-        let uf: Video =  {
-          id: array[j].id,
-          title: array[j].title,
-          type: 0,
-          timeOnPLatform: array[j].timeOnPLatform,
-          channelId: array[j].channelId,
-          description: array[j].description,
-          thumbnails: array[j].thumbnails
-        };
-
-        out.push(uf);
-      }
-      // out.concat(array);
-    }
-    return out;
-  }
 
   ngOnInit() { 
     // Parse query string to see if page request is coming from OAuth 2.0 server.
-    this.youtubeService.consumeOathToken();
-    this.token = this.youtubeService.getCredentials();
+    this.authService.consumeOathToken();
+    this.session = this.authService.getCredentials();
 
-    this.youtubeService.getUserAsync(this.token).then((res) => {
+    
+
+    this.authService.getUserAsync(this.session).then((res) => {
       this.user = res;
 
       let typemap: LooseObject = {};
 
-      // ["test"] 
+      this.transcriptionService.getPlaylistAsync(this.session, res.id, typemap, "dashboard").then((r) => {
 
-      this.youtubeService.getPlaylistAsync(this.token, res.uploads, typemap).then((r) => {
-
-        this.uploads = this.repeat(r, 6);
+        console.log(r);
+        
+        this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
  
-        for (let i:number = 0; i < 20; i++ ) {
-          this.uploads[i].type = this.getRandomInt();
-        }
-
-        // console.log(this.uploads);
 
         this.shownVideos = this.uploads;
 
         console.log(this.uploads);
 
-        this.failedVideos = this.uploads.filter((item: Video) => { return item.type === 3 });
-        this.inProgressVideos = this.uploads.filter((item: Video) => { return item.type === 4 });
-        this.doneVideos = this.uploads.filter((item: Video) => { return item.type === 2 });
+        this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
+        this.inProgressVideos = this.uploads.filter((item: Video) => { return item.status === "IN_PROGRESS" });
+        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+      
       });
     });
 
@@ -270,7 +250,7 @@ export class DashboardComponent {
   }
 
   test(): void {
-    // let temp: LooseObject = this.youtubeService.getUser(this.token);
+    // let temp: LooseObject = this.authService.getUser(this.session);
     // this.user = temp['user'];
     // this.uploads = temp['videos'];
 

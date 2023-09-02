@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Video } from '../video';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { YoutubeApiService } from '../youtube-api.service';
+import { AuthApiService } from '../auth-api.service';
 import { TranscriptionApiService } from '../transcription-api.service';
 import { LooseObject } from '../loose-object';
 import * as $ from 'jquery';
@@ -18,7 +18,7 @@ let apiLoaded = false;
 export class TranscriptionDetailComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   id!: string; 
-  youtubeService: YoutubeApiService = inject(YoutubeApiService);
+  youtubeService: AuthApiService = inject(AuthApiService);
   transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   url: string = "";
   player: any;
@@ -165,7 +165,7 @@ export class TranscriptionDetailComponent {
 
     // escape(`https://www.youtube.com/watch?v=${this.id}`)
 
-    this.transcriptionService.getResults(`https://www.youtube.com/watch?v=${this.id}`).then((res) => {
+    this.transcriptionService.getResults(this.id, "p").then((res) => {
       this.transcriptions = res;
       this.immutableTranscriptions = res;
       // console.log(res);

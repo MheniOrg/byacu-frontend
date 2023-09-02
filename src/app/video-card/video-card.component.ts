@@ -44,7 +44,7 @@ export class VideoCardComponent {
   }
 
   navigateToVideoDetail(): void {
-    this._router.navigateByUrl(`/transcription/${this.videoInfo.id}`);
+    this._router.navigateByUrl(`/transcription/${this.videoInfo.video_id}`);
   }
 
   addButtons(type: number): void {
@@ -83,6 +83,10 @@ export class VideoCardComponent {
     }
 
     
+  }
+
+  transcribe(): void {
+    this.transcriptionService.transcribe(this.videoInfo.video_id, this.videoInfo.user_id, "Kinyarwanda", 'dashboard');
   }
 
 }

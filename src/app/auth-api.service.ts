@@ -10,7 +10,7 @@ import moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
-export class YoutubeApiService {
+export class AuthApiService {
 
   // YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
   // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
@@ -90,17 +90,21 @@ export class YoutubeApiService {
     while (m = regex.exec(location.hash.substring(1))) {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
-    if (Object.keys(params).length > 0) {
-      localStorage.setItem('oauth2-test-params', JSON.stringify(params) );
 
+    console.log(params);
+
+    if (params["session_id"]) {
+      localStorage.setItem('JYUID', JSON.stringify(params) );
     }
+
+    
 
     history.pushState("", document.title, window.location.pathname + window.location.search);
 
   }
 
   getCredentials(): string {
-    var prms: string | null = localStorage.getItem('oauth2-test-params');
+    var prms: string | null = localStorage.getItem('JYUID');
 
     // console.log(location.hash.length);
 
@@ -112,16 +116,17 @@ export class YoutubeApiService {
       // this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
     }
 
-    return params["access_token"];
+    return params["session_id"];
   }
 
-  refreshAuth() {
-    localStorage.removeItem('oauth2-test-params');
+  refreshAuth(page: string) {
+    localStorage.removeItem('JYUID');
 
-    // this.initiateOath2Flow("dashboard");
+    this.initiateOath2Flow(page);
     // this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
   }
 
+  /*
   getPlaylist(credentials: string, playlistId: string): Video[] {
 
     let playlist: Video[] = [];
@@ -177,17 +182,15 @@ export class YoutubeApiService {
 
     return playlist;
   }
+  */
 
   testEndpoint(): void {
 
     var req = new XMLHttpRequest();
 
-
     req.open('GET', 'http://byacu.com:8000/oauth_redirect');
 
     req.setRequestHeader("Access-Control-Allow-Origin", '*');
-
-    // req.withCredentials = true;
 
     req.onreadystatechange = (e) => {
 
@@ -258,70 +261,8 @@ export class YoutubeApiService {
 
   }
 
-  getPlaylistAsync(credentials: string, playlistId: string, typemap: LooseObject): Promise<Video[]> {
-    return new Promise((resolve, reject) => { 
 
-      var req = new XMLHttpRequest();
-
-      req.open('GET', 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=' + playlistId + '&access_token=' + credentials, true);
-
-      req.onreadystatechange = (e) => {
-
-        if (req.readyState === 4) {
-          if (req.status === 200) {
-            let res = JSON.parse(req.response);
-            let playlist: Video[] = [];
-
-            res.items.forEach((videoObj: LooseObject) => {
-              let video: Video = {id: "", title: "", type: 1, timeOnPLatform: "", channelId: "", description: "", thumbnails: []};
-
-              video.channelId = videoObj['snippet'].channelId;
-              video.id = videoObj['snippet'].resourceId.videoId;
-              video.title = videoObj['snippet'].title;
-              video.description = videoObj['snippet'].description;
-
-              let timeOnPLatform = moment(videoObj['snippet'].publishedAt);
-
-              video.timeOnPLatform = timeOnPLatform.fromNow();
-
-              video.thumbnails = [];
-
-              ["default", "medium", "high"].forEach((typ) => {
-                let temp = videoObj['snippet'].thumbnails[typ];
-
-                video.thumbnails.push({ type: typ,  url: temp.url, width: temp.width, height: temp.height});
-              });
-
-              
-              video.type = 3; // typemap[video.id];
-
-              this.videoMap[video.id] = video;
-              
-              playlist.push(video);
-            });
-
-            resolve(playlist);
-    
-          } 
-          else {
-            this.refreshAuth();
-          }
-        }
-        
-      }
-
-      req.onerror = (e) => {
-        console.error(req.statusText);
-        reject(req.statusText);
-      };
-
-      req.send(null);
-
-
-      // return playlist;
-    });
-  }
-
+/*
   getUser(credentials: string): LooseObject {
 
     let user: User = {id: "###", likes: "###", uploads: "###", channelName: "###", channelDescription: "###", customURL: "###", timeOnPLatform: "###", thumbnails: []};
@@ -374,18 +315,19 @@ export class YoutubeApiService {
 
     return result;
   }
-
+*/
 
   getUserAsync(credentials: string): Promise<User> {
     return new Promise((resolve, reject) => { 
 
     let user: User = {id: "###", likes: "###", uploads: "###", channelName: "###", channelDescription: "###", customURL: "###", timeOnPLatform: "###", thumbnails: []};
-    // let videos: Video[] = [];
-    // let result: LooseObject = {};
 
     var req = new XMLHttpRequest();
 
-    req.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&mine=true' + '&access_token=' + credentials, true);
+    // req.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&mine=true' + '&access_token=' + credentials, true);
+
+    req.open('get', `https://byacu.com/user?session_id=${credentials}`);
+
 
     req.onreadystatechange = (e) => {
 
@@ -393,27 +335,12 @@ export class YoutubeApiService {
         if (req.status === 200) {
           let res = JSON.parse(req.response);
 
-          let timeOnPLatform = moment(res.items[0].snippet.publishedAt);
+          console.log(res);
 
-          user.id = res.items[0].id;
-          user.uploads = res.items[0].contentDetails.relatedPlaylists.uploads;
-          user.likes = res.items[0].contentDetails.relatedPlaylists.likes;
-          user.channelName = res.items[0].snippet.title;
-          user.channelDescription = res.items[0].snippet.description;
-          user.customURL = res.items[0].snippet.customUrl;
-          user.timeOnPLatform = timeOnPLatform.fromNow();
-
-          user.thumbnails = [];
-
-          ["default", "medium", "high"].forEach((typ) => {
-            let temp = res.items[0].snippet.thumbnails[typ];
-            user.thumbnails.push({ type: typ,  url: temp.url, width: temp.width, height: temp.height});
-          });
-
-          resolve(user);
+          resolve(res);
   
         } else {
-          this.refreshAuth();
+          this.refreshAuth("dashboard");
         }
       }
       
@@ -428,4 +355,5 @@ export class YoutubeApiService {
 
     });
   }
+  
 }

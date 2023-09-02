@@ -1,25 +1,52 @@
 <div class="main-card">
+    <svg style="height:0px;" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <filter id="purple-shift" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+                <feColorMatrix type="matrix" values=".33 .33 .33 0 0
+                        .33 .33 .33 0 0
+                        .33 .33 .33 0 0
+                        0 0 0 1 0" in="SourceGraphic" result="colormatrix"/>
+                <feComponentTransfer in="colormatrix" result="componentTransfer">
+                        <feFuncR type="table" tableValues="0.37 0.57 0.09"/>
+                    <feFuncG type="table" tableValues="0.17 0.3 0.26"/>
+                    <feFuncB type="table" tableValues="0.44 0.71 0.55"/>
+                    <feFuncA type="table" tableValues="0 1"/>
+                  </feComponentTransfer>
+                <feBlend mode="hue" in="componentTransfer" in2="SourceGraphic" result="blend"/>
+            </filter>
+        </defs>
+      </svg>
     <div class="image-mask">
-        <img [src]="videoInfo.thumbnails[2].url" class="vid-img"/>
+        <img [src]="videoInfo.thumbnail" class="vid-img"/>
     </div>
     <p class="video-title">{{videoInfo.title}}</p>
     <!-- <hr width="100%"/> -->
     <div id="button-case-{{this.id}}" class="button-case">
-        <ng-container [ngSwitch]="this.videoInfo.type"> 
-            <ng-container  *ngSwitchCase="1">
-                <button class="top-button">Transcribe</button>
+        <ng-container [ngSwitch]="this.videoInfo.status"> 
+            <ng-container  *ngSwitchCase="'NEW'">
+                <button class="top-button" (click)="transcribe()">Transcribe</button>
             </ng-container>
-            <ng-container  *ngSwitchCase="2">
-                <button class="top-button">Re-Transcribe</button>
-                <button class="top-button" (click)="navigateToVideoDetail()">View/Edit Results</button>
+            <ng-container  *ngSwitchCase="'COMPLETED'">
+                <!-- <button class="top-button-shared">Retry</button> -->
+                <button class="top-button" (click)="navigateToVideoDetail()">View Results</button>
             </ng-container>
-            <ng-container  *ngSwitchCase="3">
+            <ng-container  *ngSwitchCase="'UPDATED'">
+                <!-- <button class="top-button-shared">Retry</button> -->
+                <button class="top-button" (click)="navigateToVideoDetail()">View Results</button>
+            </ng-container>
+            <ng-container  *ngSwitchCase="'FAILED'">
                 <button class="disabled-button">Job failed! 💀</button>
             </ng-container>
-            <ng-container  *ngSwitchCase="4">
+            <ng-container  *ngSwitchCase="'CREATED'">
                 <div class="loader-button">
                     <div class="loader"></div>
-                    In Progress
+                    Waiting in Queue
+                </div>
+            </ng-container>
+            <ng-container  *ngSwitchCase="'IN_PROGRESS'">
+                <div class="loader-button">
+                    <div class="loader"></div>
+                    Transcribing...
                 </div>
             </ng-container>
         </ng-container>
