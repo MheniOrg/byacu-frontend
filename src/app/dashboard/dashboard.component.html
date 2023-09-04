@@ -1,17 +1,17 @@
 <div class="background">
-    <app-user-display [user]="user" (changeLangEvent)="openModal()"></app-user-display>
+    <app-user-display [lang]="this.lang" [user]="user" (changeLangEvent)="openModal()"></app-user-display>
     <div id="myModal" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close">Select a Language</span>
-          <button class="lang-select">
+          <button class="lang-select" (click)="this.storeLang('Kinyarwanda')">
             <span class="lang-select-flag">🇷🇼</span><span class="lang-select-text">Kinyarwanda</span>
           </button>
-          <button class="lang-select">
+          <button class="lang-select" (click)="this.storeLang('Luganda')">
             <span class="lang-select-flag">🇺🇬</span><span class="lang-select-text">Luganda</span>
           </button>
-          <button class="lang-select">
+          <button class="lang-select" (click)="this.storeLang('Swahili')">
             <span class="lang-select-flag">🇰🇪</span><span class="lang-select-text">Swahili (Kenya)</span>
           </button>
           <span (click)="closeModal()" class="close">&times;</span>

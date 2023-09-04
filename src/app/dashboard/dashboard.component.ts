@@ -42,6 +42,7 @@ export class DashboardComponent {
   inProgressFilter: boolean = false;
   doneFilter: boolean = false;
   videoType: number[] = [];
+  lang: string = "";
 
   constructor() { }
 
@@ -171,6 +172,14 @@ export class DashboardComponent {
     this.authService.consumeOathToken();
     this.session = this.authService.getCredentials();
 
+    var prms: string | null= localStorage.getItem('lang');
+
+    if (prms) {
+      this.lang = prms;
+    } else {
+      this.openModal();
+    }
+
     
 
     this.authService.getUserAsync(this.session).then((res) => {
@@ -180,7 +189,7 @@ export class DashboardComponent {
 
       this.transcriptionService.getPlaylistAsync(this.session, res.id, typemap, "dashboard").then((r) => {
 
-        console.log(r);
+        // console.log(r);
         
         this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
  
@@ -211,6 +220,14 @@ export class DashboardComponent {
 
   closeModal(): void {
     $("#myModal").css("display", "none");
+
+    var prms: string | null= localStorage.getItem('lang');
+
+    if (prms) {
+      this.lang = prms;
+    } else {
+      this.openModal();
+    }
   }
 
   filterVids(): void {
@@ -247,6 +264,10 @@ export class DashboardComponent {
 
     this.filterVids();
     // console.log(this.searchString);
+  }
+
+  storeLang(lang: string): void {
+    localStorage.setItem('lang', lang);
   }
 
   test(): void {

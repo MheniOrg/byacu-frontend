@@ -8,6 +8,20 @@
             <button class="usertxt" *ngIf="user" unselectable="on" (click)="menuClick()" >
             
             MENU
+            <span [ngSwitch]="this.lang">
+                <ng-container  *ngSwitchCase="''">
+                    -
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                    🇷🇼
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Luganda'">
+                    🇺🇬
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Swahili'">
+                    🇰🇪
+                </ng-container>
+            </span>
             <!-- <img class="userpicimg" *ngIf="user.thumbnails[2] !== undefined" [src]="user.thumbnails[0].url" /> -->
         </button>
         </div>

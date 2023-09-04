@@ -14,6 +14,7 @@ export class UserDisplayComponent {
   youtubeService: AuthApiService = inject(AuthApiService);
   transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   menuOpen: boolean = false;
+  @Input() lang!: string;
 
   @Output() changeLangEvent = new EventEmitter<string>();
 
@@ -23,6 +24,15 @@ export class UserDisplayComponent {
     // changes.prop contains the old and the new value...
     console.log(changes);
   }
+
+  // ngOnInit() { 
+  //   var prms: string | null= localStorage.getItem('lang');
+
+  //   if (prms) {
+  //     this.lang = prms;
+  //   }
+
+  // }
 
   menuClick(): void {
     let menu: any = document.getElementById("menuID");
