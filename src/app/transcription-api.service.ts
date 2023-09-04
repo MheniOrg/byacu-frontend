@@ -159,13 +159,82 @@ export class TranscriptionApiService {
     });
   }
 
+/*
+const apiUrl = 'https://byacu.com/update_transcriptions';
+const videoId = 'VIDEO_ID';
+const sessionId = 'SESSION_ID';
+const userId = 'USER_ID';
+
+const jsonData = JSON.stringify([
+  {
+    index: 0,
+    start_time: '00:00:00,000',
+    end_time: '00:00:05,000',
+    text: 'text',
+  },
+]);
+
+const xhr = new XMLHttpRequest();
+xhr.open('POST', `${apiUrl}?video_id=${videoId}&session_id=${sessionId}&user_id=${userId}`, true);
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      console.log('Response:', xhr.responseText);
+    } else {
+      console.error('Error:', xhr.status, xhr.statusText);
+    }
+  }
+};
+
+xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
+*/
+
   // No payload for transcriptions ????
+  updateTranscriptions(credentials: string, userId: string, videoId: string, payload: string, page: string) {
+    return new Promise((resolve, reject) => { 
+
+      var req = new XMLHttpRequest();
+
+      req.open('POST', `https://byacu.com/update_transcriptions?video_id=${videoId}&session_id=${credentials}&user_id=${userId}`);
+      
+      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      req.onreadystatechange = (e) => {
+
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            let res = JSON.parse(req.response);
+
+            resolve(res);
+    
+          } 
+          else {
+            this.authService.refreshAuth(page);
+          }
+        }
+        
+      }
+
+      req.onerror = (e) => {
+        console.error(req.statusText);
+        reject(req.statusText);
+      };
+
+      req.send(`json_data=${encodeURIComponent(payload)}`);
+
+    });
+  }
+
   uploadTranscriptions(credentials: string, userId: string, videoId: string, page: string) {
     return new Promise((resolve, reject) => { 
 
       var req = new XMLHttpRequest();
 
       req.open('POST', `https://byacu.com/upload_transcriptions?video_id=${videoId}&session_id=${credentials}&user_id=${userId}`);
+      
+      // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
       req.onreadystatechange = (e) => {
 

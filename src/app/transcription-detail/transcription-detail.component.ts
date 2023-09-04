@@ -7,6 +7,7 @@ import { AuthApiService } from '../auth-api.service';
 import { TranscriptionApiService } from '../transcription-api.service';
 import { LooseObject } from '../loose-object';
 import * as $ from 'jquery';
+import { User } from '../user';
 
 let apiLoaded = false;
 
@@ -18,7 +19,7 @@ let apiLoaded = false;
 export class TranscriptionDetailComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   id!: string; 
-  youtubeService: AuthApiService = inject(AuthApiService);
+  authService: AuthApiService = inject(AuthApiService);
   transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
   url: string = "";
   player: any;
@@ -31,6 +32,8 @@ export class TranscriptionDetailComponent {
   searchTxt: string = "";
   prevFiveIndex: number[] = [this.currIndex - this.maxSeen, this.currIndex - 1];
   videoListener: any;
+  user!: User;
+  credentials: string = "";
 
   init() {
     // Return if Player is already created
@@ -141,6 +144,16 @@ export class TranscriptionDetailComponent {
     this.matchTranscriptionsToVideo();
   }
 
+  updateChanges() {
+    this.transcriptionService.updateTranscriptions(this.credentials, this.user.id, this.id, JSON.stringify(this.transcriptions), "https://justyams.com/dashboard") 
+    // console.log("dddddd");
+  }
+  
+  uploadChanges() {
+    this.transcriptionService.uploadTranscriptions(this.credentials, this.user.id, this.id, "https://justyams.com/dashboard") 
+    console.log("l;");
+  }
+
   onPlayerError(event: { data: any; }) {
     switch (event.data) {
       case 2:
@@ -162,6 +175,12 @@ export class TranscriptionDetailComponent {
     this.id = String(this.route.snapshot.params['id']);
 
     this.init();
+
+    this.credentials = this.authService.getCredentials();
+
+    this.authService.getUserAsync(this.credentials).then((res) => {
+      this.user = res;
+    });
 
     // escape(`https://www.youtube.com/watch?v=${this.id}`)
 

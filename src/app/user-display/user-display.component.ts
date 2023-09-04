@@ -26,11 +26,11 @@ export class UserDisplayComponent {
   }
 
   // ngOnInit() { 
-  //   var prms: string | null= localStorage.getItem('lang');
+    // var prms: string | null= localStorage.getItem('lang');
 
-  //   if (prms) {
-  //     this.lang = prms;
-  //   }
+    // if (prms) {
+    //   this.lang = prms;
+    // }
 
   // }
 
