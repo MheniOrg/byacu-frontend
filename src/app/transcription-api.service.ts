@@ -56,7 +56,7 @@ export class TranscriptionApiService {
       var req = new XMLHttpRequest();
 
 
-      req.open('GET', `http://byacu.com:8000/results?video_id=${videoID}`);
+      req.open('GET', `https://byacu.com/results?video_id=${videoID}`);
 
       // req.setRequestHeader("Access-Control-Allow-Origin", '*');
 

@@ -117,7 +117,8 @@ export class LandingPageComponent {
 
   connect(): void {
     // this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
-    this.youtubeService.initiateOath2Flow("http://justyams.com/dashboard");
+    this.youtubeService.initiateOath2Flow("https://justyams.com/dashboard");
+    // this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
   }
 
   wordflick(): void {

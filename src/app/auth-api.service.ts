@@ -340,7 +340,7 @@ export class AuthApiService {
           resolve(res);
   
         } else {
-          this.refreshAuth("dashboard");
+          this.refreshAuth("https://justyams.com/dashboard");
         }
       }
       
