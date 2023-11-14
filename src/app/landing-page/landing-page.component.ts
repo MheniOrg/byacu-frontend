@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import * as $ from 'jquery';
 // import { environment } from '../../environments/environment';
 import { AuthApiService } from '../auth-api.service';
-
+import { LooseObject } from '../loose-object';
 
 
 
@@ -26,6 +26,13 @@ export class LandingPageComponent {
   part: string = '';
   textOpen = false;
   gifOpen = false;
+  colorPallete: LooseObject = { 
+    '1': "#AA7BC3",
+    '2': "#611F69",
+    '3': "#F3DE8A",
+    '4': "#048BA8",
+    '5': "#30F2F2"
+  };
   
   // YOUR_CLIENT_ID: string  = environment.YOUR_CLIENT_ID;
   // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
@@ -44,6 +51,24 @@ export class LandingPageComponent {
       this.wordflick();
     });
 
+    // this.moveCardUp();
+
+    // setTimeout(() => {
+    //   this.moveCardUp();
+    // }, 2000);
+
+  }
+
+  moveCardUp(): void {
+    $("#text-section").animate({marginTop: "-=100vh"}, 500, "swing");
+  }
+
+  nav(link: string): void {
+    // this.moveCardUp();
+
+    setTimeout(() => {
+      window.location.href = link;
+    }, 500);
   }
 
   showText(): void {
@@ -117,8 +142,8 @@ export class LandingPageComponent {
 
   connect(): void {
     // this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
-    this.youtubeService.initiateOath2Flow("https://justyams.com/dashboard");
-    // this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
+    // this.youtubeService.initiateOath2Flow("https://justyams.com/dashboard");
+    this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
   }
 
   wordflick(): void {

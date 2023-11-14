@@ -1,50 +1,99 @@
 <div class="background">
-    <app-user-display [lang]="this.lang" [user]="user" (changeLangEvent)="openModal()"></app-user-display>
+    <!-- <app-user-display [lang]="this.lang" [user]="user" (changeLangEvent)="openModal()"></app-user-display> -->
     <div id="myModal" class="modal">
 
-        <!-- Modal content -->
         <div class="modal-content">
-          <span class="close">Select a Language</span>
-          <button class="lang-select" (click)="this.storeLang('Kinyarwanda')">
-            <span class="lang-select-flag">🇷🇼</span><span class="lang-select-text">Kinyarwanda</span>
-          </button>
-          <button class="lang-select" (click)="this.storeLang('Luganda')">
-            <span class="lang-select-flag">🇺🇬</span><span class="lang-select-text">Luganda</span>
-          </button>
-          <button class="lang-select" (click)="this.storeLang('Swahili')">
-            <span class="lang-select-flag">🇰🇪</span><span class="lang-select-text">Swahili (Kenya)</span>
-          </button>
-          <span (click)="closeModal()" class="close">&times;</span>
+          <span id="modal_title">Select a Language</span>
+          <ng-container *ngFor="let lang of this.languages; let i = index">
+            <button id="lang_{{lang}}" class="lang-select" (click)="this.setLang(lang)">
+              <span class="lang-select-text">
+                {{lang}}
+                <span class="lang-select-flag-modal" [ngSwitch]="lang">
+                  <ng-container  *ngSwitchCase="''">
+                      
+                  </ng-container>
+                  <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                      🇷🇼
+                  </ng-container>
+                  <ng-container  *ngSwitchCase="'Luganda'">
+                      🇺🇬
+                  </ng-container>
+                  <ng-container  *ngSwitchCase="'Swahili'">
+                      🇰🇪
+                  </ng-container>
+                </span>
+              </span>
+            </button>
+        </ng-container>
+          <span (click)="closeModal()" class="close">Close</span>
         </div>
       
     </div>
-    <div class="search-n-filter" >
-        
-        <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
-        <!-- <button class="sync-button">&#8634; &#10161;</button> -->
-        <div class="filter-buttons">
-            <button id="left-button" class="left-click-inactive" (click)="flipFailed()">Failed</button>
-            <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()">In Progress</button>
-            <button id="right-button" class="right-click-inactive" (click)="flipDone()">Done</button>
-        </div>
-
-        <div class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#8634;</div>
-    </div>
-    <!-- <div class="ctrl-panel">
-        <p class="ctrl-title">Controls</p>
-        <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
-        <div class="filter-buttons">
-            <button id="left-button" class="left-click-inactive" (click)="flipFailed()">Failed</button>
-            <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()">In Progress</button>
-            <button id="right-button" class="right-click-inactive" (click)="flipDone()">Done</button>
-        </div>
-        <button class="sync-button">Sync &#8634;</button>
-    </div> -->
-    <div class="video-container">
-        <ng-container *ngFor="let video of this.shownVideos; let i = index">
-            <app-video-card key="i" [videoInfo]="video" />
+    <div class="top"><app-icon></app-icon></div>
+    <div class="top-right-panel">
+      <div id="flag-select" (click)="flipLangSelect()">
+        <span class="lang-bubble" [ngSwitch]="this.lang">
+          <ng-container  *ngSwitchCase="''">
+              
+          </ng-container>
+          <ng-container  *ngSwitchCase="'Kinyarwanda'">
+              🇷🇼
+          </ng-container>
+          <ng-container  *ngSwitchCase="'Luganda'">
+              🇺🇬
+          </ng-container>
+          <ng-container  *ngSwitchCase="'Swahili'">
+              🇰🇪
+          </ng-container>
+        </span>
+        <ng-container *ngIf="!this.langSelected" >
+          <ng-container *ngFor="let lang of this.filteredLanguages let i = index">
+            
+            <span (click)="setLang(lang)" class="lang-bubble" [ngSwitch]="lang">
+              <ng-container  *ngSwitchCase="''">
+                  -
+              </ng-container>
+              <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                  🇷🇼
+              </ng-container>
+              <ng-container  *ngSwitchCase="'Luganda'">
+                  🇺🇬
+              </ng-container>
+              <ng-container  *ngSwitchCase="'Swahili'">
+                  🇰🇪
+              </ng-container>
+            </span>
+          </ng-container>
         </ng-container>
+        <!-- &#9650; -->
+      </div>
+      <a style="all:unset" routerLink="/">
+      <button class="signout-button" (click)="signOut()">
+        Sign Out
+      </button>
+      </a>
+
+    </div>
+    <div class="search-n-filter" >
+      <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
+        <!-- <button class="sync-button">&#8634; &#10161;</button> -->
+        <button (click)="syncVideos()" class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#8634;</button>
         
+        <div class="filter-buttons">
+            <button id="left-button" class="left-click-inactive" (click)="flipFailed()"><div id="left-button-indicator" class="indicator-inactive"></div>Failed</button>
+            <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()"><div id="mid-button-indicator" class="indicator-inactive"></div>In Progress</button>
+            <button id="right-button" class="right-click-inactive" (click)="flipDone()"><div id="right-button-indicator" class="indicator-inactive"></div>Done</button>
+        </div>
+    </div>
+    <div class="demo-mode" *ngIf="userHasNoVideos">
+      <p *ngIf="demoVideos.length == 0" class="demo-text">Looks like there are no video on your YouTube account 😐</p>
+      <button (click)="getDemoVideos()" class="demo-video-button" *ngIf="demoVideos.length == 0">Get Demo Videos</button>
+      <div class="video-container" *ngIf="demoVideos.length > 0">
+        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="video" />
+      </div>
+    </div>
+    <div class="video-container" *ngIf="!userHasNoVideos">
+        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="video" (transcribeButtonClicked)="grabVideos()" />
     </div>
     
 </div>

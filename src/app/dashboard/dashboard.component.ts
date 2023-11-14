@@ -10,6 +10,8 @@ import { Thumbnail } from '../thumbnail';
 import { UserDisplayComponent } from '../user-display/user-display.component';
 import * as $ from 'jquery';
 
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -43,6 +45,12 @@ export class DashboardComponent {
   doneFilter: boolean = false;
   videoType: number[] = [];
   lang: string = "";
+  languages: string[] | any = [];
+  filteredLanguages: string[] | any = [];
+  langSelected: boolean = false;
+  userHasNoVideos: boolean = false;
+  demoVideos: Video[] = [];
+  grabbingNewVideos: boolean = false;
 
   constructor() { }
 
@@ -52,68 +60,102 @@ export class DashboardComponent {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  flipLangSelect(): void {
+
+    if (this.langSelected) {
+      $("#flag-select").css({"height": `calc(45px * ${this.languages.length})`});  // , "border-radius": "22.5px"
+    } else {
+      $("#flag-select").css({"height": "45px"});  //,  "border-radius": "50%"
+    }
+    this.langSelected = !this.langSelected;
+  }
+
   updateFailedButton(): void {
-    let but: any;
+    // let but: any;
+    let ind: any;
 
     try {
-      but = document.getElementById("left-button");
+      // but = document.getElementById("left-button");
+      ind = document.getElementById("left-button-indicator");
     } catch (error) {
       return;
     }
 
     if (this.failedFilter) {
-      but.classList.remove('left-click-inactive');
-      but.classList.add('left-click-active');
+      // but.classList.remove('left-click-inactive');
+      // but.classList.add('left-click-active');
+
+      ind.classList.remove('indicator-inactive');
+      ind.classList.add('indicator-active');
 
       this.shownVideos = this.failedVideos;
 
     } else {
-      but.classList.remove('left-click-active');
-      but.classList.add('left-click-inactive');
+      // but.classList.remove('left-click-active');
+      // but.classList.add('left-click-inactive');
+
+      ind.classList.remove('indicator-active');
+      ind.classList.add('indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
   }
 
   updateInProgressButton(): void {
-    let but: any;
+    // let but: any;
+    let ind: any;
 
     try {
-      but = document.getElementById("mid-button");
+      // but = document.getElementById("mid-button");
+      ind = document.getElementById("mid-button-indicator");
     } catch (error) {
       return;
     }
 
     if (this.inProgressFilter) {
-      but.classList.remove('mid-click-inactive');
-      but.classList.add('mid-click-active');
+      // but.classList.remove('mid-click-inactive');
+      // but.classList.add('mid-click-active');
+
+      ind.classList.remove('indicator-inactive');
+      ind.classList.add('indicator-active');
 
       this.shownVideos = this.inProgressVideos;
     } else {
-      but.classList.remove('mid-click-active');
-      but.classList.add('mid-click-inactive');
+      // but.classList.remove('mid-click-active');
+      // but.classList.add('mid-click-inactive');
+
+      ind.classList.remove('indicator-active');
+      ind.classList.add('indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
   }
 
   updateDoneButton(): void {
-    let but: any;
+    // let but: any;
+    let ind: any;
 
     try {
-      but = document.getElementById("right-button");
+      // but = document.getElementById("right-button");
+      ind = document.getElementById("right-button-indicator");
     } catch (error) {
       return;
     }
 
     if (this.doneFilter) {
-      but.classList.remove('right-click-inactive');
-      but.classList.add('right-click-active');
+      // but.classList.remove('right-click-inactive');
+      // but.classList.add('right-click-active');
+
+      ind.classList.remove('indicator-inactive');
+      ind.classList.add('indicator-active');
 
       this.shownVideos = this.doneVideos;
     } else {
-      but.classList.remove('right-click-active');
-      but.classList.add('right-click-inactive');
+      // but.classList.remove('right-click-active');
+      // but.classList.add('right-click-inactive');
+
+      ind.classList.remove('indicator-active');
+      ind.classList.add('indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
@@ -172,50 +214,134 @@ export class DashboardComponent {
     this.authService.consumeOathToken();
     this.session = this.authService.getCredentials();
 
-    var prms: string | null= localStorage.getItem('lang');
+    this.transcriptionService.getSupportedLanguages("dashboard").then((res) => {
+      this.languages = res;
 
-    if (prms) {
-      this.lang = prms;
-    } else {
-      this.openModal();
-    }
+      var prms: string | null= localStorage.getItem('lang');
+
+      if (prms) {
+        this.lang = prms;
+        this.langSelected = true;
+        this.filteredLanguages = this.languages.filter((l: string) => {
+          return l != this.lang
+        });
+        // console.log("rrr", this.lang, this.languages, this.filteredLanguages);
+      } else {
+        this.openModal();
+      }
+    });
 
     
+
+    
+
 
     this.authService.getUserAsync(this.session).then((res) => {
       this.user = res;
 
       let typemap: LooseObject = {};
 
-      this.transcriptionService.getPlaylistAsync(this.session, res.id, typemap, "dashboard").then((r) => {
+      localStorage.setItem('JYUID', JSON.stringify({ "session_id": this.session, "user_id": this.user.id }) );
+
+      this.transcriptionService.getPlaylistAsync(this.session, res.id, "dashboard").then((r) => {
 
         // console.log(r);
         
         this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
- 
 
-        this.shownVideos = this.uploads;
+        if (this.uploads.length == 0) {
+          this.userHasNoVideos = true;
+        } else {
+          this.shownVideos = this.uploads;
+          this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
+          this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
+          this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+        }
 
-        console.log(this.uploads);
+        // console.log(this.uploads);
 
-        this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
-        this.inProgressVideos = this.uploads.filter((item: Video) => { return item.status === "IN_PROGRESS" });
-        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
-      
       });
     });
 
-    // for (let i:number = 0; i < 12; i++ ) {
-    //   this.videoType.push(this.getRandomInt());
-    // }
-
-    // console.log(this.videoType);
+    setInterval(() => {this.grabVideos()}, 10000);
     
+  }
 
+  grabVideos(): void {
+    if (!this.userHasNoVideos) {
+      this.transcriptionService.getPlaylistAsync(this.session, this.user.id, "dashboard").then((r) => {
+
+        // console.log(r);
+        
+        this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
+  
+  
+        this.shownVideos = this.uploads;
+  
+        console.log("<><><><", this.uploads);
+  
+        this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
+        this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
+        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+      
+      });
+    } 
+    
   }
 
   openModal(): void {
     $("#myModal").css("display", "flex");
+
+    var lang: string | null= localStorage.getItem('lang');
+
+    if (lang) {
+      $(`#lang_${lang}`).focus();
+    } 
+  }
+
+  signOut(): void {
+    localStorage.removeItem("JYUID"); 
+  }
+
+  syncVideos(): void {
+    if (!this.userHasNoVideos) {
+      this.transcriptionService.updateUserVideos(this.session, this.user.id, "dashboard").then((res: any) => {
+        // console.log("ddddd", res);
+
+        this.uploads = res["items"] as Video[]; //this.repeat(r, 6);
+  
+  
+        this.shownVideos = this.uploads;
+  
+        this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
+        this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
+        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+      
+      });
+    }
+    
+  }
+
+  getDemoVideos(): void {
+    this.transcriptionService.getDemoVideos("dashboard").then((res) => {
+      // console.log(">>>>>>", res);
+      this.demoVideos = res as Video[];
+
+      this.shownVideos = this.demoVideos;
+      this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
+      this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
+      this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+    });
+  }
+
+  setLang(lang: string): void {
+    this.lang = lang;
+
+    this.filteredLanguages = this.languages.filter((l: string) => {
+      return l != this.lang
+    });
+
+    localStorage.setItem('lang', lang);
   }
 
   closeModal(): void {
@@ -225,8 +351,12 @@ export class DashboardComponent {
 
     if (prms) {
       this.lang = prms;
+
+      this.flipLangSelect();
     } else {
       this.openModal();
+      // console.log("Iinjn");
+      $("#modal_title").text("Please Select a Language :)");
     }
   }
 

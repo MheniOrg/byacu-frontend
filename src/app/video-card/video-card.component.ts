@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Video } from '../video';
 import { YouTubePlayerModule } from '@angular/youtube-player';
@@ -19,7 +19,9 @@ export class VideoCardComponent {
   @Input() videoInfo!: Video;
   @Input() id!: number;
   transcriptionService: TranscriptionApiService = inject(TranscriptionApiService);
-  @Input() type!: number;
+  @Input() lang!: string;
+  @Output() transcribeButtonClicked = new EventEmitter<string>();
+
   y: string = "https://i.ytimg.com/vi/hifMYHbVELU/hq720.jpg";
   z: string = "The Sound of the Kinyarwanda language (Numbers, Greetings, Words & Prayer)";
 
@@ -86,7 +88,9 @@ export class VideoCardComponent {
   }
 
   transcribe(): void {
-    this.transcriptionService.transcribe(this.videoInfo.video_id, this.videoInfo.user_id, "Kinyarwanda", 'dashboard');
+    this.transcriptionService.transcribe(this.videoInfo.video_id, this.videoInfo.user_id, this.lang, 'dashboard').then((res) => {
+      this.transcribeButtonClicked.emit();
+    });
   }
 
 }

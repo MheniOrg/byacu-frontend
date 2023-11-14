@@ -1,15 +1,57 @@
 .background {
-    /* background-color: aliceblue; */
+    background-color: #f6f4f1;
+    width: 100vw;
+    min-height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    /* background: url(https://garden.spoonflower.com/c/9757164/p/f/m/RmYQjqT7f2DUkVRItvNlsstd8a57mVfW85jfv-LQ3v2ta_7TAkE/Geometric%20African%20Pattern.jpg); */
+        /* background: url(https://static.vecteezy.com/system/resources/previews/008/043/428/non_2x/african-mexican-seamless-pattern-south-african-ornaments-african-tribal-background-south-africa-design-uganda-pattern-design-for-background-texture-fabric-vector.jpg); */
+    background-size: 300px;
+    
+} 
+
+.top {
+    position:absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 10px; */
+    color: black;
+    width: 150px;
+    font-family: 'Antic';
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 80%;
+    top: 30px;
+    left: 30px;
+}
+
+#card {
+    /* background-color: aliceblue; */
+    background-color: #f6f4f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     color: #611f69;
     font-family: 'Antic';
-    margin: 0px;
-    width: 100vw;
-    margin-top: 10px;
-    margin-bottom: 70px;
+    width: 100%;
+    width: 100%;
+    /* margin-top: calc(100vh + 50px); */
+    /* margin-top: 50px; */
+    /* margin-bottom: 50px; */
+    /* margin-left: 50px;
+    margin-right: 50px;
+    width: calc(100% - 100px);
+    height: calc(100vh - 100px); */
+    /* border-radius: 5px;
+    overflow-y: scroll; */
+    /* box-shadow: 5px 10px 8px 10px #00000063; */
+
 }
 
 .title {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Video } from '../video';
 import { Router } from '@angular/router';
@@ -8,13 +8,16 @@ import { TranscriptionApiService } from '../transcription-api.service';
 import { LooseObject } from '../loose-object';
 import * as $ from 'jquery';
 import { User } from '../user';
+import moment from 'moment';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 let apiLoaded = false;
 
 @Component({
   selector: 'app-transcription-detail',
   templateUrl: './transcription-detail.component.html',
-  styleUrls: ['./transcription-detail.component.css']
+  styleUrls: ['./transcription-detail.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TranscriptionDetailComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
@@ -24,6 +27,7 @@ export class TranscriptionDetailComponent {
   url: string = "";
   player: any;
   reframed: Boolean = false;
+  shownTranscriptions!: LooseObject[];
   transcriptions!: LooseObject[];
   immutableTranscriptions!: LooseObject[];
   currIndex: number = 0;
@@ -34,6 +38,14 @@ export class TranscriptionDetailComponent {
   videoListener: any;
   user!: User;
   credentials: string = "";
+  video: LooseObject | undefined;
+  uploadInProgress: boolean = false;
+  resetInProgress: boolean = false;
+  saveInProgress: boolean = false;
+  errorMessage: string = "Something went wrong!";
+  infoMessage: string = "Hello!";
+  showError: boolean = true;
+  loaderText: string = "Reseting...";
 
   init() {
     // Return if Player is already created
@@ -142,16 +154,33 @@ export class TranscriptionDetailComponent {
     // this.currIndex = idx;
 
     this.matchTranscriptionsToVideo();
+
+    this.makeEditable(idx);
+
+    this.ref.detectChanges();
   }
 
   updateChanges() {
-    this.transcriptionService.updateTranscriptions(this.credentials, this.user.id, this.id, JSON.stringify(this.transcriptions), "https://justyams.com/dashboard") 
+    this.saveInProgress = true;
+    this.transcriptionService.updateTranscriptions(this.credentials, this.user.id, this.id, JSON.stringify(this.transcriptions), "https://justyams.com/dashboard").then((res) => {
+      console.log("Ss", res);
+      let temp = res as LooseObject;
+      this.saveInProgress = false;
+      this.openInfo(temp["message"]);
+      setTimeout(() => {this.closeInfo()}, 10000);
+    }).catch((res) => {
+      console.log("Sffs", res);
+      this.saveInProgress = false;
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, 3000);
+
+    });
     // console.log("dddddd");
   }
   
   uploadChanges() {
     this.transcriptionService.uploadTranscriptions(this.credentials, this.user.id, this.id, "https://justyams.com/dashboard") 
-    console.log("l;");
+    // console.log("l;");
   }
 
   onPlayerError(event: { data: any; }) {
@@ -166,7 +195,7 @@ export class TranscriptionDetailComponent {
     };
   };
 
-  constructor(private _router: Router, private ref: ChangeDetectorRef) {
+  constructor(private _router: Router, private ref: ChangeDetectorRef, private sanitizer: DomSanitizer) {
   }
 
 
@@ -182,19 +211,83 @@ export class TranscriptionDetailComponent {
       this.user = res;
     });
 
-    // escape(`https://www.youtube.com/watch?v=${this.id}`)
+    this.transcriptionService.getVideos(this.id, "transcription_page").then((res) => {
+      this.video = res as LooseObject;
+    });
 
     this.transcriptionService.getResults(this.id, "p").then((res) => {
+      this.shownTranscriptions = res;
       this.transcriptions = res;
       this.immutableTranscriptions = res;
-      // console.log(res);
+
+
+      this.transcriptions.forEach((item, idx, arr) => {
+        let i = this.transcriptions[idx]["text"]; //.replace(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+        this.transcriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
+        this.immutableTranscriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
+        this.shownTranscriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
+      });
+
     });
+
+  //   setTimeout(() => {
+  //     this.openError("");
+  //     setTimeout(() => {this.closeError()}, 3000);
+  
+  // }, 500);
+
+  // setTimeout(() => {
+  //   this.openInfo("");
+  //   setTimeout(() => {this.closeInfo()}, 3000);
+
+  // }, 500);
 
     
   }
 
+  openError(message: string) {
+    this.errorMessage = message;
+    $("#warning").css("top", "10px");
+  }
+
+  closeError() {
+    $("#warning").css("top", "-100px");
+    this.errorMessage = "Something went wrong!";
+  }
+
+  openInfo(message: string) {
+    this.infoMessage = message;
+    $("#info").css("top", "10px");
+  }
+
+  closeInfo() {
+    $("#info").css("top", "-100px");
+    this.infoMessage = "Hello!";
+  }
+
+  formatDate(since: boolean): string {
+    // return "";
+    if (this.video) {
+
+      if (since) {
+        return moment.unix(this.video['last_uploaded']).fromNow();
+      } else {
+        return moment.unix(this.video['last_uploaded']).format("LLLL");
+      }
+      
+    } else {
+      return ""
+    }
+    
+  }
+
   getProgress(): number {
-    return ((this.currIndex + 1) / this.transcriptions.length ) * 100;
+    if (this.transcriptions) {
+      return ((this.currIndex + 1) / this.transcriptions.length ) * 100;
+    }else {
+      return 0;
+    }
+    
   }
 
   updateReplaceTxt(event: any): void {
@@ -205,9 +298,118 @@ export class TranscriptionDetailComponent {
     this.searchTxt = event.target.value;
     this.currIndex = 0;
 
-    this.transcriptions = this.immutableTranscriptions.filter((item: LooseObject) => {
+    this.shownTranscriptions = this.transcriptions.filter((item: LooseObject) => {
       return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
     });
+
+    // this.transcriptions.forEach((item, idx, arr) => {
+    //   let i = this.transcriptions[idx]["text"].replace(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+    //   this.transcriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+    // });
+
+    this.shownTranscriptions.forEach((item, idx, arr) => {
+      let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+      this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+    });
+    
+  }
+
+  replace(): void {
+    this.transcriptions.forEach((item, idx, arr) => {
+      let i = this.transcriptions[idx]["text"].replaceAll(this.searchTxt, this.replaceTxt);
+      this.transcriptions[idx]["text"] = i;
+      this.transcriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+    });
+
+    this.shownTranscriptions = this.transcriptions.filter((item: LooseObject) => {
+      return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
+    });
+
+    
+
+    // this.shownTranscriptions.forEach((item, idx, arr) => {
+    //   let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+    //   this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+    // });
+  }
+
+  resetTranscriptions(): void {
+    this.resetInProgress = true;
+    // console.log("p", JSON.parse(JSON.stringify(this.immutableTranscriptions)));
+    this.transcriptions = JSON.parse(JSON.stringify(this.immutableTranscriptions)) as LooseObject[];
+    this.shownTranscriptions = this.transcriptions.filter((item: LooseObject) => {
+      return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
+    });
+
+    this.shownTranscriptions.forEach((item, idx, arr) => {
+      let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+      this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+    });
+
+    setTimeout(() => { this.resetInProgress = false; }, 200);
+  }
+
+  saveChangeBlur(total_idx: number, filtered_idx: number, event: any) {
+    // console.log(">", total_idx);
+    // console.log(">", filtered_idx);
+    console.log(">", event.target.innerText);
+
+    // let new_text = event.target.innerHTML.replace("<span>", "");
+    // new_text = new_text.replace("</span>", "");
+
+    // console.log(">k>", new_text);
+
+    let i = event.target.innerText.replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+
+    this.shownTranscriptions[filtered_idx]["text"] =  event.target.innerText;
+    this.shownTranscriptions[filtered_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+
+    this.transcriptions[total_idx]["text"] =  event.target.innerText;
+    this.transcriptions[total_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+
+    let ele = $(`#transcription-item-${total_idx}`);
+
+    ele.focus();
+    ele.attr('contenteditable','false');
+  }
+
+  saveChangeKey(total_idx: number, filtered_idx: number, event: any) {
+    // console.log(">", total_idx);
+    // console.log(">", filtered_idx);
+    // console.log(">", event.target.innerText);
+
+    let i = event.target.innerText.replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+
+    event.preventDefault();
+
+    this.shownTranscriptions[filtered_idx]["text"] =  event.target.innerText;
+    this.shownTranscriptions[filtered_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+
+    this.transcriptions[total_idx]["text"] =  event.target.innerText;
+    this.transcriptions[total_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
+
+    
+  }
+
+  makeEditable(idx: number) {
+
+    let ele = $(`#transcription-item-${idx}`);
+
+    
+
+    // if (!ele.is(":focus")) {
+    //   ele.html(ele.text());
+    // }
+    ele.focus();
+    
+    ele.attr('contenteditable','true');
+    
+
+    // ele = $(`#transcription-item-${idx} span`);
+
+    // ele.focus();
+    // ele.attr('contenteditable','false');
+
   }
 
 
@@ -238,26 +440,28 @@ export class TranscriptionDetailComponent {
       this.prevFiveIndex[0] = this.currIndex - this.maxSeen;
       this.prevFiveIndex[1] = this.currIndex - 1;
 
-      $("#focus-item").focus();
-      $("#focus-item").attr('contenteditable','true');
+      // $("#focus-item").focus();
+      // $("#focus-item").attr('contenteditable','true');
 
-      this.ref.detectChanges();
+      
     // }
     
 
-    console.log("jjjjj", this.currIndex);
+    // console.log("jjjjj", this.currIndex);
   }
 
   next(): void {
 
-    if (this.currIndex < this.transcriptions.length) {
-      this.currIndex += 1;
-      this.prevFiveIndex[0] += 1;
-      this.prevFiveIndex[1] += 1;
-    }
+    // if (this.currIndex < this.transcriptions.length) {
+    //   this.currIndex += 1;
+    //   this.prevFiveIndex[0] += 1;
+    //   this.prevFiveIndex[1] += 1;
+    // }
 
-    $("#focus-item").focus();
-    $("#focus-item").attr('contenteditable','true');
+    // $("#focus-item").focus();
+    // $("#focus-item").attr('contenteditable','true');
+
+    
   }
 
   prev(): void {
@@ -290,6 +494,7 @@ export class TranscriptionDetailComponent {
 
     $("#focus-item").focus();
     $("#focus-item").attr('contenteditable','true');
+    
   }
 
 

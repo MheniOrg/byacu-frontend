@@ -16,22 +16,35 @@
             </filter>
         </defs>
       </svg>
+      
     <div class="image-mask">
+        <!-- <span class="flag" [ngSwitch]="this.videoInfo.language">
+            <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                🇷🇼
+            </ng-container>
+            <ng-container  *ngSwitchCase="'Luganda'">
+                🇺🇬
+            </ng-container>
+            <ng-container  *ngSwitchCase="'Swahili'">
+                🇰🇪
+            </ng-container>
+            <ng-container  *ngSwitchDefault>
+                🆕
+            </ng-container>
+          </span> -->
+        <p class="video-title">{{videoInfo.title}}</p>
         <img [src]="videoInfo.thumbnail" class="vid-img"/>
     </div>
-    <p class="video-title">{{videoInfo.title}}</p>
-    <!-- <hr width="100%"/> -->
-    <div id="button-case-{{this.id}}" class="button-case">
+    
+    <div class="button-case">
         <ng-container [ngSwitch]="this.videoInfo.status"> 
             <ng-container  *ngSwitchCase="'NEW'">
                 <button class="top-button" (click)="transcribe()">Transcribe</button>
             </ng-container>
             <ng-container  *ngSwitchCase="'COMPLETED'">
-                <!-- <button class="top-button-shared">Retry</button> -->
                 <button class="top-button" (click)="navigateToVideoDetail()">View Results</button>
             </ng-container>
             <ng-container  *ngSwitchCase="'UPDATED'">
-                <!-- <button class="top-button-shared">Retry</button> -->
                 <button class="top-button" (click)="navigateToVideoDetail()">View Results</button>
             </ng-container>
             <ng-container  *ngSwitchCase="'FAILED'">
@@ -40,7 +53,7 @@
             <ng-container  *ngSwitchCase="'CREATED'">
                 <div class="loader-button">
                     <div class="loader"></div>
-                    Waiting in Queue
+                    Waiting
                 </div>
             </ng-container>
             <ng-container  *ngSwitchCase="'IN_PROGRESS'">
@@ -51,6 +64,9 @@
             </ng-container>
         </ng-container>
     </div>
+   
+    <!-- <hr width="100%"/> -->
+    
 </div>
 
 

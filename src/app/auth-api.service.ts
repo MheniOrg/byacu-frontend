@@ -91,13 +91,13 @@ export class AuthApiService {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
 
+    params["user_id"] = "";
+
     console.log(params);
 
     if (params["session_id"]) {
       localStorage.setItem('JYUID', JSON.stringify(params) );
     }
-
-    
 
     history.pushState("", document.title, window.location.pathname + window.location.search);
 
@@ -120,9 +120,13 @@ export class AuthApiService {
   }
 
   refreshAuth(page: string) {
-    localStorage.removeItem('JYUID');
+    // localStorage.removeItem('JYUID');
+    // localStorage.removeItem('lang');
 
-    this.initiateOath2Flow(page);
+    
+
+    // window.location = '/';
+    // this.initiateOath2Flow(page);
     // this.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
   }
 

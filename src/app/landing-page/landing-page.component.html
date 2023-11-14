@@ -1,17 +1,35 @@
+<!-- <app-kente-circle diameter="50px" bottom="20px" right="20px" circleId="1" [colorPallete]="colorPallete"></app-kente-circle>
+<app-kente-circle diameter="50px" bottom="80px" right="25px" circleId="2" [colorPallete]="colorPallete"></app-kente-circle>
+<app-kente-circle diameter="50px" bottom="30px" right="80px" circleId="3" [colorPallete]="colorPallete"></app-kente-circle> -->
+<!-- <app-kente-circle diameter="150px" bottom="30px" right="130px" circleId="2" [colorPallete]="colorPallete"></app-kente-circle>
+<app-kente-circle diameter="50px" bottom="50px" right="50px" circleId="3" [colorPallete]="colorPallete"></app-kente-circle> -->
+<!-- <app-kente-circle diameter={{110}} bottom="20px" right="220px" circleId="4" [colorPallete]="colorPallete"></app-kente-circle> -->
 <div class="background">
     <!-- <app-video-display></app-video-display> -->
+    <script src="https://accounts.google.com/gsi/client" async></script>
     <div class="main-container">
         
-        <div class="text-section">
+        <div id="text-section">
             <div class="top"><app-icon></app-icon></div>
-            <!-- <app-icon></app-icon> -->
             <p class="title"><span class="jy">Captions</span></p>
             <p class="service-text">Caption videos in Kinyarwanda, Luganda, and Swahili</p>
-            <div class="google-button-wrapper">
+            <!-- <button (click)="connect()" class="google-button-wrapper">
                <button (click)="connect()" class="google-button"></button>
+               <app-google-sign-in-button /> Connect To Youtube Via Google
+            </button> -->
+            
+            <button type="button" (click)="connect()" class="login-with-google-btn" >
+                Sign in with Google
+            </button>
+
+            
+            <a (click)="nav('/legal/PrivacyPolicy')" class="info-text">Privacy Policy</a>
+            <a (click)="nav('/legal/TermsOfService')" class="info-text">Terms of Service</a>
+
+            <div style="width: 70%; font-family: 'Antic'; text-align: center; position: absolute; bottom: 30px;color: rgb(80, 80, 80);">
+                Just Yams' use and transfer of information received from Google APIs to any other app will adhere to <a href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements.
             </div>
-            <a class="info-text" href="/legal/PrivacyPolicy">Privacy Policy</a>
-            <a class="info-text" href="/legal/TermsOfService">Terms of Service</a>
+            
             <!-- <p class="info-text" (click)="showText()">How it Works <span class="icon-arr" *ngIf="textOpen">&#9650;</span><span class="icon-arr" *ngIf="!textOpen">&#9660;</span></p>
             <div tabindex="0" id="how-it-works-text">
 Each language has a pretrained ML model (built using the Mozilla Common Voice Dataset) which we use to convert sound into captions.  If you decide to use our captioning service, we will use this model to generate  captions for you. At the moment we expect a Word Error Rate of 5%-20% depending on the language. 

@@ -1,5 +1,9 @@
 <div class="background">
-    <app-video-display></app-video-display>
+    <!-- <app-video-display></app-video-display> -->
+    <div class="top"><app-icon></app-icon></div>
+    <div class="warning" id="warning">{{this.errorMessage}}</div>
+    <div class="info" id="info">{{this.infoMessage}}</div>
+    <!-- <button class="dashboard-button" (click)="navigateToDashboard()">Back to Dashboard</button> -->
     <div class="main-container">
         <div class="video-controls-container">
             <div class="video-section">
@@ -7,59 +11,97 @@
                     <div id="player"></div>
                     <!-- <youtube-player id="player" class="embeded-video" videoId="X9t4DH6-9U4" [height]="300" [width]="550"></youtube-player> -->
                 </div>
-                <!-- <div class="title-and-description">
-                    <p class="title-text">{{video.title}}</p>
-                    <p class="desc-text">{{video.description}}</p>
-                </div> -->
-                <div class="ctrl-panel">
-
-                    <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
-                        <button class="top-button" (click)="uploadChanges()">Upload</button>
-                        <button class="top-button">Reset</button>
-                        <button class="top-button" (click)="updateChanges()">Save</button>
-                    </div>
-                    
-                    <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
-                        <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="Find"> 
-                        <button *ngIf="this.searchTxt.length > 0" class="top-button">Remove</button>
-                        <button *ngIf="this.searchTxt.length == 0" class="disabled-button">Remove</button>
-                    </div>
-
-                    <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
-                        <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="Replace with">
-                        <button *ngIf="this.replaceTxt.length > 0" class="top-button">Replace</button>
-                        <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
-                    </div>
-                    <!-- <hr width="100%"> -->
-
-                    
-                    <!-- <hr width="100%"> -->
-
+                <div  class="title-and-description">
+                    <p *ngIf="video" class="title-text">{{video["title"]}}</p>
+                    <!-- <p class="desc-text">{{video["description"]}}</p> -->
                 </div>
-                <button class="info-buttton" (click)="next()">i</button>
+                <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
+                    <button *ngIf="!uploadInProgress" class="top-button-alt" (click)="uploadChanges()"><span class="tooltiptext">Click here to upload these captions to youtube</span> Upload</button>
+                    <div *ngIf="uploadInProgress" class="loader-button">
+                        <div class="loader"></div>
+                    </div>
+                    <button *ngIf="!resetInProgress" class="top-button-alt" (click)="resetTranscriptions()"><span class="tooltiptext">Click here to reset the editor (undo all changes)</span> Reset</button>
+                    <div *ngIf="resetInProgress" class="loader-button">
+                        <div class="loader"></div>
+                    </div>
+                    <button *ngIf="!saveInProgress" class="top-button-alt" (click)="updateChanges()"><span class="tooltiptext">Click here to upload these captions to our database</span>  Save</button>
+                    <div *ngIf="saveInProgress" class="loader-button">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+                
+                
+                <!-- <button class="info-buttton" (click)="next()">i</button> -->
+            </div>
+            <div class="ctrl-panel">
+                    
+                <!-- <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
+                    <button class="top-button-alt" (click)="uploadChanges()">Upload</button>
+                    <button class="top-button-alt">Reset</button>
+                    <button class="top-button-alt" (click)="updateChanges()">Save</button>
+                </div> -->
+                
+                
+                
+                <!-- <hr style="color: #612c67db;" width="100%"> -->
+
+                <div class="ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'UPDATED'">
+                    <span style="font-size: 24px;width: 90%; text-align: left; margin-bottom: 15px;">Information</span>
+                    <p>This video was captioned in {{this.video['language']}}.</p>
+                    <p>Captions for this video were uploaded to Youtube {{formatDate(true)}} on {{formatDate(false)}}.</p>
+                    <p>Use the editor to the right to repair any mistakes our model may have made.</p>
+                    <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
+                </div>
+                <div class="ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'COMPLETED'">
+                    <span style="font-size: 24px;width: 90%; text-align: left; margin-bottom: 15px;">Information</span>
+                    <p>This video was captioned in {{this.video['language']}}.</p>
+                    <p>You have not yet uploaded captions for this video to Youtube.</p>
+                    <p>Use the editor to the right to repair any mistakes our model may have made.</p>
+                    <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
+                </div>
+                
+                
+
+                
+                <!-- <hr width="100%"> -->
+
             </div>
         </div>
         <div class="text-section">
-            <mat-progress-bar mode="determinate" class="progress-bar" [value]="this.getProgress()"></mat-progress-bar>
-            <div *ngIf="transcriptions" class="transcriptions">
-                
-                <ng-container *ngFor="let item of transcriptions; let i = index">
-                    <button *ngIf="i > currIndex" (click)="this.jumpTo(i)" class="wrap-transcription-item">
-                        <p class="time-code" *ngIf="prevFiveIndex[0] <= i && prevFiveIndex[1] >= i " unselectable >{{item['start_time'].substring(0,8)}}</p>
-                        <div tabindex="0" *ngIf="prevFiveIndex[0] <= i && prevFiveIndex[1] >= i " class="transcription-item">{{item['text']}}</div>
-                    </button>
-                </ng-container>
-                <button  *ngIf="transcriptions[currIndex]" class="wrap-transcription-item">
-                    <p class="time-code" unselectable id="focus-time-code" >{{transcriptions[currIndex]['start_time'].substring(0,8)}}</p>
-                    <div class="transcription-item" tabindex="0" id="focus-item" autofocus>{{transcriptions[currIndex]['text']}}</div>
-                </button>
-                <ng-container *ngFor="let item of transcriptions; let i = index">
-                    <button *ngIf="i > currIndex" (click)="this.jumpTo(i)" class="wrap-transcription-item">
-                        <p class="time-code" *ngIf="i > currIndex" unselectable>{{item['start_time'].substring(0,8)}}</p>
-                        <div tabindex="0" *ngIf="i > currIndex" class="transcription-item">{{item['text']}}</div>
-                    </button>
-                </ng-container>
+            <!-- <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
+                <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="Find"> 
+                <button *ngIf="this.searchTxt.length > 0" class="top-button">Remove</button>
+                <button *ngIf="this.searchTxt.length == 0" class="disabled-button">Remove</button>
             </div>
+
+            <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
+                <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="Replace with">
+                <button *ngIf="this.replaceTxt.length > 0" class="top-button">Replace</button>
+                <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
+            </div> -->
+            <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; align-items: center; background-color: white; padding-bottom: 10px;">
+                <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="&#8981; Find">
+                <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="&#8645; Replace with">
+                <button (click)="replace()" *ngIf="this.replaceTxt.length > 0" class="top-button"><span class="tooltiptext">Replace "{{this.searchTxt}}" with "{{this.replaceTxt}}"</span>Replace</button>
+                <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
+            </div>
+
+            <div style="width: calc(100% - 70px);padding-left: 20px;padding-right: 50px;">
+                <mat-progress-bar mode="determinate" class="progress-bar" [value]="this.getProgress()"></mat-progress-bar>
+            </div>
+            
+            <div *ngIf="transcriptions && !resetInProgress" class="transcriptions">
+
+                <ng-container *ngFor="let item of shownTranscriptions; let i = index">
+                    <button  (click)="this.jumpTo(item['index'])" class="wrap-transcription-item">
+                        <p class="time-code" unselectable>{{item['start_time'].substring(0,8)}}</p>
+                        <div tabindex="0" (blur)="saveChangeBlur(item['index'], i, $event)" [id]="'transcription-item-'.concat(item['index'].toString())" class="transcription-item" [innerHtml]="item['html']"></div>
+                   </button>
+                </ng-container>
+                
+            </div>
+            <div *ngIf="resetInProgress" class="loader-big"></div>
+            <div *ngIf="resetInProgress" class="loader-text">{{loaderText}}</div>
         </div>
     </div>
     

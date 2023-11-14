@@ -1,5 +1,6 @@
 .background {
-    background-color: rgb(255, 255, 255); /*#f1f1f1;*/
+    /* background-color: rgb(255, 255, 255); #f1f1f1; */
+    background-color: #f6f4f1;
     width: 100vw;
     min-height: 100vh;
     display: flex;
@@ -8,86 +9,158 @@
     justify-content: flex-start;
 }
 
+
 .video-container {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
-    justify-content: center;
-    /* margin-top: 150px; */
-    width: 80%;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 50px;
+    width: 65vw;
     flex-wrap: wrap;
+    /* &:nth-child(4n+3) { margin-right: 70px; } */
     /* background-color: aliceblue; */
     /* border: solid #611f69 2px; */
 }
 
+/* [style]="!((i + 1) % 4 == 0) ? 'margin-right: calc(4%/3);' : 'margin-right: 0px;' " */
+
+/* .video-card {
+    margin-right: calc(((65vw - 800px)/3)); 
+} */
+
+.video {
+    width:24%;
+    margin-right: calc(4%/3);
+}
+
+.video-container :nth-child(4n + 4) {
+    margin-right: 0px;
+}
+
+.top {
+    position:absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 10px; */
+    color: black;
+    width: 150px;
+    font-family: 'Antic';
+    font-size: 20px;
+    cursor: pointer;
+    /* margin-right: 80%; */
+    top: 30px;
+    left: 30px;
+}
+
+
 .search-n-filter {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin-top: 85px;
+    justify-content: space-between;
+    margin-top: 150px;
     /* width: calc(60% - 20px); */
 
     /* margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 40px; */
 
-    width: 70%;
+    width: 65%;
     height: fit-content;
 }
 
 .input-box {
-    all: unset;
-    width: 100%;
-    /* flex-grow: 1; */
-    height: 35px;
-    border-width: 1px;
-    border-color: #611f69;
-    /* border-radius: 5px; */
-    border-radius: 5px 5px 0px 0px; 
-    border-style: solid;
-    text-align: center;
-
-    /* border-bottom: none; */
-    
+    all: unset;                
+    width: calc(45% - 20px);  
+    height: 40px;
+    text-align: left;
     font-weight: 400;
     font-size: 18px;
     transition: box-shadow 0.5s;
     color: #611f69;
     background-color: aliceblue;
     font-family: 'Antic';
-    /* margin-bottom: 10px; */
-    /* margin-right: 10px; */
+    border-bottom: #621f6937 solid 1px;
+    padding-left: 20px;
 }
 
 .filter-buttons {
     /* margin-left: 10px; */
     transition: box-shadow 0.5s;
-    border-radius: 0px 0px 5px 5px; 
+    /* border-radius: 5px;  */
     overflow: hidden;
-    width: auto;
-    border-color: #611f69;
-    border-style: solid;
-    width: 100%;
-    border-width: 1px;
-    height: 35px;
+    /* width: auto; */
+    /* border-color: #611f69;
+    border-style: solid; */
+    width: 45%;
+    /* height: fit-content; */
+    /* border-width: 1px; */
+    height: 40px;
     /* flex-grow: 1; */
-
-    border-top: none;
+    background-color: aliceblue;
+    /* border-top: none; */
+    border-bottom: solid 1px rgb(98, 31, 105, 0.216);
 }
 
-.ctrl-panel {
+
+.top-right-panel {
+    position:absolute;
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* margin-top: 10px; */
+    color: black;
+    width: 170px;
+    height: 60px;
+    font-family: 'Antic';
+    
+    /* font-size: 40px; */
+    /* cursor: pointer; */
+    /* margin-right: 80%; */
+    top: 30px;
+    right: 30px;
+    /* background-color: #d9ad61; */
+
+    -ms-user-select: none;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+.lang-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 50%; */
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+}
+
+.lang-bubble:hover {
+    background-color: rgb(98, 31, 105, 0.216);
+}
+
+#flag-select {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    position: fixed;
+    justify-content: flex-start;
+    /* border-radius: 50%; */
+    width: 45px;
+    height: 45px;
+    font-size: 32px;
+    /* border-radius: 50%; */
     background-color: aliceblue;
-    border-radius: 5px;
-    width: 310px;
-    height: 260px;
-    top: 300px;
-    left: 30px
+    border-bottom: solid 2px rgba(98, 31, 105, 0.284);
+    cursor: pointer;
+    color: #611f69;
+    /* transition: height 0.1s ease-in-out; */
 }
 
 @keyframes spinner {
@@ -128,7 +201,7 @@ border-radius: 5px;
 /* Position the tooltip text - see examples below! */
 /* rotate: -90deg; */
 position: absolute;
-right: -80px;
+right: -180px;
 /* left: 50px; */
 /* margin-left: -60px; */
 z-index: 1;
@@ -159,20 +232,21 @@ visibility: visible;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 22px;
-    width: 22px;
+    /* height: 30px; */
+    aspect-ratio: 1/1;
+    width: 1%;
     /* flex-grow: 1; */
     border-radius: 50%;
-    padding: 8px;
-    margin-top: 10px;
-    margin-bottom: 50px;
+    padding: 2%;
+    /* margin-top: 10px; */
+    /* margin-bottom: 50px; */
     /* margin-left: calc((4% - 30px) / 2);
     margin-right: calc((4% - 30px) / 2); */
     /* padding-left: 2px;
     padding-right: 2px; */
     font-weight: 900;
-    font-size: 22px;
-    /* background-color: #611f69; */
+    font-size: 25px;
+    background-color: aliceblue;
 
     color: #611f69;
     cursor: pointer;
@@ -182,7 +256,7 @@ visibility: visible;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-    border: solid 1px #611f69;
+    border-left: solid 1px rgb(98, 31, 105, 0.216);
     /* margin: 5px;
     margin-top: 30px; */
     /*
@@ -197,8 +271,8 @@ visibility: visible;
 
 .sync-button:hover {
     
-    background-color: #44154a;
-    color: white;
+    background-color: #611f69;
+    color: aliceblue;
 }
 
 
@@ -220,11 +294,42 @@ visibility: visible;
     box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b;
 } */
 
+.indicator-inactive {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    border-radius: 50%;
+    border-color: #611f69;
+    border-width: 1px;
+    border-style: solid;
+    width: 6px;
+    height: 6px;
+    background-color: aliceblue;
+    /* margin-left: calc(100% - 30px); */
+
+}
+
+.indicator-active {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    border-radius: 50%;
+    border-color: #611f69;
+    border-width: 1px;
+    border-style: solid;
+    width: 6px;
+    height: 6px;
+    background-color: #611f69;
+    /* margin-left: calc(100% - 30px); */
+
+}
+
 .left-click-inactive {
     all: unset;
+    position: relative;
     height: 100%;
     width: 30%;
-    background-color: aliceblue;
+    background-color: rgba(240, 248, 255, 0);
     /* border-radius: 20px 0px 0px 20px;  */
     text-align: center;
     cursor:pointer;
@@ -247,15 +352,16 @@ visibility: visible;
     /* transition: background-color 0.1s, color 0.1s;; */
 }
 
-.left-click-inactive:hover {
+.left-click-inactive:hover .indicator-inactive  {
     background-color: #611f69;
     /* color: #d9ad61; */
-    color: white;
+    /* color: white; */
     /* border-color: rgb(225, 207, 70); */
 }
 
 .left-click-active {
     all: unset;
+    position: relative;
     height: 100%;
     width: 30%;
     background-color: #611f69;
@@ -283,9 +389,10 @@ visibility: visible;
 
 .right-click-inactive {
     all: unset;
+    position: relative;
     height: 100%;
     width: 30%;
-    background-color: aliceblue;
+    background-color: rgba(240, 248, 255, 0);
     /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
@@ -310,15 +417,16 @@ visibility: visible;
     /* transition: background-color 0.5s, color 0.5s;; */
 }
 
-.right-click-inactive:hover {
+.right-click-inactive:hover .indicator-inactive  {
     background-color: #611f69;
     /* color: #d9ad61; */
-    color: white;
+    /* color: white; */
     /* border-color: rgb(225, 207, 70); */
 }
 
 .right-click-active {
     all: unset;
+    position: relative;
     height: 100%;
     width: 30%;
     background-color: #611f69;
@@ -347,18 +455,21 @@ visibility: visible;
 
 .mid-click-inactive {
     all: unset;
+    position: relative;
     height: 100%;
-    width: 40%;
-    background-color: aliceblue;
+    width: calc(40% - 2px);
+    background-color: rgba(240, 248, 255, 0);
     /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
     cursor:pointer;
     /* color: rgb(225, 207, 70); */
     color: #611f69;
     font-family: 'Antic';
-    /* border-color: #d9ad614b;
+    border-color: rgba(98, 31, 105, 0.216);
     border-style: solid;
-    border-width: 1px; */
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;
     font-size: 18px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -373,17 +484,18 @@ visibility: visible;
     /* transition: background-color 0.5s, color 0.5s;; */
 }
 
-.mid-click-inactive:hover {
+.mid-click-inactive:hover .indicator-inactive  {
     background-color: #611f69;
     /* color: #d9ad61; */
-    color: white;
+    /* color: white; */
     /* border-color: rgb(225, 207, 70); */
 }
 
 .mid-click-active {
     all: unset;
+    position: relative;
     height: 100%;
-    width: 40%;
+    width: calc(40% - 2px);
     background-color: #611f69;
     /* border-radius: 0px 20px 20px 0px;  */
     text-align: center;
@@ -391,10 +503,12 @@ visibility: visible;
     color: white;
     /* color: #d9ad61; */
     font-family: 'Antic';
-    /* border-color: #d9ad614b;
+    border-color: #611f69;
     border-style: solid;
-    border-width: 1px; */
+    border-width: 1px;
     font-size: 18px;
+    border-top: none;
+    border-bottom: none;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -463,7 +577,7 @@ visibility: visible;
 
     display: flex;
     flex-direction: row-reverse;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     cursor: pointer;
@@ -491,14 +605,23 @@ visibility: visible;
     width: calc(50% - 15px);
 }
 
+.lang-select-flag-modal {
+    position: absolute;
+    right: 10px;
+    font-size: 36px;
+    /* rotate: z 180deg; */
+    /* top: 40%; */
+}
+
 .lang-select-text {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    margin-left: 15px;
-    font-size: 26px;
-    width: calc(50% - 15px);
-    text-align: left;
+    justify-content: center;
+    /* margin-left: 15px; */
+    font-size: 30px;
+    width: 90%; /*calc(50% - 15px);*/
+    text-align: center;
+    position: relative;
 }
 
 /* Modal Content/Box */
@@ -512,16 +635,27 @@ visibility: visible;
     /* margin: 15% auto; 15% from the top and centered */
     /* padding: 20px;
     border: 1px solid #888; */
-    width: 30%; /* Could be more or less, depending on screen size */
-    /* height: 500px; */
+    /* width: 30%; Could be more or less, depending on screen size */
+    height: 500px;
     aspect-ratio: 1/1;
 }
+
+
 
 /* The Close Button */
 .close {
     color: #aaa;
     float: right;
-    font-size: 42px;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: 'Antic';
+    margin-bottom: 10px;
+} 
+
+#modal_title {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
     font-weight: bold;
     font-family: 'Antic';
     margin-bottom: 10px;
@@ -533,3 +667,185 @@ visibility: visible;
     text-decoration: none;
     cursor: pointer;
 } 
+
+
+@media screen and (max-width: 1400px) {
+    .video-container {
+        width: 65vw;
+    }
+
+    .search-n-filter {
+        width: 65vw;
+    }
+
+    /* .input-box {
+        width: calc(100% - 20px);
+        margin-bottom: 15px;
+    }
+
+    .filter-buttons {
+        overflow: hidden;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .sync-button {
+        margin-bottom: 15px;
+    } */
+
+    
+
+    .video {
+        width: 30%;
+        margin-right: 5%;
+    }
+    
+    .video-container :nth-child(3n + 3) {
+        margin-right: 0px !important;
+    }
+
+    .video-container :nth-child(4n + 4) {
+        margin-right: 5%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .video-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 50px;
+        width: 80vw;
+        /* flex-wrap: wrap; */
+        /* background-color: aliceblue; */
+        /* border: solid #611f69 2px; */
+    }
+
+    .search-n-filter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+        height: fit-content;
+    }
+
+    .input-box {
+        width: calc(100% - 20px);
+        margin-bottom: 15px;
+    }
+
+    .filter-buttons {
+        overflow: hidden;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .sync-button {
+        margin-bottom: 15px;
+    }
+
+    .video {
+        width: 100% !important;
+        margin: 0px !important;
+    }
+
+    .sync-button {
+        width: 30px;
+        padding: 10px;
+    }
+}
+
+.signout-button {
+    all: unset;
+    height: 30px;
+    /* width: 32%; 120px; */
+    width: 100px;
+    /* flex-grow: 1; */
+    border-radius: 2px 2px 2px 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #612c67db;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* margin: 5px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    /* margin: 5px; */
+}
+
+.signout-button:hover {
+    background-color: #3e1443;
+    color: white;
+}
+
+.demo-mode {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    
+}
+
+.demo-text {
+    font-size: 18px;
+    font-family: 'Antic';
+    text-align: center;
+    margin-top: 100px;
+}
+
+.demo-video-button {
+    all: unset;
+    height: 30px;
+    /* width: 32%; 120px; */
+    width: 180px;
+    /* flex-grow: 1; */
+    border-radius: 2px 2px 2px 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #612c67db;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* margin: 5px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    /* margin: 5px; */
+}
+
+.demo-video-button :hover {
+    background-color: #3e1443;
+    color: white;
+}

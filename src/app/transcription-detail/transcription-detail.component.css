@@ -10,12 +10,29 @@
     color:#d9ad6133
 }
 
+.top {
+    position:absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 10px; */
+    color: black;
+    width: 150px;
+    font-family: 'Antic';
+    font-size: 20px;
+    cursor: pointer;
+    /* margin-right: 80%; */
+    top: 30px;
+    left: 30px;
+}
+
 .main-container {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 85px;
-    height: calc(100% - 85px);
+    margin-top: 100px;
+    height: calc(100% - 100px);
     /* height: 100%; calc(100% - 85px); */
     /* background-color: blueviolet; */
 }
@@ -24,12 +41,13 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
-    height: fit-content;
+    /* align-items: flex-start; */
+    /* height: fit-content; */
     /* background-color: aliceblue; */
     width: 100%;
     border-radius: 5px;
     border:none;
+    /* margin-bottom: 10px; */
     /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
 }
 
@@ -38,11 +56,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: calc(100% - 20px);
+    height: calc(100% - 10px);
     width: calc(40% - 40px);
     margin-right: 10px;
     margin-left: 30px;
     margin-bottom: 10px;
+    margin-top: 0px;
     border: none;
 }
 
@@ -58,27 +77,31 @@
     margin-right: 30px;
     margin-bottom: 10px;
     border-radius: 2px;
+    border-bottom: #621f6937 solid 1px;
     /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
 }
 
 #video-player {
     display: block;
     width: 100%;
-    /* height: auto; */
-    border-radius: 5px 5px 5px 5px;
-    overflow: hidden;
-    background-color: rgb(0, 0, 0);
+    height: auto;
+    /* border-radius: 5px 5px 5px 5px; */
+    /* overflow: hidden; */
+    background-color: #621f6921;  
     padding: 0px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    /* padding-top: 30px;
+    padding-bottom: 30px; */
     margin: 0px;
-    /* border: none; */
+    border: none;
+    aspect-ratio: 16/9;
+    /* border-bottom: #621f6937 solid 1px; */
 }
 
 #player {
     aspect-ratio: 16/9;
     padding: 0px;
     margin: 0px;
+    width: 100%
     /* border-radius: 5px 5px 5px 5px; */
     /* border: none; */
     
@@ -89,8 +112,13 @@
 }
 
 .title-and-description {
-    margin: 5px;
+    margin: 10px;
     width: calc(100% - 20px);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* flex-grow: 2; */
 }
 
 .desc-text {
@@ -108,48 +136,92 @@
 
 .title-text {
     width: 100%;
-    font-size: 22px;
+    font-size: 18px;
     /* height: 100px; */
+    color: #611f69;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* height: 100%; */
     display: -webkit-box;
-   -webkit-line-clamp: 1; /* number of lines to show */
-           line-clamp: 1; 
+   -webkit-line-clamp: 2; 
+           line-clamp: 2; 
    -webkit-box-orient: vertical;
-   color: black;
+   /* color: black; */
     font-family: 'Antic';
+    padding: 0px;
 }
 
 .ctrl-panel {
     /* all: unset; */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: center; */
     align-items: center;
-    color: #621f69;
-    /* flex-grow: 1; */
-    width: calc(100% - 4px);
-    padding: 4px;
-    /* height: 150px; */
+    flex-grow: 1;
+    /* width: calc(100%); */
+    /* padding: 4px; */
+    /* height: 250px; */
     /* background-color: #d9ad6191; */
-    border-radius: 5px;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    /* border: #000000 solid 1px; */
-    overflow: hidden;
-    /* border-top: #611f69 2px solid; */
-    /* box-shadow: 0 4px 8px 0 #d9ad6133, 0 6px 20px 0 #d9ad614b; */
+    /* background-color: aliceblue; */
+    font-family: 'Antic';
+    /* border-radius: 5px; */
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #611f69;
+    background-color: aliceblue;
+    font-family: 'Antic';
+    border: none;
+    border-bottom: #621f6937 solid 1px;
+    text-align: left;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }
 
-.ctrl-panel-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    /* margin: 15px; */
-    height: 100%;
+.ctrl-panel::-webkit-scrollbar {
+    display: none;
 }
+
+.ctrl-panel-messages {
+    display:flex; 
+    /* justify-content: center;  */
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 16px;
+    height: 90%;
+    width: 90%; 
+    /* overflow-y: scroll; */
+    margin: 0px;
+    margin-left: 10px;
+    margin-top: 10px;
+    /* text-align: left; */
+}
+
+.ctrl-panel-messages p {
+    border-left: #621f696e solid 2px;
+    /* border-bottom: #621f696e solid 1px; */
+    padding-left: 10px;
+    /* margin-bottom: 3px; */
+    /* padding-top: 3px; */
+    width: calc(100% - 12px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* display:flex; 
+    justify-content: space-between; 
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 16px;
+    height: 60px;
+    width: 90%; */
+    /* text-align: left; */
+}
+
+/* .ctrl-panel-messages p:hover {
+    background-color: #621f696e;
+    color: aliceblue;
+} */
 
 .transcriptions {
     display: flex;
@@ -166,6 +238,7 @@
 .wrap-transcription-item {
     all: unset;
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -184,13 +257,13 @@
     /* display: inline-block; */
     width: calc(100% - 20px);
     /* border-bottom: none; */
-    
+    /* display: inline-block; */
     font-size: 18px;
     min-height: 18px;
     /* min-height: 18px; */
     /* max-height: 20px; */
     caret-color: #611f69;
-    caret-shape: block;
+    /* caret-shape: block; */
     
     overflow: hidden; 
     white-space: nowrap;
@@ -199,7 +272,7 @@
     font-family: 'Antic';
     padding: 5px;
     background-color: rgb(247, 242, 235);  
-    margin-top: 12px;
+    /* margin-top: 12px; */
 
     border-radius: 5px;
     
@@ -209,6 +282,7 @@
     /* border-top: solid #611f69 2px;  */
     /* transition: min-height 0.5s; */
 }
+
 
 .info-buttton {
     display: flex; 
@@ -290,7 +364,7 @@
 
 .progress-bar{
     margin-top: 30px;
-    width: calc(100% - 40px);
+    width: calc(50% - 40px);
     background-color:#621f694a !important;
     color: #621f69 !important;
 
@@ -324,19 +398,18 @@
     color: #611f69;
 }
 
-.top-button {
+.top-button-alt {
     all: unset;
-    height: 22px;
-    /* width: 32%; 120px; */
-    flex-grow: 1;
-    border-radius: 5px;
+    height: 24px;
+    /* flex-grow: 1; */
+    position: relative;
+    width: 32%;
+    border-radius: 2px;
     padding-top: 8px;
     padding-bottom: 8px;
-    /* padding-left: 2px;
-    padding-right: 2px; */
     font-weight: 400;
     font-size: 18px;
-    background-color: #611f69;
+    background-color: #612c67db;
     color: white;
     cursor: pointer;
     font-family: 'Antic';
@@ -345,7 +418,6 @@
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-    margin: 5px;
     /*
         Introduced in IE 10.
         See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
@@ -354,8 +426,45 @@
     user-select: none;
 }
 
-.top-button:hover {
-    
+.top-button {
+    all: unset;
+    height: 22px;
+    /* width: 32%; 120px; */
+    /* flex-grow: 1; */
+    position: relative;
+    width: 15%;
+    border-radius: 2px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    /* padding-left: 2px;
+    padding-right: 2px; */
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #612c67db;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* margin: 10px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 0px;
+}
+
+.top-button:hover { 
+    background-color: #3e1443;
+    color: white;
+}
+
+.top-button-alt:hover { 
     background-color: #3e1443;
     color: white;
 }
@@ -380,22 +489,31 @@
 
 .input-box-big {
     all: unset;
-    /* width: calc((64% + (4% / 2)) - 4px); */
-    flex-grow: 7;
-    height: 34px;
-    border-width: 1px;
+    /* flex-grow: 2; */
+    width: 40%;
+    height: 40px;
+    /* border-width: 1px;
     border-color: #611f69;
     border-radius: 5px;
     border-style: solid;
     text-align: center;
-    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    transition: box-shadow 0.5s;
+    color: #611f69;
+    background-color: aliceblue;
+    font-family: 'Antic'; */
+    margin-right: 10px;
+    margin-bottom: 0px;
+    text-align: left;
     font-weight: 400;
     font-size: 18px;
     transition: box-shadow 0.5s;
     color: #611f69;
     background-color: aliceblue;
     font-family: 'Antic';
-    margin: 5px;
+    border-bottom: #621f6937 solid 1px;
+    padding-left: 20px;
 }
 
 .input-box-small {
@@ -421,9 +539,10 @@
 .disabled-button {
     all: unset;
     height: 22px;
+    width: 15%;
     /* width: 32%; */
-    flex-grow: 1;
-    border-radius: 5px;
+    /* flex-grow: 1; */
+    border-radius: 2px;
     padding-top: 8px;
     padding-bottom: 8px;
     font-weight: 400;
@@ -444,5 +563,282 @@
     */
     -ms-user-select: none;
     user-select: none;
-    margin: 5px;
+    /* margin: 10px; */
+    margin-bottom: 0px;
+}
+
+.transcription-item span {
+    background-color: #612c67db;
+    color: aliceblue;
+    height: 100%;
+    /* user-select: none; */
+    /* padding-top:5px; 
+    padding-bottom:5px; */
+    border-radius: 2px;
+    /* width: fit-content; */
+}
+
+.transcription-item:focus span {
+    background-color: blanchedalmond;;
+    color: black;
+    height: 100%;
+    /* user-select: none; */
+    /* padding-top:5px; 
+    padding-bottom:5px; */
+    border-radius: 2px;
+    /* width: fit-content; */
+}
+
+
+.transcription-item span::selection {
+    background:  white; /* WebKit/Blink Browsers */
+    color: #611f69;
+  }
+  .transcription-item span::-moz-selection {
+    background:  white; /* WebKit/Blink Browsers */
+    color: #611f69;
+}
+
+
+.transcription-item span {
+    background-color: #612c67db;
+    color: aliceblue;
+    height: 100%;
+    /* padding-top:5px; 
+    padding-bottom:5px; */
+    border-radius: 2px;
+    /* width: fit-content; */
+}
+
+.dashboard-button {
+    all: unset;
+    height: 30px;
+    /* width: 32%; 120px; */
+    width: 180px;
+    /* flex-grow: 1; */
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    border-radius: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: #612c67db;
+    color: white;
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* margin: 5px; */
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    /* margin: 5px; */
+}
+
+.dashboard-button:hover {
+    background-color: #3e1443;
+    color: white;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 90%;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -45%;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.top-button-alt:hover .tooltiptext {
+visibility: visible;
+opacity: 1;
+}
+
+.top-button:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wrap-transcription-item:hover .tooltiptext {
+visibility: visible;
+opacity: 1;
+}
+
+.loader {
+    border: 2px solid #f3f3f300;
+    border-radius: 50%;
+    border-top: 2px solid #621f69;
+    border-bottom: 2px solid #621f69;
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-big {
+    border: 4px solid #f3f3f300;
+    margin-top: 150px;
+    border-radius: 50%;
+    border-top: 4px solid #621f69;
+    border-bottom: 4px solid #621f69;
+    width: 48px;
+    height: 48px;
+    z-index: 2;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* .loader-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 22px;
+    transition: background-color 0.1s;
+    border-radius: 0px 20px 20px 0px; 
+    text-align: center;
+    cursor:pointer;
+    color: #696969bc;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #621f69;
+    font-family: 'Antic';
+    font-size: 24px;
+} */
+
+.loader-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row-reverse;
+    height: 22px;
+    /* flex-grow: 1; */
+    position: relative;
+    width: calc(32% - 2px);
+    border-radius: 2px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background-color: aliceblue;
+    color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    font-family: 'Antic';
+    text-align: center;
+    transition: background-color 0s;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    border: solid 1px #3e1443;
+    cursor:progress;
+}
+
+
+
+.warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 75px;
+    position: absolute;
+    top: -100px;
+    left: calc(50% - 150px);
+    background-color: rgba(241, 40, 40, 0.723);
+    color: aliceblue;
+    text-align: center;
+    font-family: 'Antic';
+    border-radius: 3px;
+    font-size: 16px;
+    transition: top 0.5s;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 75px;
+    position: absolute;
+    top: -100px;
+    left: calc(50% - 150px);
+    background-color: rgba(54, 190, 27, 0.599);
+    color: aliceblue;
+    text-align: center;
+    font-family: 'Antic';
+    border-radius: 3px;
+    font-size: 16px;
+    transition: top 0.5s;
+}
+
+.loader-text {
+    font-family: 'Antic';
+    font-size: 24px;
+    color: #611f69;
+    margin-top: 50px;
 }

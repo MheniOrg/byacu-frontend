@@ -91,7 +91,7 @@ export class TranscriptionApiService {
 
   }
 
-  getPlaylistAsync(credentials: string, userId: string, typemap: LooseObject, page: string): Promise<LooseObject> {
+  getPlaylistAsync(credentials: string, userId: string, page: string): Promise<LooseObject> {
     return new Promise((resolve, reject) => { 
 
       var req = new XMLHttpRequest();
@@ -159,37 +159,6 @@ export class TranscriptionApiService {
     });
   }
 
-/*
-const apiUrl = 'https://byacu.com/update_transcriptions';
-const videoId = 'VIDEO_ID';
-const sessionId = 'SESSION_ID';
-const userId = 'USER_ID';
-
-const jsonData = JSON.stringify([
-  {
-    index: 0,
-    start_time: '00:00:00,000',
-    end_time: '00:00:05,000',
-    text: 'text',
-  },
-]);
-
-const xhr = new XMLHttpRequest();
-xhr.open('POST', `${apiUrl}?video_id=${videoId}&session_id=${sessionId}&user_id=${userId}`, true);
-xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === XMLHttpRequest.DONE) {
-    if (xhr.status === 200) {
-      console.log('Response:', xhr.responseText);
-    } else {
-      console.error('Error:', xhr.status, xhr.statusText);
-    }
-  }
-};
-
-xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
-*/
 
   // No payload for transcriptions ????
   updateTranscriptions(credentials: string, userId: string, videoId: string, payload: string, page: string) {
@@ -208,10 +177,14 @@ xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
             let res = JSON.parse(req.response);
 
             resolve(res);
+
+            // console.log(res);
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            // console.error(req.statusText);
+            reject(JSON.parse(req.response));
+            // this.authService.refreshAuth(page);
           }
         }
         
@@ -220,6 +193,7 @@ xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
       req.onerror = (e) => {
         console.error(req.statusText);
         reject(req.statusText);
+        // reject(JSON.parse(req.response));
       };
 
       req.send(`json_data=${encodeURIComponent(payload)}`);
@@ -243,6 +217,8 @@ xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
             let res = JSON.parse(req.response);
 
             resolve(res);
+
+            console.log(res);
     
           } 
           else {
@@ -268,13 +244,85 @@ xhr.send(`json_data=${encodeURIComponent(jsonData)}`);
 
       var req = new XMLHttpRequest();
 
-      req.open('POST', `https://byacu.com/supported_languages`);
+      req.open('GET', `https://byacu.com/supported_languages`);
 
       req.onreadystatechange = (e) => {
 
         if (req.readyState === 4) {
           if (req.status === 200) {
             let res = JSON.parse(req.response);
+
+            console.log("PPPOOO", res, "KKKiim")
+
+            resolve(res);
+    
+          } 
+          else {
+            this.authService.refreshAuth(page);
+          }
+        }
+        
+      }
+
+      req.onerror = (e) => {
+        console.error(req.statusText);
+        reject(req.statusText);
+      };
+
+      req.send(null);
+
+    });
+  }
+
+  getVideos(videoId: string, page: string) {
+    return new Promise((resolve, reject) => { 
+
+      var req = new XMLHttpRequest();
+
+      req.open('GET', `https://byacu.com/video?video_id=${videoId}`);
+
+      req.onreadystatechange = (e) => {
+
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            let res = JSON.parse(req.response);
+
+            // console.log("jl", res);
+
+            resolve(res);
+    
+          } 
+          else {
+            this.authService.refreshAuth(page);
+          }
+        }
+        
+      }
+
+      req.onerror = (e) => {
+        console.error(req.statusText);
+        reject(req.statusText);
+      };
+
+      req.send(null);
+
+    });
+  }
+
+  getDemoVideos(page: string) {
+    return new Promise((resolve, reject) => { 
+
+      var req = new XMLHttpRequest();
+
+      req.open('GET', `https://byacu.com/demo_videos`);
+
+      req.onreadystatechange = (e) => {
+
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            let res = JSON.parse(req.response);
+
+            // console.log("PPPOOO", res, "KKKiim")
 
             resolve(res);
     
