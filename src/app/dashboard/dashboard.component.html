@@ -1,14 +1,16 @@
-<div class="background">
+<div class="db-background">
     <!-- <app-user-display [lang]="this.lang" [user]="user" (changeLangEvent)="openModal()"></app-user-display> -->
-    <div id="myModal" class="modal">
+    <div class="db-warning" id="db-warning">{{this.errorMessage}}</div>
+    <div class="db-info" id="db-info">{{this.infoMessage}}</div>
+    <div id="db-myModal" class="db-modal">
 
-        <div class="modal-content">
-          <span id="modal_title">Select a Language</span>
+        <div class="db-modal-content">
+          <span id="db-modal_title">Select a Language</span>
           <ng-container *ngFor="let lang of this.languages; let i = index">
-            <button id="lang_{{lang}}" class="lang-select" (click)="this.setLang(lang)">
-              <span class="lang-select-text">
+            <button id="db-lang_{{lang}}" class="db-lang-select" (click)="this.setLang(lang)">
+              <span class="db-lang-select-text">
                 {{lang}}
-                <span class="lang-select-flag-modal" [ngSwitch]="lang">
+                <span class="db-lang-select-flag-modal" [ngSwitch]="lang">
                   <ng-container  *ngSwitchCase="''">
                       
                   </ng-container>
@@ -25,14 +27,14 @@
               </span>
             </button>
         </ng-container>
-          <span (click)="closeModal()" class="close">Close</span>
+          <span (click)="closeModal()" class="db-close">Close</span>
         </div>
       
     </div>
-    <div class="top"><app-icon></app-icon></div>
-    <div class="top-right-panel">
-      <div id="flag-select" (click)="flipLangSelect()">
-        <span class="lang-bubble" [ngSwitch]="this.lang">
+    <div class="db-top"><app-icon></app-icon></div>
+    <div class="db-top-right-panel">
+      <div id="db-flag-select" (click)="flipLangSelect()">
+        <span class="db-lang-bubble" [ngSwitch]="this.lang">
           <ng-container  *ngSwitchCase="''">
               
           </ng-container>
@@ -49,7 +51,7 @@
         <ng-container *ngIf="!this.langSelected" >
           <ng-container *ngFor="let lang of this.filteredLanguages let i = index">
             
-            <span (click)="setLang(lang)" class="lang-bubble" [ngSwitch]="lang">
+            <span (click)="setLang(lang)" class="db-lang-bubble" [ngSwitch]="lang">
               <ng-container  *ngSwitchCase="''">
                   -
               </ng-container>
@@ -68,32 +70,32 @@
         <!-- &#9650; -->
       </div>
       <a style="all:unset" routerLink="/">
-      <button class="signout-button" (click)="signOut()">
+      <button class="db-signout-button" (click)="signOut()">
         Sign Out
       </button>
       </a>
 
     </div>
-    <div class="search-n-filter" >
-      <input class="input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
+    <div class="db-search-n-filter" >
+      <input class="db-input-box" (keyup)="onKey($event)" type="text" placeholder="Filter by video title" #filter>
         <!-- <button class="sync-button">&#8634; &#10161;</button> -->
-        <button (click)="syncVideos()" class="sync-button"><span class="tooltiptext">Pull new videos from YouTube</span>&#8634;</button>
+        <button (click)="syncVideos()" class="db-sync-button"><span class="db-tooltiptext">Pull new videos from YouTube</span>&#8634;</button>
         
-        <div class="filter-buttons">
-            <button id="left-button" class="left-click-inactive" (click)="flipFailed()"><div id="left-button-indicator" class="indicator-inactive"></div>Failed</button>
-            <button id="mid-button" class="mid-click-inactive" (click)="flipInProgress()"><div id="mid-button-indicator" class="indicator-inactive"></div>In Progress</button>
-            <button id="right-button" class="right-click-inactive" (click)="flipDone()"><div id="right-button-indicator" class="indicator-inactive"></div>Done</button>
+        <div class="db-filter-buttons">
+            <button id="db-left-button" class="db-left-click-inactive" (click)="flipFailed()"><div id="db-left-button-indicator" class="db-indicator-inactive"></div>Failed</button>
+            <button id="db-mid-button" class="db-mid-click-inactive" (click)="flipInProgress()"><div id="db-mid-button-indicator" class="db-indicator-inactive"></div>In Progress</button>
+            <button id="db-right-button" class="db-right-click-inactive" (click)="flipDone()"><div id="db-right-button-indicator" class="db-indicator-inactive"></div>Done</button>
         </div>
     </div>
-    <div class="demo-mode" *ngIf="userHasNoVideos">
-      <p *ngIf="demoVideos.length == 0" class="demo-text">Looks like there are no video on your YouTube account 😐</p>
-      <button (click)="getDemoVideos()" class="demo-video-button" *ngIf="demoVideos.length == 0">Get Demo Videos</button>
-      <div class="video-container" *ngIf="demoVideos.length > 0">
-        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="video" />
+    <div class="db-demo-mode" *ngIf="userHasNoVideos">
+      <p *ngIf="demoVideos.length == 0" class="db-demo-text">Looks like there are no video on your YouTube account 😐</p>
+      <button (click)="getDemoVideos()" class="db-demo-video-button" *ngIf="demoVideos.length == 0">Get Demo Videos</button>
+      <div class="db-video-container" *ngIf="demoVideos.length > 0">
+        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="db-video" />
       </div>
     </div>
-    <div class="video-container" *ngIf="!userHasNoVideos">
-        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="video" (transcribeButtonClicked)="grabVideos()" />
+    <div class="db-video-container" *ngIf="!userHasNoVideos">
+        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="db-video" (transcribeButtonClicked)="grabVideos()" />
     </div>
     
 </div>

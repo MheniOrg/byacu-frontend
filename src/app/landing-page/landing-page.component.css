@@ -1,7 +1,8 @@
 .background {
-    background-color: #f6f4f1;
-    width: 100vw;
-    min-height: 100vh;
+    /* background-color: #f6f4f1; */
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 100%;
     height: fit-content;
     display: flex;
     flex-direction: column;

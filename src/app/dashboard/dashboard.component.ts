@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, SimpleChanges, ViewEncapsulation } from '@angular/core';
 // import { environment } from '../../environments/environment';
 import { AuthApiService } from '../auth-api.service';
 import { TranscriptionApiService } from '../transcription-api.service';
@@ -16,6 +16,7 @@ import * as $ from 'jquery';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  // encapsulation: ViewEncapsulation.Emulated
 })
 export class DashboardComponent {
   authService: AuthApiService = inject(AuthApiService);
@@ -51,6 +52,9 @@ export class DashboardComponent {
   userHasNoVideos: boolean = false;
   demoVideos: Video[] = [];
   grabbingNewVideos: boolean = false;
+  errorMessage: string = "Something went wrong!";
+  infoMessage: string = "Hello!";
+  messageTimer: number = 10000;
 
   constructor() { }
 
@@ -63,9 +67,9 @@ export class DashboardComponent {
   flipLangSelect(): void {
 
     if (this.langSelected) {
-      $("#flag-select").css({"height": `calc(45px * ${this.languages.length})`});  // , "border-radius": "22.5px"
+      $("#db-flag-select").css({"height": `calc(45px * ${this.languages.length})`});  // , "border-radius": "22.5px"
     } else {
-      $("#flag-select").css({"height": "45px"});  //,  "border-radius": "50%"
+      $("#db-flag-select").css({"height": "45px"});  //,  "border-radius": "50%"
     }
     this.langSelected = !this.langSelected;
   }
@@ -76,17 +80,17 @@ export class DashboardComponent {
 
     try {
       // but = document.getElementById("left-button");
-      ind = document.getElementById("left-button-indicator");
+      ind = document.getElementById("db-left-button-indicator");
     } catch (error) {
-      return;
+      // //console.log("]]]]", error);
     }
 
     if (this.failedFilter) {
       // but.classList.remove('left-click-inactive');
       // but.classList.add('left-click-active');
 
-      ind.classList.remove('indicator-inactive');
-      ind.classList.add('indicator-active');
+      ind.classList.remove('db-indicator-inactive');
+      ind.classList.add('db-indicator-active');
 
       this.shownVideos = this.failedVideos;
 
@@ -94,8 +98,8 @@ export class DashboardComponent {
       // but.classList.remove('left-click-active');
       // but.classList.add('left-click-inactive');
 
-      ind.classList.remove('indicator-active');
-      ind.classList.add('indicator-inactive');
+      ind.classList.remove('db-indicator-active');
+      ind.classList.add('db-indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
@@ -107,7 +111,7 @@ export class DashboardComponent {
 
     try {
       // but = document.getElementById("mid-button");
-      ind = document.getElementById("mid-button-indicator");
+      ind = document.getElementById("db-mid-button-indicator");
     } catch (error) {
       return;
     }
@@ -116,16 +120,16 @@ export class DashboardComponent {
       // but.classList.remove('mid-click-inactive');
       // but.classList.add('mid-click-active');
 
-      ind.classList.remove('indicator-inactive');
-      ind.classList.add('indicator-active');
+      ind.classList.remove('db-indicator-inactive');
+      ind.classList.add('db-indicator-active');
 
       this.shownVideos = this.inProgressVideos;
     } else {
       // but.classList.remove('mid-click-active');
       // but.classList.add('mid-click-inactive');
 
-      ind.classList.remove('indicator-active');
-      ind.classList.add('indicator-inactive');
+      ind.classList.remove('db-indicator-active');
+      ind.classList.add('db-indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
@@ -137,7 +141,7 @@ export class DashboardComponent {
 
     try {
       // but = document.getElementById("right-button");
-      ind = document.getElementById("right-button-indicator");
+      ind = document.getElementById("db-right-button-indicator");
     } catch (error) {
       return;
     }
@@ -146,16 +150,16 @@ export class DashboardComponent {
       // but.classList.remove('right-click-inactive');
       // but.classList.add('right-click-active');
 
-      ind.classList.remove('indicator-inactive');
-      ind.classList.add('indicator-active');
+      ind.classList.remove('db-indicator-inactive');
+      ind.classList.add('db-indicator-active');
 
       this.shownVideos = this.doneVideos;
     } else {
       // but.classList.remove('right-click-active');
       // but.classList.add('right-click-inactive');
 
-      ind.classList.remove('indicator-active');
-      ind.classList.add('indicator-inactive');
+      ind.classList.remove('db-indicator-active');
+      ind.classList.add('db-indicator-inactive');
 
       this.shownVideos = this.uploads;
     }
@@ -225,16 +229,17 @@ export class DashboardComponent {
         this.filteredLanguages = this.languages.filter((l: string) => {
           return l != this.lang
         });
-        // console.log("rrr", this.lang, this.languages, this.filteredLanguages);
+        // //console.log("rrr", this.lang, this.languages, this.filteredLanguages);
       } else {
         this.openModal();
       }
+    }).catch((res) => {
+      this.openError("We encountered an error while fetching our supported languages. Details: ".concat(res['detail']));
+      setTimeout(() => {this.closeError()}, this.messageTimer);
+
     });
 
     
-
-    
-
 
     this.authService.getUserAsync(this.session).then((res) => {
       this.user = res;
@@ -245,8 +250,6 @@ export class DashboardComponent {
 
       this.transcriptionService.getPlaylistAsync(this.session, res.id, "dashboard").then((r) => {
 
-        // console.log(r);
-        
         this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
 
         if (this.uploads.length == 0) {
@@ -255,12 +258,12 @@ export class DashboardComponent {
           this.shownVideos = this.uploads;
           this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
           this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
-          this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+          this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
         }
-
-        // console.log(this.uploads);
-
       });
+    }).catch((res) => {
+      this.openError("Error fetching User Info");
+      setTimeout(() => {this.closeError()}, this.messageTimer);
     });
 
     setInterval(() => {this.grabVideos()}, 10000);
@@ -270,23 +273,14 @@ export class DashboardComponent {
   grabVideos(): void {
     if (!this.userHasNoVideos) {
       this.transcriptionService.getPlaylistAsync(this.session, this.user.id, "dashboard").then((r) => {
-
-        // console.log(r);
         
-        this.uploads = r["items"] as Video[]; //this.repeat(r, 6);
-  
-  
+        this.uploads = r["items"] as Video[];
         this.shownVideos = this.uploads;
-  
-        console.log("<><><><", this.uploads);
-  
         this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
         this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
-        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
-      
+        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
       });
     } 
-    
   }
 
   openModal(): void {
@@ -297,6 +291,26 @@ export class DashboardComponent {
     if (lang) {
       $(`#lang_${lang}`).focus();
     } 
+  }
+
+  openError(message: string) {
+    this.errorMessage = message;
+    $("#db-warning").css("top", "10px");
+  }
+
+  closeError() {
+    $("#db-warning").css("top", "-100px");
+    // this.errorMessage = "Something went wrong!";
+  }
+
+  openInfo(message: string) {
+    this.infoMessage = message;
+    $("#db-info").css("top", "10px");
+  }
+
+  closeInfo() {
+    $("#db-info").css("top", "-100px");
+    // this.infoMessage = "Hello!";
   }
 
   signOut(): void {
@@ -315,8 +329,13 @@ export class DashboardComponent {
   
         this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
         this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
-        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
-      
+        this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
+        this.openInfo("We succesfully pulled new videos from your YouTube channel!");
+        setTimeout(() => {this.closeInfo()}, this.messageTimer);
+      }).catch((res) => {
+        this.openError("We encountered an error while attempting to sync. Details: ".concat(res['detail']));
+        setTimeout(() => {this.closeError()}, this.messageTimer);
+  
       });
     }
     
@@ -324,13 +343,17 @@ export class DashboardComponent {
 
   getDemoVideos(): void {
     this.transcriptionService.getDemoVideos("dashboard").then((res) => {
-      // console.log(">>>>>>", res);
+      // //console.log(">>>>>>", res);
       this.demoVideos = res as Video[];
 
       this.shownVideos = this.demoVideos;
       this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
       this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
-      this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED") });
+      this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
+    }).catch((res) => {
+      this.openError("We encountered an error while fetching demo videos for you. Details: ".concat(res['detail']));
+      setTimeout(() => {this.closeError()}, this.messageTimer);
+
     });
   }
 
@@ -355,7 +378,7 @@ export class DashboardComponent {
       this.flipLangSelect();
     } else {
       this.openModal();
-      // console.log("Iinjn");
+      // //console.log("Iinjn");
       $("#modal_title").text("Please Select a Language :)");
     }
   }
@@ -382,18 +405,19 @@ export class DashboardComponent {
     
   }
 
-  ngOnChanges() {
-    // this.failedVideos = this.uploads.filter((item: Video) => { item.type === 3 });
-    // this.inProgressVideos = this.uploads.filter((item: Video) => { item.type === 4 });
-    // this.doneVideos = this.uploads.filter((item: Video) => { item.type === 2 });
+  // ngOnChanges(changes: SimpleChanges) {
+  //   // this.failedVideos = this.uploads.filter((item: Video) => { item.type === 3 });
+  //   // this.inProgressVideos = this.uploads.filter((item: Video) => { item.type === 4 });
+  //   // this.doneVideos = this.uploads.filter((item: Video) => { item.type === 2 });
+  //   //console.log("llpp", changes);
 
-  }
+  // }
 
   onKey(event: LooseObject) {
     this.searchString = event['target'].value;
 
     this.filterVids();
-    // console.log(this.searchString);
+    // //console.log(this.searchString);
   }
 
   storeLang(lang: string): void {

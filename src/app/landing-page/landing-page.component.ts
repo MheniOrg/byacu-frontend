@@ -38,8 +38,8 @@ export class LandingPageComponent {
   // YOUR_REDIRECT_URI: string = environment.YOUR_REDIRECT_URI;
   
   constructor() { 
-    /* console.log(environment); */ 
-    // console.log(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
+    /* //console.log(environment); */ 
+    // //console.log(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
   }
 
   
@@ -88,14 +88,14 @@ export class LandingPageComponent {
       // }, 1000);
       this.textOpen = true;
 
-      console.log("open");
+      //console.log("open");
     } else {
       
       this.textOpen = false;
 
       element.css("height", "0px");
       element.css("overflow-y", "hidden");
-      console.log("closed");
+      //console.log("closed");
     }
     
   }
@@ -117,33 +117,33 @@ export class LandingPageComponent {
       // }, 1000);
       this.gifOpen = true;
 
-      console.log("open");
+      //console.log("open");
     } else {
       
       this.gifOpen = false;
 
       element.css("height", "0px");
       element.css("overflow-y", "hidden");
-      console.log("closed");
+      //console.log("closed");
     }
     
   }
 
   hideText(): void {
     var element = $("#how-it-works-text");
-    // console.log("uhy");
+    // //console.log("uhy");
     // element.css({ "height": "0px", "overflow-y": "hidden" });
     this.textOpen = false;
 
     element.css("height", "0px");
     element.css("overflow-y", "hidden");
-    console.log("closed");
+    //console.log("closed");
   }
 
   connect(): void {
     // this.youtubeService.oauth2SignIn(this.YOUR_CLIENT_ID, this.YOUR_REDIRECT_URI);
-    this.youtubeService.initiateOath2Flow("https://justyams.com/dashboard");
-    // this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
+    // this.youtubeService.initiateOath2Flow("https://justyams.com/dashboard");
+    this.youtubeService.initiateOath2Flow("http://localhost:4200/dashboard");
   }
 
   wordflick(): void {

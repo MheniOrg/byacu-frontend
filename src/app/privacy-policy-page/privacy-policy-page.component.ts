@@ -19,7 +19,7 @@ export class PrivacyPolicyPageComponent {
   }
 
   ngOnInit() { 
-    // console.log("iiiiii");
+    // //console.log("iiiiii");
     // this.moveCardUp();
 
   }

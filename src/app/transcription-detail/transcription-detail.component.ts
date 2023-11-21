@@ -17,7 +17,10 @@ let apiLoaded = false;
   selector: 'app-transcription-detail',
   templateUrl: './transcription-detail.component.html',
   styleUrls: ['./transcription-detail.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class TranscriptionDetailComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
@@ -42,16 +45,33 @@ export class TranscriptionDetailComponent {
   uploadInProgress: boolean = false;
   resetInProgress: boolean = false;
   saveInProgress: boolean = false;
+  retranscribeInProgress: boolean = false;
   errorMessage: string = "Something went wrong!";
   infoMessage: string = "Hello!";
   showError: boolean = true;
   loaderText: string = "Reseting...";
+  messageTimer: number = 10000;
+  lang: string = "";
+  languages: string[] | any = [];
+  langSelected: boolean = false;
+  filteredLanguages: string[] | any = [];
+  mobile = false;
 
   init() {
     // Return if Player is already created
-    if (window['YT']) {
-      this.startVideo();
-      return;
+    // if ((<any>window)['YT']) {
+      
+    //   this.startVideo();
+    //   return;
+    // }
+
+    if ((<any>window)['YT']) {
+      (<any>window)['YT'] = null;
+  
+      if(this.player){
+       this.player.destroy();
+      }
+      this.init();
     }
 
     var tag = document.createElement('script');
@@ -69,11 +89,21 @@ export class TranscriptionDetailComponent {
     (<any>window)['onYouTubeIframeAPIReady'] = () => this.startVideo();
   }
 
+  flipLangSelect(): void {
+
+    if (this.langSelected) {
+      $("#td-flag-select").css({"height": `calc(45px * ${this.languages.length})`});
+    } else {
+      $("#td-flag-select").css({"height": "45px"});
+    }
+    this.langSelected = !this.langSelected;
+  }
+
   startVideo() {
     this.reframed = false;
-    this.player = new window['YT'].Player('player', {
+    this.player = new window['YT'].Player('td-player', {
       videoId: this.id,
-      width: "100%",
+      // width: "100%",
       
       playerVars: {
         modestbranding: 1,
@@ -103,32 +133,31 @@ export class TranscriptionDetailComponent {
     // }
     // event.target.playVideo();
     // event.target.mute();
-    // console.log("jg6g8g", this.player);
+    
+    
   }
 
   /* 5. API will call this function when Player State changes like PLAYING, PAUSED, ENDED */
   onPlayerStateChange(event: { data: any; }) {
-    // console.log(event)
+
     this.matchTranscriptionsToVideo();
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
         this.setupVideoListener();
         if (this.cleanTime() == 0) {
-          console.log('started ' + this.cleanTime());
-
-          
+          // //console.log('started ' + this.cleanTime());
         } else {
-          console.log('playing ' + this.cleanTime())
+          // //console.log('playing ' + this.cleanTime())
         };
         break;
       case window['YT'].PlayerState.PAUSED:
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
-          console.log('paused' + ' @ ' + this.cleanTime());
+          // //console.log('paused' + ' @ ' + this.cleanTime());
         };
         clearInterval(this.videoListener);
         break;
       case window['YT'].PlayerState.ENDED:
-        console.log('ended ');
+        // //console.log('ended ');
         clearInterval(this.videoListener);
         break;
     };
@@ -146,12 +175,13 @@ export class TranscriptionDetailComponent {
       clearInterval(this.videoListener);
     }
 
+    this.makeEditable(this.currIndex);
     this.videoListener = setInterval(() => { this.matchTranscriptionsToVideo(); }, 1000);
   }
 
   jumpTo(idx: number) {
     this.player.seekTo(idx * 5);
-    // this.currIndex = idx;
+    this.currIndex = idx;
 
     this.matchTranscriptionsToVideo();
 
@@ -163,122 +193,213 @@ export class TranscriptionDetailComponent {
   updateChanges() {
     this.saveInProgress = true;
     this.transcriptionService.updateTranscriptions(this.credentials, this.user.id, this.id, JSON.stringify(this.transcriptions), "https://justyams.com/dashboard").then((res) => {
-      console.log("Ss", res);
       let temp = res as LooseObject;
+      this.immutableTranscriptions = JSON.parse(JSON.stringify(this.transcriptions)) as LooseObject[];
       this.saveInProgress = false;
+      this.transcriptionService.getVideos(this.id, "transcription_page").then((res) => {
+        this.video = res as LooseObject;
+      });
       this.openInfo(temp["message"]);
-      setTimeout(() => {this.closeInfo()}, 10000);
+      setTimeout(() => {this.closeInfo()}, this.messageTimer);
     }).catch((res) => {
-      console.log("Sffs", res);
       this.saveInProgress = false;
       this.openError(res['detail']);
-      setTimeout(() => {this.closeError()}, 3000);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
 
     });
-    // console.log("dddddd");
   }
   
   uploadChanges() {
-    this.transcriptionService.uploadTranscriptions(this.credentials, this.user.id, this.id, "https://justyams.com/dashboard") 
-    // console.log("l;");
+    this.uploadInProgress = true;
+    this.transcriptionService.updateTranscriptions(this.credentials, this.user.id, this.id, JSON.stringify(this.transcriptions), "https://justyams.com/dashboard").then((res) => {
+      this.immutableTranscriptions = JSON.parse(JSON.stringify(this.transcriptions)) as LooseObject[];
+
+      this.transcriptionService.uploadTranscriptions(this.credentials, this.user.id, this.id, "https://justyams.com/dashboard").then((res) => {
+        let temp = res as LooseObject;
+        this.openInfo(temp["message"]);
+        this.uploadInProgress = false;
+        this.transcriptionService.getVideos(this.id, "transcription_page").then((res) => {
+          this.video = res as LooseObject;
+        });
+        setTimeout(() => {this.closeInfo()}, this.messageTimer);
+      }).catch((res) => {
+        this.uploadInProgress = false;
+        this.openError(res['detail']);
+        setTimeout(() => {this.closeError()}, this.messageTimer);
+      });
+    }).catch((res) => {
+      this.uploadInProgress = false;
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
+    });
+  }
+
+  transcribe(): void {
+    if (this.video) {
+      this.retranscribeInProgress = true;
+      this.transcriptionService.transcribe(this.video["video_id"], this.video["user_id"], this.lang, 'dashboard').then((res) => {
+        this.retranscribeInProgress = false;
+        this.openInfo(`Succesfully started your re-transcribe request. Sending you back to the dashboard in ${this.messageTimer/5000} seconds!`);
+        setTimeout(() => { this.closeInfo(); this.navigateToDashboard();}, this.messageTimer/5);
+      }).catch((res) => {
+        this.retranscribeInProgress = false;
+        this.openError(`Retranscribe failed for the following reason: ${res['detail']}`);
+        setTimeout(() => {this.closeError()}, this.messageTimer);
+      });
+    }
   }
 
   onPlayerError(event: { data: any; }) {
+    let reason;
     switch (event.data) {
       case 2:
-        // console.log('' + this.video)
+        reason = "Invalid VideoID";
+        break;
+      case 5:
+        reason = "HTML5 player error";
         break;
       case 100:
+        reason = "Video not found. Set to private or removed.";
         break;
       case 101 || 150:
+        reason = "Video owner blocked access to video";
         break;
     };
+    this.openError(`Something bad happened: ${reason}.<br> Try Refreshing this tab.`);
+    setTimeout(() => {this.closeError()}, this.messageTimer);
   };
 
   constructor(private _router: Router, private ref: ChangeDetectorRef, private sanitizer: DomSanitizer) {
   }
 
+  onResize(event: any) {
+    if (window.screen.width <= 600) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false
+    }
+  }
 
   ngOnInit() {
+
+
+    
     
     this.id = String(this.route.snapshot.params['id']);
 
+    if (window.screen.width <= 600) { // 768px portrait
+      this.mobile = true;
+    }
+
+    
+
     this.init();
+
+    // this.startVideo();
+    
 
     this.credentials = this.authService.getCredentials();
 
     this.authService.getUserAsync(this.credentials).then((res) => {
       this.user = res;
+    }).catch((res) => {
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
     });
 
     this.transcriptionService.getVideos(this.id, "transcription_page").then((res) => {
       this.video = res as LooseObject;
+    }).catch((res) => {
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
+    });
+
+    this.transcriptionService.getSupportedLanguages("dashboard").then((res) => {
+      this.languages = res;
+
+      var prms: string | null= localStorage.getItem('lang');
+
+      if (prms) {
+        this.lang = prms;
+        this.langSelected = true;
+        this.filteredLanguages = this.languages.filter((l: string) => {
+          return l != this.lang
+        });
+
+      } else {
+        this.lang = `${this.video ? this.video["language"] : "Kinyarwanda"}`;
+        this.langSelected = true;
+        this.filteredLanguages = this.languages.filter((l: string) => {
+          return l != this.lang
+        });
+      }
+    }).catch((res) => {
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
     });
 
     this.transcriptionService.getResults(this.id, "p").then((res) => {
-      this.shownTranscriptions = res;
-      this.transcriptions = res;
-      this.immutableTranscriptions = res;
-
+      this.shownTranscriptions = JSON.parse(JSON.stringify(res)) as LooseObject[];
+      this.transcriptions = JSON.parse(JSON.stringify(res)) as LooseObject[];
+      this.immutableTranscriptions = JSON.parse(JSON.stringify(res)) as LooseObject[];
 
       this.transcriptions.forEach((item, idx, arr) => {
-        let i = this.transcriptions[idx]["text"]; //.replace(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+        let i = this.transcriptions[idx]["text"]; 
         this.transcriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
         this.immutableTranscriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
         this.shownTranscriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
       });
 
+    }).catch((res) => {
+      this.openError(res['detail']);
+      setTimeout(() => {this.closeError()}, this.messageTimer);
     });
 
-  //   setTimeout(() => {
-  //     this.openError("");
-  //     setTimeout(() => {this.closeError()}, 3000);
-  
-  // }, 500);
-
-  // setTimeout(() => {
-  //   this.openInfo("");
-  //   setTimeout(() => {this.closeInfo()}, 3000);
-
-  // }, 500);
-
+    setTimeout(() => {this.topOfTranscriptions();}, 1000);
     
+    
+  }
+
+  setLang(lang: string): void {
+    this.lang = lang;
+
+    this.filteredLanguages = this.languages.filter((l: string) => {
+      return l != this.lang
+    });
+
+    localStorage.setItem('lang', lang);
   }
 
   openError(message: string) {
     this.errorMessage = message;
-    $("#warning").css("top", "10px");
+    $("#td-warning").css("top", "10px");
   }
 
   closeError() {
-    $("#warning").css("top", "-100px");
-    this.errorMessage = "Something went wrong!";
+    $("#td-warning").css("top", "-100px");
+    // this.errorMessage = "Something went wrong!";
   }
 
   openInfo(message: string) {
     this.infoMessage = message;
-    $("#info").css("top", "10px");
+    $("#td-info").css("top", "10px");
   }
 
   closeInfo() {
-    $("#info").css("top", "-100px");
-    this.infoMessage = "Hello!";
+    $("#td-info").css("top", "-100px");
+    // this.infoMessage = "Hello!";
   }
 
   formatDate(since: boolean): string {
-    // return "";
     if (this.video) {
-
       if (since) {
         return moment.unix(this.video['last_uploaded']).fromNow();
       } else {
         return moment.unix(this.video['last_uploaded']).format("LLLL");
       }
-      
     } else {
       return ""
     }
-    
   }
 
   getProgress(): number {
@@ -287,11 +408,14 @@ export class TranscriptionDetailComponent {
     }else {
       return 0;
     }
-    
   }
 
   updateReplaceTxt(event: any): void {
     this.replaceTxt = event.target.value;
+
+    if (this.player.getPlayerState() == 1){
+      this.player.pauseVideo()
+    }
   }
 
   updateSearchTxt(event: any): void {
@@ -302,21 +426,25 @@ export class TranscriptionDetailComponent {
       return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
     });
 
-    // this.transcriptions.forEach((item, idx, arr) => {
-    //   let i = this.transcriptions[idx]["text"].replace(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
-    //   this.transcriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
-    // });
-
     this.shownTranscriptions.forEach((item, idx, arr) => {
       let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
       this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
     });
-    
+
+    if (this.player.getPlayerState() == 1){
+      this.player.pauseVideo()
+    }
   }
 
   replace(): void {
     this.transcriptions.forEach((item, idx, arr) => {
-      let i = this.transcriptions[idx]["text"].replaceAll(this.searchTxt, this.replaceTxt);
+      let i;
+      if (this.searchTxt.length > 0) {
+        i = this.transcriptions[idx]["text"].replaceAll(this.searchTxt, this.replaceTxt);
+      } else {
+        i = this.transcriptions[idx]["text"];
+      }
+
       this.transcriptions[idx]["text"] = i;
       this.transcriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
     });
@@ -324,25 +452,29 @@ export class TranscriptionDetailComponent {
     this.shownTranscriptions = this.transcriptions.filter((item: LooseObject) => {
       return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
     });
-
-    
-
-    // this.shownTranscriptions.forEach((item, idx, arr) => {
-    //   let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
-    //   this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
-    // });
   }
 
   resetTranscriptions(): void {
     this.resetInProgress = true;
-    // console.log("p", JSON.parse(JSON.stringify(this.immutableTranscriptions)));
     this.transcriptions = JSON.parse(JSON.stringify(this.immutableTranscriptions)) as LooseObject[];
+    
+    this.transcriptions.forEach((item, idx, arr) => {
+      let i = this.transcriptions[idx]["text"];
+      this.transcriptions[idx]["html"] = this.sanitizer.bypassSecurityTrustHtml(i);
+    });
+
     this.shownTranscriptions = this.transcriptions.filter((item: LooseObject) => {
       return item['text'].toLowerCase().includes(this.searchTxt.toLowerCase());
     });
 
     this.shownTranscriptions.forEach((item, idx, arr) => {
-      let i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+      let i;
+      if (this.searchTxt.length > 0) {
+        i = this.shownTranscriptions[idx]["text"].replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+      } else {
+        i = this.shownTranscriptions[idx]["text"];
+      }
+
       this.shownTranscriptions[idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
     });
 
@@ -350,151 +482,71 @@ export class TranscriptionDetailComponent {
   }
 
   saveChangeBlur(total_idx: number, filtered_idx: number, event: any) {
-    // console.log(">", total_idx);
-    // console.log(">", filtered_idx);
-    console.log(">", event.target.innerText);
-
-    // let new_text = event.target.innerHTML.replace("<span>", "");
-    // new_text = new_text.replace("</span>", "");
-
-    // console.log(">k>", new_text);
-
-    let i = event.target.innerText.replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
-
+    let i;
+    if (this.searchTxt.length > 0) {
+      i = event.target.innerText.replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
+    } else {
+      i = event.target.innerText;
+    }
+    
     this.shownTranscriptions[filtered_idx]["text"] =  event.target.innerText;
     this.shownTranscriptions[filtered_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
 
     this.transcriptions[total_idx]["text"] =  event.target.innerText;
     this.transcriptions[total_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
 
-    let ele = $(`#transcription-item-${total_idx}`);
+    let ele = $(`#td-transcription-item-${total_idx}`);
 
     ele.focus();
     ele.attr('contenteditable','false');
   }
 
-  saveChangeKey(total_idx: number, filtered_idx: number, event: any) {
-    // console.log(">", total_idx);
-    // console.log(">", filtered_idx);
-    // console.log(">", event.target.innerText);
-
-    let i = event.target.innerText.replaceAll(this.searchTxt, "<span>".concat(this.searchTxt, "</span>"));
-
-    event.preventDefault();
-
-    this.shownTranscriptions[filtered_idx]["text"] =  event.target.innerText;
-    this.shownTranscriptions[filtered_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
-
-    this.transcriptions[total_idx]["text"] =  event.target.innerText;
-    this.transcriptions[total_idx]["html"] =  this.sanitizer.bypassSecurityTrustHtml(i);
-
-    
-  }
-
   makeEditable(idx: number) {
-
-    let ele = $(`#transcription-item-${idx}`);
-
-    
-
-    // if (!ele.is(":focus")) {
-    //   ele.html(ele.text());
-    // }
+    let ele = $(`#td-transcription-item-${idx}`);
     ele.focus();
-    
     ele.attr('contenteditable','true');
-    
-
-    // ele = $(`#transcription-item-${idx} span`);
-
-    // ele.focus();
-    // ele.attr('contenteditable','false');
-
   }
 
-
-  test(): void {
-    // this.player.pauseVideo();
-
-    // let temp = document.getElementById("player");
-
-    // console.log(this.player.playerInfo.currentTime);
-    // console.log(window['YT']);
-
-    // console.log(this.transcriptions);
-    this.currIndex += 10;
-    this.prevFiveIndex[0] += 10;
-    this.prevFiveIndex[1] += 10;
-
-    $("#focus-item").focus();
-    $("#focus-item").attr('contenteditable','true');
-
+  topOfTranscriptions() {
+    let container = $('#td-transcriptions-id');
+    container.scrollTop(0);
   }
 
   matchTranscriptionsToVideo(): void {
-    // let f = this.cleanTime();
+    let temp = Math.floor(this.cleanTime()/5);
 
-    // if (this.currIndex != Math.floor(f/5)) {
-      this.currIndex = Math.floor(this.cleanTime()/5);
+    if (temp != this.currIndex) {
+      this.currIndex = temp
 
-      this.prevFiveIndex[0] = this.currIndex - this.maxSeen;
-      this.prevFiveIndex[1] = this.currIndex - 1;
+      let parent = $('#td-transcriptions-id');
+      let child = $(`#td-grouped-transcription-item-${this.currIndex}`);
+      let parentPosition: any;
+      let parentScrollTop: any;
+      let childPosition: any;
+      if (child) {
+        childPosition = child.offset();
+        if (childPosition) {
+          childPosition = childPosition.top;
+        }
+      }
 
-      // $("#focus-item").focus();
-      // $("#focus-item").attr('contenteditable','true');
+      if (parent) {
+        parentPosition = parent.offset();
+        parentScrollTop = parent.scrollTop();
+        if (parentPosition) {
+          parentPosition = parentPosition.top;
+        }
+      }
 
-      
-    // }
-    
+      if (parentPosition && childPosition) {
 
-    // console.log("jjjjj", this.currIndex);
-  }
+        parent.animate({
+          scrollTop: `${(childPosition - parentPosition + parentScrollTop) - 100}px`
+        }, 300);
 
-  next(): void {
-
-    // if (this.currIndex < this.transcriptions.length) {
-    //   this.currIndex += 1;
-    //   this.prevFiveIndex[0] += 1;
-    //   this.prevFiveIndex[1] += 1;
-    // }
-
-    // $("#focus-item").focus();
-    // $("#focus-item").attr('contenteditable','true');
-
-    
-  }
-
-  prev(): void {
-
-    if (this.currIndex > 0) {
-      this.currIndex -= 1;
-      this.prevFiveIndex[0] -= 1;
-      this.prevFiveIndex[1] -= 1;
+        this.makeEditable(this.currIndex);
+      } 
     }
-
-    $("#focus-item").focus();
-    $("#focus-item").attr('contenteditable','true');
-  }
-
-  last(): void {
-
-    this.currIndex = this.transcriptions.length - 1;
-    this.prevFiveIndex[0] = this.currIndex - this.maxSeen;
-    this.prevFiveIndex[1] = this.currIndex - 1;
-
-    $("#focus-item").focus();
-    $("#focus-item").attr('contenteditable','true');
-  }
-
-  first(): void {
-
-    this.currIndex = 0;
-    this.prevFiveIndex[0] = this.currIndex - this.maxSeen;
-    this.prevFiveIndex[1] = this.currIndex - 1;
-
-    $("#focus-item").focus();
-    $("#focus-item").attr('contenteditable','true');
-    
   }
 
 
@@ -508,6 +560,11 @@ export class TranscriptionDetailComponent {
     // if (window['YT']) {
     //   window.YT = null;
     // }
+
+    (<any>window)['onYouTubeIframeAPIReady'] = null;
+    if (this.player) {
+      this.player.destroy();
+    }
 
     clearInterval(this.videoListener);
   }

@@ -18,8 +18,6 @@ export class TranscriptionApiService {
 
     var req = new XMLHttpRequest();
 
-    // req.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&mine=true' + '&access_token=' + credentials, true);
-
     req.open('POST', `https://byacu.com/transcribe?video_id=${videoId}&user_id=${userId}&language=${language}`);
 
 
@@ -29,19 +27,19 @@ export class TranscriptionApiService {
         if (req.status === 200) {
           let res = JSON.parse(req.response);
 
-          console.log(res);
+          //console.log(res);
 
           resolve(res);
   
         } else {
-          this.authService.refreshAuth(page);
+          reject(JSON.parse(req.response));
         }
       }
       
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
       reject(req.statusText);
     };
 
@@ -57,19 +55,11 @@ export class TranscriptionApiService {
 
 
       req.open('GET', `https://byacu.com/results?video_id=${videoID}`);
-
-      // req.setRequestHeader("Access-Control-Allow-Origin", '*');
-
-      // req.withCredentials = true;
-
       req.onreadystatechange = (e) => {
 
         if (req.readyState === 4) {
-          let res = JSON.parse(req.response);
-
-          console.log(res);
-
-          // let temp = res.items;
+          if (req.status === 200) {
+            let res = JSON.parse(req.response);
 
           res.items.forEach((item: { text: string | any[]; }) => {
             if (item.text.length < 1) {
@@ -78,12 +68,14 @@ export class TranscriptionApiService {
           });
             
           resolve(res.items);
-        }
-        
+          } else {
+            reject(JSON.parse(req.response));
+          }
+        } 
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
       };
 
       req.send(null);
@@ -110,14 +102,14 @@ export class TranscriptionApiService {
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 
@@ -143,14 +135,14 @@ export class TranscriptionApiService {
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 
@@ -178,22 +170,19 @@ export class TranscriptionApiService {
 
             resolve(res);
 
-            // console.log(res);
+            // //console.log(res);
     
           } 
           else {
-            // console.error(req.statusText);
             reject(JSON.parse(req.response));
-            // this.authService.refreshAuth(page);
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
-        // reject(JSON.parse(req.response));
       };
 
       req.send(`json_data=${encodeURIComponent(payload)}`);
@@ -218,18 +207,18 @@ export class TranscriptionApiService {
 
             resolve(res);
 
-            console.log(res);
+            //console.log(res);
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 
@@ -252,20 +241,18 @@ export class TranscriptionApiService {
           if (req.status === 200) {
             let res = JSON.parse(req.response);
 
-            console.log("PPPOOO", res, "KKKiim")
-
             resolve(res);
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 
@@ -286,21 +273,18 @@ export class TranscriptionApiService {
         if (req.readyState === 4) {
           if (req.status === 200) {
             let res = JSON.parse(req.response);
-
-            // console.log("jl", res);
-
             resolve(res);
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 
@@ -321,21 +305,18 @@ export class TranscriptionApiService {
         if (req.readyState === 4) {
           if (req.status === 200) {
             let res = JSON.parse(req.response);
-
-            // console.log("PPPOOO", res, "KKKiim")
-
             resolve(res);
     
           } 
           else {
-            this.authService.refreshAuth(page);
+            reject(JSON.parse(req.response));
           }
         }
         
       }
 
       req.onerror = (e) => {
-        console.error(req.statusText);
+        //console.error(req.statusText);
         reject(req.statusText);
       };
 

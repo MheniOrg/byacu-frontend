@@ -19,7 +19,7 @@ export class TermsOfServicePageComponent {
   }
 
   ngOnInit() { 
-    // console.log("iiiiii");
+    // //console.log("iiiiii");
     // this.moveCardUp();
 
   }

@@ -19,7 +19,7 @@ export class VideoDisplayComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
-    console.log(changes);
+    //console.log(changes);
   }
 
   menuClick(): void {
@@ -28,7 +28,7 @@ export class VideoDisplayComponent {
     
     if (!this.menuOpen) {
       // menu.focus();
-      // console.log("iiiiinni");
+      // //console.log("iiiiinni");
       this.menuOpen = true;
     } else {
       this.menuOpen = false;
@@ -46,7 +46,7 @@ export class VideoDisplayComponent {
   menuBlur(event: any): void {
     if (!event.originalTarget.contains(event.relatedTarget)) {
       this.menuOpen = false;
-      // console.log("lo", event);
+      // //console.log("lo", event);
     } 
 
   }
@@ -64,7 +64,7 @@ export class VideoDisplayComponent {
   }
 
   SignOut(): void {
-    // console.log("kklo", e);
+    // //console.log("kklo", e);
     // e.stopPropagation();
     localStorage.removeItem('oauth2-test-params');
     this.navigateToHome();

@@ -1,107 +1,121 @@
-<div class="background">
-    <!-- <app-video-display></app-video-display> -->
-    <div class="top"><app-icon></app-icon></div>
-    <div class="warning" id="warning">{{this.errorMessage}}</div>
-    <div class="info" id="info">{{this.infoMessage}}</div>
-    <!-- <button class="dashboard-button" (click)="navigateToDashboard()">Back to Dashboard</button> -->
-    <div class="main-container">
-        <div class="video-controls-container">
-            <div class="video-section">
-                <div id="video-player">
-                    <div id="player"></div>
-                    <!-- <youtube-player id="player" class="embeded-video" videoId="X9t4DH6-9U4" [height]="300" [width]="550"></youtube-player> -->
-                </div>
-                <div  class="title-and-description">
-                    <p *ngIf="video" class="title-text">{{video["title"]}}</p>
-                    <!-- <p class="desc-text">{{video["description"]}}</p> -->
-                </div>
-                <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
-                    <button *ngIf="!uploadInProgress" class="top-button-alt" (click)="uploadChanges()"><span class="tooltiptext">Click here to upload these captions to youtube</span> Upload</button>
-                    <div *ngIf="uploadInProgress" class="loader-button">
-                        <div class="loader"></div>
-                    </div>
-                    <button *ngIf="!resetInProgress" class="top-button-alt" (click)="resetTranscriptions()"><span class="tooltiptext">Click here to reset the editor (undo all changes)</span> Reset</button>
-                    <div *ngIf="resetInProgress" class="loader-button">
-                        <div class="loader"></div>
-                    </div>
-                    <button *ngIf="!saveInProgress" class="top-button-alt" (click)="updateChanges()"><span class="tooltiptext">Click here to upload these captions to our database</span>  Save</button>
-                    <div *ngIf="saveInProgress" class="loader-button">
-                        <div class="loader"></div>
-                    </div>
-                </div>
+<div class="td-background">
+    <div class="td-top"><app-icon></app-icon></div>
+    <div class="td-top-right-panel">
+        <div id="td-flag-select" (click)="flipLangSelect()">
+          <span class="td-lang-bubble" [ngSwitch]="this.lang">
+            <ng-container  *ngSwitchCase="''">
                 
-                
-                <!-- <button class="info-buttton" (click)="next()">i</button> -->
+            </ng-container>
+            <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                🇷🇼
+            </ng-container>
+            <ng-container  *ngSwitchCase="'Luganda'">
+                🇺🇬
+            </ng-container>
+            <ng-container  *ngSwitchCase="'Swahili'">
+                🇰🇪
+            </ng-container>
+          </span>
+          <ng-container *ngIf="!this.langSelected" >
+            <ng-container *ngFor="let lang of this.filteredLanguages let i = index">
+              
+              <span (click)="setLang(lang)" class="td-lang-bubble" [ngSwitch]="lang">
+                <ng-container  *ngSwitchCase="''">
+                    -
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Kinyarwanda'">
+                    🇷🇼
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Luganda'">
+                    🇺🇬
+                </ng-container>
+                <ng-container  *ngSwitchCase="'Swahili'">
+                    🇰🇪
+                </ng-container>
+              </span>
+            </ng-container>
+          </ng-container>
+          <!-- &#9650; -->
+        </div>
+        <button class="td-signout-button" (click)="navigateToDashboard()">
+          Dashboard
+        </button>
+  
+      </div>
+    <div class="td-warning" id="td-warning">{{this.errorMessage}}</div>
+    <div class="td-info" id="td-info">{{this.infoMessage}}</div>
+    <div *ngIf="mobile" class="td-mobile-message">Sorry! This page has not yet been optimized for mobile devices. Please, visit us again later on a larger screen or try rotating your screen!</div>
+    <div *ngIf="!mobile" class="td-main-container">
+        <div class="td-video-controls-container">
+            <div class="td-video-section">
+                <div id="td-video-player">
+                    <div id="td-player"></div>
+                </div>
+                <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; margin-top: 10px;">
+                    <button *ngIf="!uploadInProgress" class="td-top-button-alt" (click)="uploadChanges()"><span class="td-tooltiptext">Click here to upload these captions to youtube</span> Upload</button>
+                    <div *ngIf="uploadInProgress" class="td-loader-button">
+                        <div class="td-loader"></div>
+                    </div>
+                    <button *ngIf="!resetInProgress" class="td-top-button-alt" (click)="resetTranscriptions()"><span class="td-tooltiptext">Click here to reset the editor (undo all changes)</span> Reset</button>
+                    <div *ngIf="resetInProgress" class="td-loader-button">
+                        <div class="td-loader"></div>
+                    </div>
+                    <button *ngIf="!retranscribeInProgress" [class]="this.video ? 'td-top-button-alt' : 'td-disabled-button-alt'" (click)="transcribe()"><span class="td-tooltiptext">We will send you back to the dashboard while we work on this!</span> Retranscribe</button>
+                    <div *ngIf="retranscribeInProgress" class="td-loader-button">
+                        <div class="td-loader"></div>
+                    </div>
+                    <button *ngIf="!saveInProgress" class="td-top-button-alt" (click)="updateChanges()"><span class="td-tooltiptext">Click here to upload these captions to our database</span>  Save</button>
+                    <div *ngIf="saveInProgress" class="td-loader-button">
+                        <div class="td-loader"></div>
+                    </div>
+                </div>
+                <div  class="td-title-and-description">
+                    <p *ngIf="video" class="td-title-text">{{video["title"]}}</p>
+                </div>
             </div>
-            <div class="ctrl-panel">
-                    
-                <!-- <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; ">
-                    <button class="top-button-alt" (click)="uploadChanges()">Upload</button>
-                    <button class="top-button-alt">Reset</button>
-                    <button class="top-button-alt" (click)="updateChanges()">Save</button>
-                </div> -->
-                
-                
-                
-                <!-- <hr style="color: #612c67db;" width="100%"> -->
+            <div class="td-ctrl-panel">
 
-                <div class="ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'UPDATED'">
+                <div class="td-ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'UPDATED'">
                     <span style="font-size: 24px;width: 90%; text-align: left; margin-bottom: 15px;">Information</span>
                     <p>This video was captioned in {{this.video['language']}}.</p>
-                    <p>Captions for this video were uploaded to Youtube {{formatDate(true)}} on {{formatDate(false)}}.</p>
+                    <p>Captions for this video were uploaded to our database {{formatDate(true)}} on {{formatDate(false)}}.</p>
                     <p>Use the editor to the right to repair any mistakes our model may have made.</p>
                     <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
                 </div>
-                <div class="ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'COMPLETED'">
+                <div class="td-ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'COMPLETED'">
                     <span style="font-size: 24px;width: 90%; text-align: left; margin-bottom: 15px;">Information</span>
                     <p>This video was captioned in {{this.video['language']}}.</p>
-                    <p>You have not yet uploaded captions for this video to Youtube.</p>
+                    <p>You have not yet uploaded captions for this video to our database.</p>
                     <p>Use the editor to the right to repair any mistakes our model may have made.</p>
                     <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
                 </div>
-                
-                
-
-                
-                <!-- <hr width="100%"> -->
-
+ 
             </div>
         </div>
-        <div class="text-section">
-            <!-- <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
-                <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="Find"> 
-                <button *ngIf="this.searchTxt.length > 0" class="top-button">Remove</button>
-                <button *ngIf="this.searchTxt.length == 0" class="disabled-button">Remove</button>
-            </div>
-
-            <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; height: 48px;">
-                <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="Replace with">
-                <button *ngIf="this.replaceTxt.length > 0" class="top-button">Replace</button>
-                <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
-            </div> -->
+        <div class="td-text-section">
             <div style="display: flex;flex-direction: row; justify-content: space-between; width: 100%; align-items: center; background-color: white; padding-bottom: 10px;">
-                <input class="input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="&#8981; Find">
-                <input class="input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="&#8645; Replace with">
-                <button (click)="replace()" *ngIf="this.replaceTxt.length > 0" class="top-button"><span class="tooltiptext">Replace "{{this.searchTxt}}" with "{{this.replaceTxt}}"</span>Replace</button>
-                <button *ngIf="this.replaceTxt.length == 0" class="disabled-button">Replace</button>
+                <input class="td-input-box-big" (keyup)="updateSearchTxt($event)" type="text" placeholder="&#8981; Find">
+                <input class="td-input-box-big" (keyup)="updateReplaceTxt($event)" type="text" placeholder="&#8645; Replace with">
+                <button (click)="replace()" *ngIf="this.searchTxt.length > 0" class="td-top-button"><span class="td-tooltiptext">Replace "{{this.searchTxt}}" with "{{this.replaceTxt}}"</span>Replace</button>
+                <button *ngIf="this.searchTxt.length == 0" class="td-disabled-button">Replace</button>
             </div>
 
             <div style="width: calc(100% - 70px);padding-left: 20px;padding-right: 50px;">
-                <mat-progress-bar mode="determinate" class="progress-bar" [value]="this.getProgress()"></mat-progress-bar>
+                <mat-progress-bar mode="determinate" class="td-progress-bar" [value]="this.getProgress()"></mat-progress-bar>
             </div>
             
-            <div *ngIf="transcriptions && !resetInProgress" class="transcriptions">
+            <div *ngIf="transcriptions && !resetInProgress" class="td-transcriptions" [id]="'td-transcriptions-id'">
 
                 <ng-container *ngFor="let item of shownTranscriptions; let i = index">
-                    <button  (click)="this.jumpTo(item['index'])" class="wrap-transcription-item">
-                        <p class="time-code" unselectable>{{item['start_time'].substring(0,8)}}</p>
-                        <div tabindex="0" (blur)="saveChangeBlur(item['index'], i, $event)" [id]="'transcription-item-'.concat(item['index'].toString())" class="transcription-item" [innerHtml]="item['html']"></div>
+                    <button [id]="'td-grouped-transcription-item-'.concat(item['index'].toString())" (click)="this.jumpTo(item['index'])" class="td-wrap-transcription-item">
+                        <p class="td-time-code" unselectable>{{item['start_time'].substring(0,8)}}</p>
+                        <div tabindex="0" (blur)="saveChangeBlur(item['index'], i, $event)" [id]="'td-transcription-item-'.concat(item['index'].toString())" class="td-transcription-item" [innerHtml]="item['html']"></div>
                    </button>
                 </ng-container>
                 
             </div>
-            <div *ngIf="resetInProgress" class="loader-big"></div>
-            <div *ngIf="resetInProgress" class="loader-text">{{loaderText}}</div>
+            <div *ngIf="resetInProgress" class="td-loader-big"></div>
+            <div *ngIf="resetInProgress" class="td-loader-text">{{loaderText}}</div>
         </div>
     </div>
     

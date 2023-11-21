@@ -81,7 +81,7 @@ export class VideoCardComponent {
       }
 
     } else {
-      console.log("fffff");
+      //console.log("fffff");
     }
 
     

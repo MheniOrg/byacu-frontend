@@ -22,7 +22,7 @@ export class UserDisplayComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
-    console.log(changes);
+    //console.log(changes);
   }
 
   // ngOnInit() { 
@@ -39,7 +39,7 @@ export class UserDisplayComponent {
     
     if (!this.menuOpen) {
       menu.focus();
-      // console.log("iiiiinni");
+      // //console.log("iiiiinni");
       this.menuOpen = true;
     } else {
       // this.menuOpen = false;
@@ -61,7 +61,7 @@ export class UserDisplayComponent {
   menuBlur(event: any): void {
     if (!event.originalTarget.contains(event.relatedTarget)) {
       this.menuOpen = false;
-      // console.log("lo", event);
+      // //console.log("lo", event);
     } 
 
   }
@@ -75,7 +75,7 @@ export class UserDisplayComponent {
   }
 
   SignOut(): void {
-    // console.log("kklo", e);
+    // //console.log("kklo", e);
     // e.stopPropagation();
     localStorage.removeItem('oauth2-test-params');
     this.navigateToHome();

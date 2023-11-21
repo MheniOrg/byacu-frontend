@@ -70,7 +70,7 @@ export class AuthApiService {
 
       xhr.onreadystatechange = (e) => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.response);
+          // //console.log(xhr.response);
         } else if (xhr.readyState === 4 && xhr.status === 401) {
           // Token invalid, so prompt for user permission.
           this.oauth2SignIn(YOUR_CLIENT_ID, YOUR_REDIRECT_URI);
@@ -93,7 +93,7 @@ export class AuthApiService {
 
     params["user_id"] = "";
 
-    console.log(params);
+    // //console.log(params);
 
     if (params["session_id"]) {
       localStorage.setItem('JYUID', JSON.stringify(params) );
@@ -106,7 +106,7 @@ export class AuthApiService {
   getCredentials(): string {
     var prms: string | null = localStorage.getItem('JYUID');
 
-    // console.log(location.hash.length);
+    // //console.log(location.hash.length);
 
     var params: LooseObject = {};
     if (prms) {
@@ -178,7 +178,7 @@ export class AuthApiService {
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
     };
 
     req.send(null);
@@ -201,13 +201,13 @@ export class AuthApiService {
       if (req.readyState === 4) {
         // let res = JSON.parse(req.response);
           
-        console.log(req);
+        //console.log(req);
       }
       
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
     };
 
     req.send(null);
@@ -225,13 +225,13 @@ export class AuthApiService {
       if (req.readyState === 4) {
         let res = JSON.parse(req.response);
           
-        console.log(res);
+        //console.log(res);
       }
       
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
     };
 
     req.send(null);
@@ -250,7 +250,7 @@ export class AuthApiService {
       if (req.readyState === 4) {
         let res = JSON.parse(req.response);
           
-        console.log(res);
+        //console.log(res);
 
         window.location.replace(res);
       }
@@ -258,7 +258,7 @@ export class AuthApiService {
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
     };
 
     req.send(null);
@@ -315,7 +315,7 @@ export class AuthApiService {
 
     req.send(null);
 
-    console.log(result);
+    //console.log(result);
 
     return result;
   }
@@ -339,7 +339,7 @@ export class AuthApiService {
         if (req.status === 200) {
           let res = JSON.parse(req.response);
 
-          console.log(res);
+          //console.log(res);
 
           resolve(res);
   
@@ -351,7 +351,7 @@ export class AuthApiService {
     }
 
     req.onerror = (e) => {
-      console.error(req.statusText);
+      //console.error(req.statusText);
       reject(req.statusText);
     };
 
