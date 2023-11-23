@@ -286,8 +286,8 @@ visibility: visible;
     margin-right: calc((4% - 30px) / 2); */
     /* padding-left: 2px;
     padding-right: 2px; */
-    font-weight: 900;
-    font-size: 25px;
+    /* font-weight: 900; */
+    font-size: 30px;
     background-color: aliceblue;
 
     color: #611f69;

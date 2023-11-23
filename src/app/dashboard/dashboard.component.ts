@@ -284,12 +284,12 @@ export class DashboardComponent {
   }
 
   openModal(): void {
-    $("#myModal").css("display", "flex");
+    $("#db-myModal").css("display", "flex");
 
     var lang: string | null= localStorage.getItem('lang');
 
     if (lang) {
-      $(`#lang_${lang}`).focus();
+      $(`#db-lang_${lang}`).focus();
     } 
   }
 
@@ -368,7 +368,7 @@ export class DashboardComponent {
   }
 
   closeModal(): void {
-    $("#myModal").css("display", "none");
+    $("#db-myModal").css("display", "none");
 
     var prms: string | null= localStorage.getItem('lang');
 
@@ -379,7 +379,7 @@ export class DashboardComponent {
     } else {
       this.openModal();
       // //console.log("Iinjn");
-      $("#modal_title").text("Please Select a Language :)");
+      $("#db-modal_title").text("Please Select a Language :)");
     }
   }
 

@@ -81,6 +81,7 @@
                     <p>Captions for this video were uploaded to our database {{formatDate(true)}} on {{formatDate(false)}}.</p>
                     <p>Use the editor to the right to repair any mistakes our model may have made.</p>
                     <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
+                    <p>Here is a link to <a class="vidlink" target="_blank" [href]="'https://www.youtube.com/watch?v='.concat(this.id)">your video</a></p>
                 </div>
                 <div class="td-ctrl-panel-messages" *ngIf="this.video && this.video['status'] == 'COMPLETED'">
                     <span style="font-size: 24px;width: 90%; text-align: left; margin-bottom: 15px;">Information</span>
@@ -88,6 +89,7 @@
                     <p>You have not yet uploaded captions for this video to our database.</p>
                     <p>Use the editor to the right to repair any mistakes our model may have made.</p>
                     <p>The find and replace search bars at the top can be used to fix repeating errors.</p>
+                    <p>Here is a link to <a class="vidlink" target="_blank" [href]="'https://www.youtube.com/watch?v='.concat(this.id)">your video</a></p>
                 </div>
  
             </div>
