@@ -294,6 +294,7 @@ export class DashboardComponent {
   }
 
   openError(message: string) {
+    this.closeInfo();
     this.errorMessage = message;
     $("#db-warning").css("top", "10px");
   }
@@ -304,6 +305,7 @@ export class DashboardComponent {
   }
 
   openInfo(message: string) {
+    this.closeError();
     this.infoMessage = message;
     $("#db-info").css("top", "10px");
   }

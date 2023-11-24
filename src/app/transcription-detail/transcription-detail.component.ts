@@ -371,6 +371,7 @@ export class TranscriptionDetailComponent {
   }
 
   openError(message: string) {
+    this.closeInfo();
     this.errorMessage = message;
     $("#td-warning").css("top", "10px");
   }
@@ -381,6 +382,7 @@ export class TranscriptionDetailComponent {
   }
 
   openInfo(message: string) {
+    this.closeError();
     this.infoMessage = message;
     $("#td-info").css("top", "10px");
   }
