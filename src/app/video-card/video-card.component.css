@@ -377,8 +377,8 @@
 .loader {
     border: 2px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 2px solid #612c6700;
-    border-bottom: 2px solid #612c6700;
+    border-top: 2px solid #612c67db;
+    border-bottom: 2px solid #612c67db;
     width: 12px;
     height: 12px;
     z-index: 2;
@@ -434,8 +434,8 @@
     padding-bottom: 8px;
     font-weight: 400;
     font-size: 18px;
-    background-color: #612c67db;
-    color: aliceblue;
+    background-color: aliceblue;
+    color: #612c67db;
     cursor:not-allowed;
     font-family: 'Antic';
     text-align: center;
@@ -451,7 +451,7 @@
     -ms-user-select: none;
     user-select: none;
     /* margin: 5px; */
-    border: solid #621f69 1px;
+    border: solid #612c67db 1px;
     border-top: none;
     border-radius: 0px 0px 5px 5px;
 }
