@@ -264,6 +264,7 @@ export class DashboardComponent {
 
         if (this.uploads.length == 0) {
           this.userHasNoVideos = true;
+          this.isDemoUser = true;
         } else {
           this.shownVideos = this.uploads;
           this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
