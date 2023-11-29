@@ -247,6 +247,11 @@ export class DashboardComponent {
 
       let typemap: LooseObject = {};
 
+      // this.transcriptionService.isDemoUser(this.session, res.id).then((r) => {
+
+      // });
+      console.log("UCYXxZjLl_DGUo-ikYrkCPFw", this.user.id);
+
       if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
         this.isDemoUser = true;
       } 
@@ -361,9 +366,9 @@ export class DashboardComponent {
       this.demoVideos = res as Video[];
 
       this.shownVideos = this.demoVideos;
-      this.failedVideos = this.uploads.filter((item: Video) => { return item.status === "FAILED" });
-      this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
-      this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
+      this.failedVideos = this.demoVideos.filter((item: Video) => { return item.status === "FAILED" });
+      this.inProgressVideos = this.demoVideos.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
+      this.doneVideos = this.demoVideos.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
     }).catch((res) => {
       this.openError("We encountered an error while fetching demo videos for you. Details: ".concat(res['detail']));
       setTimeout(() => {this.closeError()}, this.messageTimer);
@@ -398,7 +403,6 @@ export class DashboardComponent {
   }
 
   filterVids(): void {
-
     if (this.failedFilter) {
       this.shownVideos = this.failedVideos.filter(
         (vid: Video) => vid.title.toLowerCase().includes(this.searchString.toLowerCase())
@@ -412,9 +416,16 @@ export class DashboardComponent {
         (vid: Video) => vid.title.toLowerCase().includes(this.searchString.toLowerCase())
       );
     } else {
-      this.shownVideos = this.uploads.filter(
-        (vid: Video) => vid.title.toLowerCase().includes(this.searchString.toLowerCase())
-      );
+      if (this.isDemoUser) {
+        this.shownVideos = this.demoVideos.filter(
+          (vid: Video) => vid.title.toLowerCase().includes(this.searchString.toLowerCase())
+        );
+      } else {
+        this.shownVideos = this.uploads.filter(
+          (vid: Video) => vid.title.toLowerCase().includes(this.searchString.toLowerCase())
+        );
+      }
+      
     }
     
   }

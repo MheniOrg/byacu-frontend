@@ -324,4 +324,41 @@ export class TranscriptionApiService {
 
     });
   }
+
+  // isDemoUser(credentials: string, userId: string) {
+  //   return new Promise((resolve, reject) => { 
+  
+  //     var req = new XMLHttpRequest();
+  
+  //     req.open('GET', `https://byacu.com/is_demo_user?session_id=${credentials}&user_id=${userId}`);
+  
+  //     req.onreadystatechange = (e) => {
+  
+  //       if (req.readyState === 4) {
+  //         if (req.status === 200) {
+  //           let res = JSON.parse(req.response);
+
+  //           console.log(res);
+  
+  //           resolve(res);
+    
+  //         } 
+  //         else {
+  //           reject(JSON.parse(req.response));
+  //         }
+  //       }
+        
+  //     }
+  
+  //     req.onerror = (e) => {
+  //       //console.error(req.statusText);
+  //       reject(req.statusText);
+  //     };
+  
+  //     req.send(null);
+  
+  //   });
+  // }
 }
+
+
