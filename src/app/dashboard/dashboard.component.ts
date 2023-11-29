@@ -250,7 +250,7 @@ export class DashboardComponent {
       // this.transcriptionService.isDemoUser(this.session, res.id).then((r) => {
 
       // });
-      console.log("UCYXxZjLl_DGUo-ikYrkCPFw", this.user.id);
+      // console.log("UCYXxZjLl_DGUo-ikYrkCPFw", this.user.id);
 
       if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
         this.isDemoUser = true;
