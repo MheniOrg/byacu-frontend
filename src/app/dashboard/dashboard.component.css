@@ -887,7 +887,7 @@ visibility: visible;
     /* margin: 5px; */
 }
 
-.db-demo-video-button :hover {
+.db-demo-video-button:hover {
     background-color: #3e1443;
     color: white;
 }

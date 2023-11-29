@@ -11,8 +11,9 @@
         
         <div id="text-section">
             <div class="top"><app-icon></app-icon></div>
-            <p class="title"><span class="jy">Captions</span></p>
-            <p class="service-text">Caption videos in Kinyarwanda, Luganda, and Swahili</p>
+            <div class="title">
+                <span class="jy">Captions</span>
+                <p class="service-text">Caption videos in Kinyarwanda, Luganda, and Swahili</p>
             <!-- <button (click)="connect()" class="google-button-wrapper">
                <button (click)="connect()" class="google-button"></button>
                <app-google-sign-in-button /> Connect To Youtube Via Google
@@ -26,7 +27,9 @@
             <a (click)="nav('/legal/PrivacyPolicy')" class="info-text">Privacy Policy</a>
             <a (click)="nav('/legal/TermsOfService')" class="info-text">Terms of Service</a>
 
-            <div style="width: 70%; font-family: 'Antic'; text-align: center; position: absolute; bottom: 30px;color: rgb(80, 80, 80);">
+            </div>
+            
+            <div class="notice">
                 Just Yams' use and transfer of information received from Google APIs to any other app will adhere to <a href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements.
             </div>
             

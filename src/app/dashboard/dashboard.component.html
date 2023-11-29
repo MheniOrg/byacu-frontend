@@ -88,11 +88,11 @@
             <button id="db-right-button" class="db-right-click-inactive" (click)="flipDone()"><div id="db-right-button-indicator" class="db-indicator-inactive"></div>Done</button>
         </div>
     </div>
-    <div class="db-demo-mode" *ngIf="userHasNoVideos">
+    <div class="db-demo-mode" *ngIf="isDemoUser">
       <p *ngIf="demoVideos.length == 0" class="db-demo-text">Looks like there are no video on your YouTube account 😐</p>
       <button (click)="getDemoVideos()" class="db-demo-video-button" *ngIf="demoVideos.length == 0">Get Demo Videos</button>
       <div class="db-video-container" *ngIf="demoVideos.length > 0">
-        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="db-video" />
+        <app-video-card *ngFor="let video of this.shownVideos; let i = index" key="i" [videoInfo]="video" [lang]="this.lang" class="db-video" (transcribeButtonClicked)="grabVideos()"/>
       </div>
     </div>
     <div class="db-video-container" *ngIf="!userHasNoVideos">

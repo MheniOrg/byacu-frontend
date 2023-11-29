@@ -52,7 +52,7 @@
                     <div id="td-player"></div>
                 </div>
                 <div style="display: flex;flex-direction: row; width: 100%; justify-content: space-between; height: 48px; margin-top: 10px;">
-                    <button *ngIf="!uploadInProgress" class="td-top-button-alt" (click)="uploadChanges()"><span class="td-tooltiptext">Click here to upload these captions to youtube</span> Upload</button>
+                    <button *ngIf="!uploadInProgress" [class]="this.isDemoUser ? 'td-disabled-button-alt' : 'td-top-button-alt'" (click)="uploadChanges()" [disabled]="isDemoUser"><span class="td-tooltiptext">Click here to upload these captions to youtube</span> Upload<span class="td-tooltiptext-demo">You are a demo user, we cannot allow you to do that :{{"("}}</span></button>
                     <div *ngIf="uploadInProgress" class="td-loader-button">
                         <div class="td-loader"></div>
                     </div>
@@ -64,7 +64,7 @@
                     <div *ngIf="retranscribeInProgress" class="td-loader-button">
                         <div class="td-loader"></div>
                     </div>
-                    <button *ngIf="!saveInProgress" class="td-top-button-alt" (click)="updateChanges()"><span class="td-tooltiptext">Click here to upload these captions to our database</span>  Save</button>
+                    <button *ngIf="!saveInProgress" [class]="this.isDemoUser ? 'td-disabled-button-alt' : 'td-top-button-alt'" (click)="updateChanges()" [disabled]="isDemoUser"><span class="td-tooltiptext">Click here to upload these captions to our database</span>Save<span class="td-tooltiptext-demo">You are a demo user, we cannot allow you to do that :{{"("}}</span></button>
                     <div *ngIf="saveInProgress" class="td-loader-button">
                         <div class="td-loader"></div>
                     </div>

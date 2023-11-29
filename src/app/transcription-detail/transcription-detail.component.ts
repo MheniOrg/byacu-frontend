@@ -56,6 +56,7 @@ export class TranscriptionDetailComponent {
   langSelected: boolean = false;
   filteredLanguages: string[] | any = [];
   mobile = false;
+  isDemoUser: boolean = false;
 
   init() {
     // Return if Player is already created
@@ -302,6 +303,10 @@ export class TranscriptionDetailComponent {
 
     this.authService.getUserAsync(this.credentials).then((res) => {
       this.user = res;
+
+      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
+        this.isDemoUser = true;
+      }
     }).catch((res) => {
       this.openError(res['detail']);
       setTimeout(() => {this.closeError()}, this.messageTimer);

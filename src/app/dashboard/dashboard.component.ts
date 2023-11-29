@@ -55,6 +55,7 @@ export class DashboardComponent {
   errorMessage: string = "Something went wrong!";
   infoMessage: string = "Hello!";
   messageTimer: number = 10000;
+  isDemoUser: boolean = false;
 
   constructor() { }
 
@@ -246,6 +247,10 @@ export class DashboardComponent {
 
       let typemap: LooseObject = {};
 
+      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
+        this.isDemoUser = true;
+      } 
+
       localStorage.setItem('JYUID', JSON.stringify({ "session_id": this.session, "user_id": this.user.id }) );
 
       this.transcriptionService.getPlaylistAsync(this.session, res.id, "dashboard").then((r) => {
@@ -280,7 +285,14 @@ export class DashboardComponent {
         this.inProgressVideos = this.uploads.filter((item: Video) => { return (item.status === "IN_PROGRESS" || item.status === "CREATED") });
         this.doneVideos = this.uploads.filter((item: Video) => { return (item.status === "COMPLETED" || item.status === "UPDATED" || item.status === "UPLOADED") });
       });
+
+      // this.isDemoUser = false;
+
     } 
+
+    if (this.isDemoUser) {
+      this.getDemoVideos();
+    }
   }
 
   openModal(): void {
