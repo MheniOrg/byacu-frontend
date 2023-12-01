@@ -304,7 +304,8 @@ export class TranscriptionDetailComponent {
     this.authService.getUserAsync(this.credentials).then((res) => {
       this.user = res;
 
-      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
+      // if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
+      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id  && "@mhenidevs" != this.user.customURL) {
         this.isDemoUser = true;
       }
     }).catch((res) => {

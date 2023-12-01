@@ -252,7 +252,7 @@ export class DashboardComponent {
       // });
       // console.log("UCYXxZjLl_DGUo-ikYrkCPFw", this.user.id);
 
-      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id ){
+      if ("UCYXxZjLl_DGUo-ikYrkCPFw" == this.user.id  && "@mhenidevs" != this.user.customURL){
         this.isDemoUser = true;
       } 
 
