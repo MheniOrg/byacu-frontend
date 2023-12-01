@@ -504,14 +504,19 @@ export class TranscriptionDetailComponent {
 
     let ele = $(`#td-transcription-item-${total_idx}`);
 
+    // ele.focus();
+    // ele.attr('contenteditable','false');
     ele.focus();
-    ele.attr('contenteditable','false');
+    ele.attr('spellcheck','false');
   }
 
   makeEditable(idx: number) {
     let ele = $(`#td-transcription-item-${idx}`);
+    // ele.focus();
+    // ele.attr('contenteditable','true');
+
     ele.focus();
-    ele.attr('contenteditable','true');
+    ele.attr('spellcheck','true');
   }
 
   topOfTranscriptions() {

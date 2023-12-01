@@ -111,7 +111,7 @@
                 <ng-container *ngFor="let item of shownTranscriptions; let i = index">
                     <button [id]="'td-grouped-transcription-item-'.concat(item['index'].toString())" (click)="this.jumpTo(item['index'])" class="td-wrap-transcription-item">
                         <p class="td-time-code" unselectable>{{item['start_time'].substring(0,8)}}</p>
-                        <div tabindex="0" (blur)="saveChangeBlur(item['index'], i, $event)" [id]="'td-transcription-item-'.concat(item['index'].toString())" class="td-transcription-item" [innerHtml]="item['html']"></div>
+                        <div spellcheck="false" tabindex="0" contenteditable="true" (blur)="saveChangeBlur(item['index'], i, $event)" [id]="'td-transcription-item-'.concat(item['index'].toString())" class="td-transcription-item" [innerHtml]="item['html']"></div>
                    </button>
                 </ng-container>
                 
